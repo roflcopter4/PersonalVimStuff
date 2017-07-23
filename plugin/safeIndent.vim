@@ -2,7 +2,7 @@
 function! SafeIndent()
 
     if search('^\s\{2}\S', 'w')
-        s%/^\s\{2}\(\S\)/\t\1/
+        s%/\v^[ ]{2}(\S)/    \1/
     else
         return 0
     endif
@@ -12,8 +12,10 @@ function! SafeIndent()
         "s%/\v^(\t{-})((\s{2}(\S))|((\s{2}){-}(\S)))/\1\t~/
         "s%/\v^(\t{-})\s{2}/\1\t/
     "endwhile
-    while search('\v^(\t)\s{2}', 'w')
-        s%/\v^(\t{-})\s{2}/\1\t/
+    let s:num = 1
+    while search("\v^(([ ]{4}){s:num})\s{2}" 'w')
+        s%/\v^(([ ]{4}){s:num})\s{2}/\1\    /
+        let s:num = s:num + 1
     endwhile
 
 endfunction
