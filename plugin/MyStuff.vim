@@ -4,7 +4,7 @@
 " Description: Doesn't work
 " Location: plugin/numbers.vim
 
-function AddSpaces()
+function! AddSpaces()
     execute "2"
     let a:line_number = 2
     try
