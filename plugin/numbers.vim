@@ -15,7 +15,9 @@
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 let s:numbers_version = '0.5.0'
-let g:numbers_default_norelative=1
+if (!exists('g:numbers_default_norelative'))
+    let g:numbers_default_norelative=1
+endif
 
 if exists("g:loaded_numbers") && g:loaded_numbers
     finish
