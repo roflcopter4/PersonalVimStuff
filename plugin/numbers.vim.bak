@@ -15,9 +15,9 @@
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 let s:numbers_version = '0.5.0'
-"if (!exists('g:numbers_default_norelative'))
-    "let g:numbers_default_norelative=1
-"endif
+if (!exists('g:numbers_default_norelative'))
+    let g:numbers_default_norelative=1
+endif
 
 if exists("g:loaded_numbers") && g:loaded_numbers
     finish
@@ -147,6 +147,9 @@ let &cpo = s:save_cpo
 
 if (g:enable_numbers)
     call NumbersEnable()
-else
-    let s:mode=1
+
+    if (g:numbers_default_norelative)
+        call NumbersDisable()
+        call NumbersToggle()
+    endif
 endif
