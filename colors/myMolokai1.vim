@@ -155,7 +155,8 @@ call s:HL("SpecialChar"    , s:bright_pink     , ''                , s:bold)
 call s:HL("SpecialComment" , s:shiny_grey      , ''                , '')
 call s:HL("Comment"        , s:shiny_grey      , ''                , '')
 
-call s:HL("Special"        , s:cyan_           , "bg"              , s:italic)
+"call s:HL("Special"        , s:cyan_           , "bg"              , s:italic)
+call s:HL("Special"        , s:cyan_           , "bg"              , '')
 call s:HL("SpecialKey"     , s:cyan_           , ''                , s:italic)
 
 call s:HL("Statement"      , s:bright_pink     , ''                , s:bold)
