@@ -42,7 +42,8 @@ endfun
 " Readable Color Definitions
 
 let s:normal           = "#F8F8F2"
-let s:background       = "#1B1D1E"
+"let s:background       = "#1B1D1E"
+let s:background       = "#131515"
 let s:lighter_bg       = "#232526"
 let s:cursor           = "#F8F8F0"
 
@@ -76,6 +77,8 @@ let s:key_grey         = "#888A85"
 let s:cursorline_grey  = "#293739"
 let s:warning_grey     = "#333333"
 
+" NOTE: comment_grey is NOT used at all, only left in for legacy.
+"       shiney_grey is used for comments
 let s:comment_grey     = "#878787"
 let s:shiny_grey       = "#7E8E91"
 
@@ -183,7 +186,6 @@ call s:HL("WarningMsg"     , s:white_          , s:warning_grey    , s:bold)
 call s:HL("WildMenu"       , s:cyan_           , s:black_          , '')
 
 call s:HL("Normal"         , s:normal          , s:background      , '')
-"call s:HL("Comment"       , s:dark_grey       , ''                , '')
 call s:HL("CursorLine"     , ''                , s:cursorline_grey , '')
 call s:HL("CursorColumn"   , ''                , s:cursorline_grey , '')
 call s:HL("LineNr"         , s:very_light_grey , s:lighter_bg      , '')
