@@ -41,9 +41,15 @@ endfun
 " ---------------------------------------------------------------------
 " Readable Color Definitions
 
+if g:myMolokai_BG == 'darker'
+    let s:background       = "#131515"
+elseif g:myMolokai_BG == 'custom'
+    let s:background       = g:myMolokai_CustomBG
+else
+    let s:background       = "#1B1D1E"
+endif
+
 let s:normal           = "#F8F8F2"
-"let s:background       = "#1B1D1E"
-let s:background       = "#131515"
 let s:lighter_bg       = "#232526"
 let s:cursor           = "#F8F8F0"
 
@@ -203,7 +209,7 @@ endif
 "
 " Support for 256-color terminal
 "
-if &t_Co > 255 && 0
+if &t_Co > 255 && !has('termguicolors')
     hi Boolean         ctermfg=135
     hi Character       ctermfg=144
     hi Number          ctermfg=135
