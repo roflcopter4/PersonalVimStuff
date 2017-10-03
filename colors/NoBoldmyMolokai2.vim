@@ -215,7 +215,8 @@ if has("spell")
 endif
 
 " Special commands for Vim syntax
-call s:HL("vimCommand"     , s:bright_pink     , ''                , s:bold)
+"call s:HL("vimCommand"     , s:bright_pink     , ''                , s:none)
+"call s:HL("vimCondHL"      , s:bright_pink     , ''                , s:bold)
 
 
 

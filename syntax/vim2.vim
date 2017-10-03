@@ -415,7 +415,7 @@ syn match vimNotFunc	"\<if\>\|\<el\%[seif]\>\|\<return\>\|\<while\>"
 if !exists("g:vimsyn_noerror") && !exists("g:vimsyn_novimfunctionerror")
     syn match	vimFunctionError	"\s\zs[a-z0-9]\i\{-}\ze\s*("			contained contains=vimFuncKey,vimFuncBlank
 " syn match	vimFunctionError	"\s\zs\%(<[sS][iI][dD]>\|[sSgGbBwWtTlL]:\)[0-9]\i\{-}\ze\s*("	contained contains=vimFuncKey,vimFuncBlank
-    syn match	vimElseIfErr	"\<else\s\+if\>"
+    syn match	vimElseIfErr	"\<else\s)\+if\>"
     syn match	vimBufnrWarn	/\<bufnr\s*(\s*["']\.['"]\s*)/
 endif
 
@@ -819,7 +819,7 @@ if !exists("skip_vim_syntax_inits")
     hi def link vimEchoHLNone	vimGroup
     hi def link vimEchoHL	vimCommand
     hi def link vimElseIfErr	Error
-    hi def link vimElseif	vimCondHL
+    hi def link vimElseif	Conditional
     hi def link vimEnvvar	PreProc
     hi def link vimError	Error
     hi def link vimFBVar	vimVar
