@@ -18,7 +18,7 @@ if version > 580
         syntax reset
     endif
 endif
-let g:colors_name="NoBold_myMolokai2"
+let g:colors_name="NoBold_myMolokai3"
 
 fun! s:HL(group, guifg, guibg, gui)
     let histring = "hi " . a:group
@@ -167,7 +167,7 @@ call s:HL("Repeat"         , s:bright_pink     , ''                , s:bold)
 call s:HL("Search"         , s:black_          , s:beige_          , s:none)
 " marks column
 call s:HL("SignColumn"     , s:lime_           , s:lighter_bg      , s:none)
-call s:HL("SpecialChar"    , s:bright_pink     , ''                , s:bold)
+call s:HL("SpecialChar"    , s:bright_pink     , ''                , s:none)
 
 call s:HL("SpecialComment" , s:shiny_grey      , ''                , s:none)
 call s:HL("Comment"        , s:grey4           , ''                , s:none)
