@@ -1,6 +1,6 @@
 
-syntax keyword fishType set set_color
+syntax keyword fishDef set set_color
 
 highlight link fishKeyword Conditional
 
-highlight default link fishType Type
+highlight default link fishDef Define
