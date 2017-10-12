@@ -218,7 +218,7 @@ endif
 "call s:HL("vimCondHL"      , s:bright_pink     , ''                , s:bold)
 
 " Special rules for fish syntax
-call s:HL("fishKeyword", s:bright_pink, '', s:bold)
+"call s:HL("fishKeyword", s:bright_pink, '', s:bold)
 "hi! fishKeyword   guifg=#F92672  gui=bold
 
 

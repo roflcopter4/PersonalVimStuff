@@ -1,2 +1,2 @@
 
-highlight link fishKeyword NONE
+highlight link fishKeyword Conditional
