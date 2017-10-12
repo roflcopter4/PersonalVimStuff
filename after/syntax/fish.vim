@@ -1,5 +1,5 @@
 
-syntax keyword fishDef set set_color
+syntax keyword fishDef set
 
 highlight link fishKeyword Conditional
 
