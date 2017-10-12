@@ -1,0 +1,2 @@
+
+highlight link fishKeyword NONE
