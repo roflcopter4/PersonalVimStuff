@@ -1,7 +1,7 @@
 syn match    shBang  '^\%1l#\!.*$'
 
 hi def link  shBang  PreProc
-highlight link shLoop Repeat
+hi! link shLoop Repeat
 
 "hi link shParenError	NONE
 "hi link shCommandSub	Special
