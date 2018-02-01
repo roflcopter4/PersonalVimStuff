@@ -6,6 +6,7 @@
 " by Wimer Hazenberg and its darker variant 
 " by Hamish Stuart Macpherson
 "
+" Note: Extensively edited by roflcopter4.
 
 hi clear
 
@@ -41,16 +42,6 @@ endfun
 " ---------------------------------------------------------------------
 " Readable Color Definitions
 
-if g:myMolokai_BG == 'darker'
-    let s:background       = "#131515"
-elseif g:myMolokai_BG == 'custom'
-    let s:background       = g:myMolokai_CustomBG
-else
-    let s:background       = "#1B1D1E"
-endif
-
-let s:normal           = "#F8F8F2"
-let s:foreground       = "#ECEFF1"
 let s:lighter_bg       = "#232526"
 let s:cursor           = "#F8F8F0"
 
@@ -104,6 +95,33 @@ let s:bold_italic      = "italic,bold"
 let s:reverse          = "reverse"
 let s:undercurl        = "undercurl"
 let s:underline        = "underline"
+
+
+if g:myMolokai_BG == 'darker'
+    let s:background       = "#131515"
+elseif g:myMolokai_BG == 'custom'
+    let s:background       = g:myMolokai_CustomBG
+else
+    let s:background       = "#1B1D1E"
+endif
+
+if g:myMolokai_FG == "darker"
+    let s:foreground       = "#ECEFF1"
+elseif g:myMolokai_FG == 'custom'
+    let s:foreground       = g:myMolokai_CustomFG
+else
+    let s:foreground       = "#F8F8F2"
+endif
+
+if g:myMolokaiComment = 'shiny'
+    let s:comment = s:shiny_grey
+elseif g:myMolokaiComment = 'comment_grey'
+    let s:comment = s:comment_grey
+elseif g:myMolokaiComment = 'custom'
+    let s:comment = g:myMolokaiComment_Custom
+else
+    let s:comment = s:grey4
+endif
 
 
 " ---------------------------------------------------------------------
@@ -168,12 +186,8 @@ call s:HL("SignColumn"     , s:lime_           , s:lighter_bg      , s:none)
 call s:HL("SpecialChar"    , s:bright_pink     , ''                , s:bold)
 
 call s:HL("SpecialComment" , s:shiny_grey      , ''                , s:none)
-call s:HL("Comment"        , s:grey4           , ''                , s:none)
-"call s:HL("Comment"        , s:shiny_grey      , ''                , s:none)
-"call s:HL("Comment"        , s:light_grey      , ''                , s:none)
+call s:HL("Comment"        , s:comment         , ''                , s:none)
 
-"call s:HL("Special"        , s:cyan_           , "bg"              , s:italic)
-"call s:HL("SpecialKey"     , s:cyan_           , ''                , s:italic)
 call s:HL("Special"        , s:cyan_           , "bg"              , s:none)
 call s:HL("SpecialKey"     , s:cyan_           , ''                , s:none)
 
@@ -197,7 +211,6 @@ call s:HL("Visual"         , ''                , s:grey_brown      , s:none)
 call s:HL("WarningMsg"     , s:white_          , s:warning_grey    , s:bold)
 call s:HL("WildMenu"       , s:cyan_           , s:black_          , s:none)
 
-"call s:HL("Normal"         , s:normal          , s:background      , s:none)
 call s:HL("Normal"         , s:foreground      , s:background      , s:none)
 call s:HL("CursorLine"     , ''                , s:cursorline_grey , s:none)
 call s:HL("CursorColumn"   , ''                , s:cursorline_grey , s:none)
