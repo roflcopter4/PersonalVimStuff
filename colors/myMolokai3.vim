@@ -42,6 +42,7 @@ endfun
 " ---------------------------------------------------------------------
 " Readable Color Definitions
 
+let s:normal           = "#F8F8F2"
 let s:lighter_bg       = "#232526"
 let s:cursor           = "#F8F8F0"
 
@@ -97,28 +98,42 @@ let s:undercurl        = "undercurl"
 let s:underline        = "underline"
 
 
-if g:myMolokai_BG == 'darker'
-    let s:background       = "#131515"
-elseif g:myMolokai_BG == 'custom'
-    let s:background       = g:myMolokai_CustomBG
+if exists('g:myMolokai_BG')
+    if g:myMolokai_BG == 'darker'
+        let s:background       = "#131515"
+    elseif g:myMolokai_BG == 'custom'
+        let s:background       = g:myMolokai_CustomBG
+    else
+        let s:background       = "#1B1D1E"
+    endif
 else
     let s:background       = "#1B1D1E"
 endif
 
-if g:myMolokai_FG == "darker"
-    let s:foreground       = "#ECEFF1"
-elseif g:myMolokai_FG == 'custom'
-    let s:foreground       = g:myMolokai_CustomFG
+
+if exists('g:myMolokai_FG')
+    if g:myMolokai_FG == 'other'
+        let s:foreground       = "#F8F8F2"
+    elseif g:myMolokai_FG == 'custom'
+        let s:foreground       = g:myMolokai_CustomFG
+    else
+        let s:foreground       = "#ECEFF1"
+    endif
 else
-    let s:foreground       = "#F8F8F2"
+    let s:foreground       = "#ECEFF1"
 endif
 
-if g:myMolokaiComment = 'shiny'
-    let s:comment = s:shiny_grey
-elseif g:myMolokaiComment = 'comment_grey'
-    let s:comment = s:comment_grey
-elseif g:myMolokaiComment = 'custom'
-    let s:comment = g:myMolokaiComment_Custom
+
+if exists('g:myMolokaiComment')
+    if g:myMolokaiComment == 'shiny'
+        let s:comment = s:shiny_grey
+    elseif g:myMolokaiComment == 'comment_grey'
+        let s:comment = s:comment_grey
+    elseif g:myMolokaiComment == 'custom'
+        let s:comment = g:myMolokaiComment_Custom
+    else
+        let s:comment = s:grey4
+    endif
 else
     let s:comment = s:grey4
 endif
