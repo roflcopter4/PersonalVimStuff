@@ -65,6 +65,10 @@ else
     let s:black_        = "#000000"
 endif
 
+if exists('g:myNova_BG')
+    let s:background = g:myNova_BG
+endif
+
     let s:none             = "none"
     let s:bold             = "bold"
     let s:italic           = "italic"
