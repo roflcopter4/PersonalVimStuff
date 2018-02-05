@@ -53,7 +53,7 @@ let s:red_             = "#FF0000"
 
 let s:light_purple     = "#AE81FF"
 let s:light_yellow     = "#E6DB74"
-let s:bright_pink      = "#F92672"
+let s:bright_pink      = "#F92672"  
 let s:debug_grey       = "#BCA3A3"
 let s:cyan_            = "#66D9EF"
 let s:lime_            = "#A6E22E"
@@ -75,6 +75,11 @@ let s:diff_grey        = "#89807D"
 let s:key_grey         = "#888A85"
 let s:cursorline_grey  = "#293739"
 let s:warning_grey     = "#333333"
+
+let s:nova_teal        = "#26A69A"
+let s:nova_light_green = "#66BB6A"
+let s:palevioletred_   = "#d33682"
+let s:nova_blue        = "#42A5F5"
 
 " NOTE: comment_grey is NOT used at all, only left in for legacy.
 "       shiney_grey is used for comments
@@ -182,7 +187,11 @@ call s:HL("MatchParen"     , s:black_          , s:orange_         , s:none)
 
 call s:HL("ModeMsg"        , s:light_yellow    , ''                , s:none)
 call s:HL("MoreMsg"        , s:light_yellow    , ''                , s:none)
-call s:HL("Operator"       , s:bright_pink     , ''                , s:none)
+
+"call s:HL("Operator"       , s:bright_pink     , ''                , s:none)
+"call s:HL("Operator"       , s:nova_light_green, ''                , s:none)
+"call s:HL("Operator"       , s:palevioletred_  , ''                , s:none)
+call s:HL("Operator"       , s:nova_blue       , ''                , s:none)
 
 " complete menu
 call s:HL("Pmenu"          , s:cyan_           , s:black_          , s:none)
@@ -239,6 +248,9 @@ if has("spell")
     hi SpellRare   guisp=#FFFFFF  gui=undercurl
 endif
 
+" NONSTANDARD
+"call s:HL("Operators")
+call s:HL('NegationChar', s:red_, '', s:bold)
 
 
 "
