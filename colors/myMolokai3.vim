@@ -10,7 +10,7 @@
 
 hi clear
 
-set background=dark
+"set background=dark
 if version > 580
     " no guarantees for version 5.8 and below, but this makes it stop
     " complaining
@@ -345,3 +345,4 @@ if &t_Co > 255 && !has('termguicolors')
     hi NonText         ctermfg=250 ctermbg=234
 end
 
+set background=dark
