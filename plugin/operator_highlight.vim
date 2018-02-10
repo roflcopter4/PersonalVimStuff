@@ -31,6 +31,9 @@ endif
 if !exists('g:negchar_color')
     let g:negchar_color = 'red'
 endif
+if !exists('g:structderef_color')
+    let g:structderef_color = 'cyan'
+endif
 
 
 if !exists('g:ophigh_color_gui')
@@ -39,27 +42,21 @@ endif
 if !exists('g:negchar_color_gui')
     let g:negchar_color_gui = g:negchar_color
 endif
+if !exists('g:structderef_color_gui')
+    let g:structderef_color_gui = g:structderef_color
+endif
 
 
 if !exists('g:negchar_highlight_link_group')
     let g:negchar_highlight_link_group = ""
 endif
-
-
 if !exists('g:ophigh_highlight_link_group')
     let g:ophigh_highlight_link_group = ""
 endif
+if !exists('g:structderef_highlight_link_group')
+    let g:structderef_highlight_link_group = ""
+endif
 
-
-"if !exists( 'g:ophigh_container_color_gui' )
-    "let g:ophigh_container_color_gui = "orange"
-"endif
-"if !exists( 'g:ophigh_highlight_container_link_group' )
-    "let g:ophigh_highlight_container_link_group = ""
-"endif
-"if !exists( 'g:ophigh_container_color' )
-    "let g:ophigh_container_color = "cyan"
-"endif
 
 if !exists( 'g:ophigh_filetypes' )
     let g:ophigh_filetypes = [ 'c', 'cpp', 'rust']
@@ -111,7 +108,7 @@ fun! s:HighlightOperators()
         syn match OperatorChars /::\|:\(\w\)\@!/
         syn match OperatorChars /||\||=\||\(\d\)\@=\||\(\w\)\@!\(.\{-\}|\)\@!/
     else
-        syn match OperatorChars /[|:]/
+        syn match OperatorChars /[|]/
     endif
 
     " LaTeX edgecase: % is special
@@ -136,13 +133,16 @@ fun! s:HighlightOperators()
 
     syn match OperatorChars +/\(/\|*\)\@!+
     " These are generally safe...
-    syn match OperatorChars /[?+*;,<>&!~=]/
+    syn match OperatorChars /[?+*<>&!~=]/
 
+    if (&filetype == 'c' || &filetype == 'cpp')
+        syn match StructDeref /->/
+        "syn match StructDeref /\%(\w\)\(\.\)[A-Za-z]/
+        "syn match StructDeref /\([A-Za-z)\]]\d*\)\@<=\.\(\d\)\@!/
+        syn match StructDeref /\([A-Za-z)\]]\d*\)\@<=\./
+    endif
     syn match NegationChar /!\(=\)\@!/
 
-    "syn region ParenContainer   matchgroup=ContainerChars start=/(/ end=/)/ transparent
-    "syn region BraceContainer   matchgroup=ContainerChars start=/{/ end=/}/ transparent
-    "syn region BracketContainer matchgroup=ContainerChars start=/\[/ end=/\]/ transparent
 
     if g:ophigh_highlight_link_group != ""
         exec "hi link OperatorChars " . g:ophigh_highlight_link_group
@@ -158,12 +158,12 @@ fun! s:HighlightOperators()
         exec "hi NegationChar ctermfg= " . g:negchar_color . " cterm=BOLD"
     endif
 
-    "if g:ophigh_highlight_container_link_group != ""
-        "exec "hi link ContainerChars " . g:ophigh_highlight_container_link_group
-    "else
-        "exec "hi ContainerChars guifg=" . g:ophigh_container_color_gui . " gui=NONE"
-        "exec "hi ContainerChars ctermfg=" . g:ophigh_container_color . " cterm=NONE"
-    "endif
+    if g:structderef_highlight_link_group != ""
+        exec "hi link StructDeref " . g:structderef_highlight_link_group
+    else
+        exec "hi StructDeref guifg= " . g:structderef_color_gui . " gui=BOLD"
+        exec "hi StructDeref ctermfg= " . g:structderef_color . " cterm=BOLD"
+    endif
 
 endfunction
 

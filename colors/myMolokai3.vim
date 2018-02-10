@@ -80,6 +80,7 @@ let s:nova_teal        = "#26A69A"
 let s:nova_light_green = "#66BB6A"
 let s:palevioletred_   = "#d33682"
 let s:nova_blue        = "#42A5F5"
+let s:newMagenta       = "#CD00CD"
 
 " NOTE: comment_grey is NOT used at all, only left in for legacy.
 "       shiney_grey is used for comments
@@ -176,7 +177,6 @@ call s:HL("Folded"         , s:dark_grey       , s:black_          , s:none)
 call s:HL("Function"       , s:lime_           , ''                , s:none)
 call s:HL("Identifier"     , s:orange_         , ''                , s:none)
 call s:HL("Ignore"         , s:border_grey     , "bg"              , s:none)
-"call s:HL("IncSearch"      , s:beige_          , s:black_          , s:none)
 call s:HL("IncSearch"      , s:orange_         , s:black_          , s:none)
 
 call s:HL("Keyword"        , s:bright_pink     , ''                , s:bold)
@@ -188,10 +188,17 @@ call s:HL("MatchParen"     , s:black_          , s:orange_         , s:none)
 call s:HL("ModeMsg"        , s:light_yellow    , ''                , s:none)
 call s:HL("MoreMsg"        , s:light_yellow    , ''                , s:none)
 
-"call s:HL("Operator"       , s:bright_pink     , ''                , s:none)
+"call s:HL("Operator"       , s:bright_pink     , ''                , s:bold)
+call s:HL("Operator"       , s:bright_pink     , ''                , s:none)
 "call s:HL("Operator"       , s:nova_light_green, ''                , s:none)
-"call s:HL("Operator"       , s:palevioletred_  , ''                , s:none)
-call s:HL("Operator"       , s:nova_blue       , ''                , s:none)
+"call s:HL("Operator"       , s:palevioletred_  , ''                , s:bold)
+"call s:HL("Operator"       , s:nova_blue       , ''                , s:none)
+"call s:HL("Operator"       , s:nova_blue       , ''                , s:bold)
+"call s:HL("Operator"       , s:lime_           , ''                , s:bold)
+"call s:HL("Operator"        , ''                , ''                , s:bold)
+"call s:HL("Operator"       , s:red_            , ''                , s:bold)
+"call s:HL("Operator"       , s:newMagenta            , ''                , s:bold)
+
 
 " complete menu
 call s:HL("Pmenu"          , s:cyan_           , s:black_          , s:none)
@@ -203,11 +210,12 @@ call s:HL("PreCondit"      , s:lime_           , ''                , s:bold)
 call s:HL("PreProc"        , s:lime_           , ''                , s:none)
 call s:HL("Question"       , s:cyan_           , ''                , s:none)
 call s:HL("Repeat"         , s:bright_pink     , ''                , s:bold)
-"call s:HL("Search"         , s:white_          , s:very_dark_grey  , s:none)
 call s:HL("Search"         , s:black_          , s:beige_          , s:none)
+
 " marks column
 call s:HL("SignColumn"     , s:lime_           , s:lighter_bg      , s:none)
-call s:HL("SpecialChar"    , s:bright_pink     , ''                , s:bold)
+"call s:HL("SpecialChar"    , s:bright_pink     , ''                , s:bold)
+call s:HL("SpecialChar"    , s:bright_pink     , ''                , s:none)
 
 call s:HL("SpecialComment" , s:shiny_grey      , ''                , s:none)
 call s:HL("Comment"        , s:comment         , ''                , s:none)
@@ -218,7 +226,6 @@ call s:HL("SpecialKey"     , s:cyan_           , ''                , s:none)
 call s:HL("Statement"      , s:bright_pink     , ''                , s:bold)
 call s:HL("StatusLine"     , s:very_dark_grey  , "fg"              , s:none)
 call s:HL("StatusLineNC"   , s:border_grey     , s:near_black_     , s:none)
-"call s:HL("StorageClass"   , s:orange_         , ''                , s:italic)
 call s:HL("StorageClass"   , s:orange_         , ''                , s:none)
 call s:HL("Structure"      , s:cyan_           , ''                , s:none)
 call s:HL("Tag"            , s:bright_pink     , ''                , s:italic)
