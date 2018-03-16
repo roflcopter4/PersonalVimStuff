@@ -103,6 +103,8 @@ let s:reverse          = 'reverse'
 let s:undercurl        = 'undercurl'
 let s:underline        = 'underline'
 
+let s:perlspecial      = s:orange_red
+
 
 if exists('g:myMolokai_BG')
     if g:myMolokai_BG ==# 'darker'
@@ -222,6 +224,9 @@ call s:HL('Comment'        , s:comment         , ''                , s:none)
 
 call s:HL('Special'        , s:cyan_           , 'bg'              , s:none)
 call s:HL('SpecialKey'     , s:cyan_           , ''                , s:none)
+
+call s:HL('PerlSpecialChar' ,s:perlspecial      , ''                , s:bold)
+call s:HL('PerlSpecialChar2' ,s:perlspecial      , ''                , s:none)
 
 call s:HL('Statement'      , s:bright_pink     , ''                , s:bold)
 call s:HL('StatusLine'     , s:very_dark_grey  , 'fg'              , s:none)
