@@ -194,8 +194,8 @@ syn match  perlSpecialMatch	"\\g\%(\d\+\|{\%(-\=\d\+\|\h\w*\)}\)" contained
 syn match  perlSpecialMatch	"\\k\%(<\h\w*>\|'\h\w*'\)" contained
 syn match  perlSpecialMatch	"{\d\+\%(,\%(\d\+\)\=\)\=}" contained
 syn match  perlSpecialMatch	"\[[]-]\=[^\[\]]*[]-]\=\]" contained extend
-syn match  perlSpecialMatch	"[+*()?.]" contained
-syn match  perlSpecialMatch	"(?[#:=!]" contained
+syn match  perlSpecialMatch	"[+*.]" contained
+"syn match  perlSpecialMatch	"(?[#:=!]" contained
 syn match  perlSpecialMatch	"(?[impsx]*\%(-[imsx]\+\)\=)" contained
 syn match  perlSpecialMatch	"(?\%([-+]\=\d\+\|R\))" contained
 syn match  perlSpecialMatch	"(?\%(&\|P[>=]\)\h\w*)" contained
@@ -466,6 +466,9 @@ endif
 "       them into b:match_skip in ftplugin/perl.vim.
 
 " SHITIADDED:
+syn match perlStatementStorageExtra	"\<\%(new\|struct\)\>"
+hi def link perlStatementStorageExtra	perlType
+hi def link perlStatementStorage	perlTypeSpec
 hi def link perlPatSep			SpecialChar
 
 " The default highlighting.
@@ -524,7 +527,7 @@ hi def link perlPackageDecl		perlType
 hi def link perlStorageClass		perlType
 hi def link perlPackageRef		perlType
 hi def link perlStatementPackage	perlStatement
-hi def link perlStatementStorage	perlStatement
+"hi def link perlStatementStorage	perlType
 hi def link perlStatementControl	perlStatement
 hi def link perlStatementScalar	perlStatement
 hi def link perlStatementRegexp	perlStatement

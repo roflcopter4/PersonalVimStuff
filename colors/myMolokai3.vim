@@ -103,7 +103,7 @@ let s:reverse          = 'reverse'
 let s:undercurl        = 'undercurl'
 let s:underline        = 'underline'
 
-let s:perlspecial      = s:orange_red
+let s:perlspecial      = s:beige_
 
 
 if exists('g:myMolokai_BG')
@@ -224,10 +224,6 @@ call s:HL('Comment'        , s:comment         , ''                , s:none)
 
 call s:HL('Special'        , s:cyan_           , 'bg'              , s:none)
 call s:HL('SpecialKey'     , s:cyan_           , ''                , s:none)
-
-call s:HL('PerlSpecialChar' ,s:perlspecial      , ''                , s:bold)
-call s:HL('PerlSpecialChar2' ,s:perlspecial      , ''                , s:none)
-
 call s:HL('Statement'      , s:bright_pink     , ''                , s:bold)
 call s:HL('StatusLine'     , s:very_dark_grey  , 'fg'              , s:none)
 call s:HL('StatusLineNC'   , s:border_grey     , s:near_black_     , s:none)
@@ -264,6 +260,10 @@ endif
 "call s:HL('Operators')
 call s:HL('NegationChar', s:red_, '', s:bold)
 call s:HL('pythonDocstring', s:comment, '', s:none)
+
+call s:HL('PerlSpecialChar',  s:debug_grey, '', s:bold)
+call s:HL('PerlSpecialChar2', s:key_grey,   '', s:bold)
+call s:HL('perlTypeSpec',     s:cyan_,      '', s:bold)
 
 
 "
