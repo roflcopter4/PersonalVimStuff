@@ -467,33 +467,35 @@ endif
 
 " SHITIADDED:
 syn match perlStatementStorageExtra	"\<\%(new\|struct\)\>"
+"syn match perlModuleFunctions		"\<\%(basename\|realpath\|which\|move\|copy\|mv\|cp\)\>"
 hi def link perlStatementStorageExtra	perlType
 hi def link perlStatementStorage	perlTypeSpec
 hi def link perlPatSep			SpecialChar
+hi def link perlModuleFunctions		perlStatement
 
 " The default highlighting.
 hi def link perlSharpBang		PreProc
-hi def link perlControl		PreProc
-hi def link perlInclude		Include
-hi def link perlSpecial		Special
-hi def link perlString		String
+hi def link perlControl			PreProc
+hi def link perlInclude			Include
+hi def link perlSpecial			Special
+hi def link perlString			String
 hi def link perlCharacter		Character
-hi def link perlNumber		Number
-hi def link perlFloat		Float
+hi def link perlNumber			Number
+hi def link perlFloat			Float
 hi def link perlType			Type
 hi def link perlIdentifier		Identifier
-hi def link perlLabel		Label
+hi def link perlLabel			Label
 hi def link perlStatement		Statement
 hi def link perlConditional		Conditional
-hi def link perlRepeat		Repeat
+hi def link perlRepeat			Repeat
 hi def link perlOperator		Operator
 hi def link perlFunction		Keyword
-hi def link perlSubName		Function
+hi def link perlSubName			Function
 hi def link perlSubPrototype		Type
 hi def link perlSignature		Type
-hi def link perlSubAttributes	PreProc
+hi def link perlSubAttributes		PreProc
 hi def link perlSubAttributesCont	perlSubAttributes
-hi def link perlComment		Comment
+hi def link perlComment			Comment
 hi def link perlTodo			Todo
 if get(g:, 'perl_string_as_statement', 0)
   hi def link perlStringStartEnd	perlStatement
@@ -505,22 +507,22 @@ hi def link perlList			perlStatement
 hi def link perlMisc			perlStatement
 hi def link perlVarPlain		perlIdentifier
 hi def link perlVarPlain2		perlIdentifier
-hi def link perlArrow		perlIdentifier
+hi def link perlArrow			perlIdentifier
 hi def link perlFiledescRead		perlIdentifier
 hi def link perlFiledescStatement	perlIdentifier
-hi def link perlVarSimpleMember	perlIdentifier
+hi def link perlVarSimpleMember		perlIdentifier
 hi def link perlVarSimpleMemberName 	perlString
-hi def link perlVarNotInMatches	perlIdentifier
+hi def link perlVarNotInMatches		perlIdentifier
 hi def link perlVarSlash		perlIdentifier
 hi def link perlQQ			perlString
 hi def link perlHereDoc			perlString
 hi def link perlHereDoc2		perlString
 hi def link perlStringUnexpanded	perlString
-hi def link perlSubstitutionSQ	perlString
-hi def link perlSubstitutionGQQ	perlString
-hi def link perlTranslationGQ	perlString
-hi def link perlMatch		perlString
-hi def link perlMatchStartEnd	perlStatement
+hi def link perlSubstitutionSQ		perlString
+hi def link perlSubstitutionGQQ		perlString
+hi def link perlTranslationGQ		perlString
+hi def link perlMatch			perlString
+hi def link perlMatchStartEnd		perlStatement
 hi def link perlFormatName		perlIdentifier
 hi def link perlFormatField		perlString
 hi def link perlPackageDecl		perlType
@@ -529,42 +531,42 @@ hi def link perlPackageRef		perlType
 hi def link perlStatementPackage	perlStatement
 "hi def link perlStatementStorage	perlType
 hi def link perlStatementControl	perlStatement
-hi def link perlStatementScalar	perlStatement
-hi def link perlStatementRegexp	perlStatement
+hi def link perlStatementScalar		perlStatement
+hi def link perlStatementRegexp		perlStatement
 hi def link perlStatementNumeric	perlStatement
-hi def link perlStatementList	perlStatement
-hi def link perlStatementHash	perlStatement
-hi def link perlStatementIOfunc	perlStatement
+hi def link perlStatementList		perlStatement
+hi def link perlStatementHash		perlStatement
+hi def link perlStatementIOfunc		perlStatement
 hi def link perlStatementFiledesc	perlStatement
-hi def link perlStatementVector	perlStatement
-hi def link perlStatementFiles	perlStatement
-hi def link perlStatementFlow	perlStatement
+hi def link perlStatementVector		perlStatement
+hi def link perlStatementFiles		perlStatement
+hi def link perlStatementFlow		perlStatement
 hi def link perlStatementInclude	perlStatement
-hi def link perlStatementProc	perlStatement
-hi def link perlStatementSocket	perlStatement
+hi def link perlStatementProc		perlStatement
+hi def link perlStatementSocket		perlStatement
 hi def link perlStatementIPC		perlStatement
 hi def link perlStatementNetwork	perlStatement
-hi def link perlStatementPword	perlStatement
-hi def link perlStatementTime	perlStatement
-hi def link perlStatementMisc	perlStatement
+hi def link perlStatementPword		perlStatement
+hi def link perlStatementTime		perlStatement
+hi def link perlStatementMisc		perlStatement
 hi def link perlStatementIndirObj	perlStatement
 hi def link perlFunctionName		perlIdentifier
-hi def link perlMethod		perlIdentifier
+hi def link perlMethod			perlIdentifier
 hi def link perlPostDeref		perlIdentifier
 hi def link perlFunctionPRef		perlType
 
 if !get(g:, 'perl_include_pod', 1)
-  hi def link perlPOD		perlComment
+  hi def link perlPOD			perlComment
 endif
 hi def link perlShellCommand		perlString
 hi def link perlSpecialAscii		perlSpecial
-hi def link perlSpecialDollar	perlSpecial
-hi def link perlSpecialString	perlSpecial
-hi def link perlSpecialStringU	perlSpecial
+hi def link perlSpecialDollar		perlSpecial
+hi def link perlSpecialString		perlSpecial
+hi def link perlSpecialStringU		perlSpecial
 hi def link perlSpecialMatch		perlSpecial
 
-hi def link MatchGroupStartEnd			PerlSpecialChar
-hi def link MatchGroupStartEnd2			PerlSpecialChar2
+hi def link MatchGroupStartEnd		PerlSpecialChar
+hi def link MatchGroupStartEnd2		PerlSpecialChar2
 
 hi def link perlDATA			perlComment
 

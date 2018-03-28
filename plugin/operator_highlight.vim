@@ -136,6 +136,7 @@ fun! s:HighlightOperators()
     syn match OperatorChars /[?+*<>&!~=]/
 
     if (&filetype == 'c' || &filetype == 'cpp')
+        syn match OperatorChars /[:]/
         syn match StructDeref /->/
         "syn match StructDeref /\%(\w\)\(\.\)[A-Za-z]/
         "syn match StructDeref /\([A-Za-z)\]]\d*\)\@<=\.\(\d\)\@!/
