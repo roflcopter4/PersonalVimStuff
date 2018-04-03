@@ -197,7 +197,8 @@ call s:HL('Operator'       , s:bright_pink     , ''                , s:none)
 "call s:HL('Operator'       , s:nova_blue       , ''                , s:none)
 "call s:HL('Operator'       , s:nova_blue       , ''                , s:bold)
 "call s:HL('Operator'       , s:lime_           , ''                , s:bold)
-"call s:HL('Operator'        , ''                , ''                , s:bold)
+"call s:HL('Operator'        , s:debug_grey      , ''                , s:bold)
+"call s:HL('Operator'        , s:key_grey      , ''                , s:bold)
 "call s:HL('Operator'       , s:red_            , ''                , s:bold)
 "call s:HL('Operator'       , s:newMagenta            , ''                , s:bold)
 
@@ -257,13 +258,26 @@ if has('spell')
 endif
 
 " NONSTANDARD
-"call s:HL('Operators')
+call s:HL('LightPinkR', s:bright_pink, '', s:none)
+
 call s:HL('NegationChar', s:red_, '', s:bold)
 call s:HL('pythonDocstring', s:comment, '', s:none)
 
-call s:HL('PerlSpecialChar',  s:debug_grey, '', s:bold)
-call s:HL('PerlSpecialChar2', s:key_grey,   '', s:bold)
-call s:HL('perlTypeSpec',     s:cyan_,      '', s:bold)
+call s:HL('PerlSpecialChar',s:debug_grey, '', s:bold)
+call s:HL('PerlSpecialChar2', s:debug_grey, '', s:bold)
+call s:HL('perlTypeSpec', s:cyan_, '', s:bold)
+call s:HL('cMiscFuncs', s:light_purple, '', s:bold)
+"call s:HL('OperatorChars', s:debug_grey, '', s:bold)
+call s:HL('OperatorChars', s:debug_grey, '', s:none)
+
+"call s:HL('CFuncTag', s:nova_light_green, '', s:none)
+call s:HL('CFuncTag', s:nova_teal, '', s:none)
+"call s:HL('CMember', s:foreground, '', s:bold)
+call s:HL('CMember', s:palevioletred_, '', s:none)
+call s:HL('PreProcB', s:lime_, '', s:bold)
+"call s:HL('Enum', s:cyan_, '', s:bold)
+"call s:HL('Enum', s:nova_blue, '', s:bold)
+call s:HL('Enum', s:nova_blue, '', s:none)
 
 
 "

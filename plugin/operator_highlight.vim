@@ -26,7 +26,7 @@ endif
 
 
 if !exists( 'g:ophigh_color' )
-    let g:ophigh_color = "cyan"
+    let g:ophigh_color = 'cyan'
 endif
 if !exists('g:negchar_color')
     let g:negchar_color = 'red'
@@ -48,13 +48,13 @@ endif
 
 
 if !exists('g:negchar_highlight_link_group')
-    let g:negchar_highlight_link_group = ""
+    let g:negchar_highlight_link_group = ''
 endif
 if !exists('g:ophigh_highlight_link_group')
-    let g:ophigh_highlight_link_group = ""
+    let g:ophigh_highlight_link_group = ''
 endif
 if !exists('g:structderef_highlight_link_group')
-    let g:structderef_highlight_link_group = ""
+    let g:structderef_highlight_link_group = ''
 endif
 
 
@@ -103,7 +103,7 @@ fun! s:HighlightOperators()
     " Ruby edgecases:
     "   add :: and : but ignore for ruby symbols
     "   block params | hightlighting
-    if (&filetype == "ruby")
+    if (&filetype ==# 'ruby')
         "syn match OperatorChars +/\(.\{-}/\)\@!+ " FIXME: regex region match
         syn match OperatorChars /::\|:\(\w\)\@!/
         syn match OperatorChars /||\||=\||\(\d\)\@=\||\(\w\)\@!\(.\{-\}|\)\@!/
@@ -112,12 +112,12 @@ fun! s:HighlightOperators()
     endif
 
     " LaTeX edgecase: % is special
-    if !(&filetype == "tex")
+    if !(&filetype ==# 'tex')
         syn match OperatorChars /%/
     endif
 
     " Lua comment edgecase: highlight -, but not --
-    if (&filetype == "lua")
+    if (&filetype ==# 'lua')
         syn match OperatorChars /-\(-\)\@!/
     else
         syn match OperatorChars /-/
@@ -125,17 +125,17 @@ fun! s:HighlightOperators()
 
     " Go type assertion edgecase: consuming both . and ( clobers go type assertion
     " region matching
-    if (&filetype == "go")
+    if (&filetype ==# 'go')
         syn match OperatorChars /\.\((\)\@!/
     else
         syn match OperatorChars /\./
     endif
 
-    syn match OperatorChars +/\(/\|*\)\@!+
+    "syn match OperatorChars +/\(/\|\*\)\@!+
     " These are generally safe...
     syn match OperatorChars /[?+*<>&!~=]/
 
-    if (&filetype == 'c' || &filetype == 'cpp')
+    if (&filetype ==# 'c' || &filetype ==# 'cpp')
         syn match OperatorChars /[:]/
         syn match StructDeref /->/
         "syn match StructDeref /\%(\w\)\(\.\)[A-Za-z]/
@@ -145,29 +145,31 @@ fun! s:HighlightOperators()
     syn match NegationChar /!\(=\)\@!/
 
 
-    if g:ophigh_highlight_link_group != ""
-        exec "hi link OperatorChars " . g:ophigh_highlight_link_group
+    if g:ophigh_highlight_link_group !=# ''
+        exec 'hi def link OperatorChars ' . g:ophigh_highlight_link_group
     else
-        exec "hi OperatorChars guifg=" . g:ophigh_color_gui . " gui=NONE"
-        exec "hi OperatorChars ctermfg=" . g:ophigh_color . " cterm=NONE"
+        exec 'hi OperatorChars guifg=' . g:ophigh_color_gui . ' gui=NONE'
+        exec 'hi OperatorChars ctermfg=' . g:ophigh_color . ' cterm=NONE'
     endif
 
-    if g:negchar_highlight_link_group != ""
-        exec "hi link NegationChar " . g:negchar_highlight_link_group
+    if g:negchar_highlight_link_group !=# ''
+        exec 'hi def link NegationChar ' . g:negchar_highlight_link_group
     else
-        exec "hi NegationChar guifg= " . g:negchar_color_gui . " gui=BOLD"
-        exec "hi NegationChar ctermfg= " . g:negchar_color . " cterm=BOLD"
+        exec 'hi NegationChar guifg= ' . g:negchar_color_gui . ' gui=BOLD'
+        exec 'hi NegationChar ctermfg= ' . g:negchar_color . ' cterm=BOLD'
     endif
 
-    if g:structderef_highlight_link_group != ""
-        exec "hi link StructDeref " . g:structderef_highlight_link_group
+    if g:structderef_highlight_link_group !=# ''
+        exec 'hi def link StructDeref ' . g:structderef_highlight_link_group
     else
-        exec "hi StructDeref guifg= " . g:structderef_color_gui . " gui=BOLD"
-        exec "hi StructDeref ctermfg= " . g:structderef_color . " cterm=BOLD"
+        exec 'hi StructDeref guifg= ' . g:structderef_color_gui . ' gui=BOLD'
+        exec 'hi StructDeref ctermfg= ' . g:structderef_color . ' cterm=BOLD'
     endif
 
 endfunction
 
-au Syntax * call s:HighlightOperators()
-au ColorScheme * call s:HighlightOperators()
+augroup Operator_Higlight
+    au Syntax * call s:HighlightOperators()
+    au ColorScheme * call s:HighlightOperators()
+augroup END
 

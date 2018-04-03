@@ -1,0 +1,14 @@
+!_TAG_FILE_SORTED	2	/0=unsorted, 1=sorted, 2=foldcase/
+g:loaded_operator_highlight	/home/bml/.vim/dein/repos/github.com/roflcopter4/PersonalVimStuff/plugin/operator_highlight.vim	/^    let g:loaded_operator_highlight = 1$/;"	v	language:Vim
+g:negchar_color	/home/bml/.vim/dein/repos/github.com/roflcopter4/PersonalVimStuff/plugin/operator_highlight.vim	/^    let g:negchar_color = 'red'$/;"	v	language:Vim
+g:negchar_color_gui	/home/bml/.vim/dein/repos/github.com/roflcopter4/PersonalVimStuff/plugin/operator_highlight.vim	/^    let g:negchar_color_gui = g:negchar_color$/;"	v	language:Vim
+g:negchar_highlight_link_group	/home/bml/.vim/dein/repos/github.com/roflcopter4/PersonalVimStuff/plugin/operator_highlight.vim	/^    let g:negchar_highlight_link_group = ''$/;"	v	language:Vim
+g:ophigh_color	/home/bml/.vim/dein/repos/github.com/roflcopter4/PersonalVimStuff/plugin/operator_highlight.vim	/^    let g:ophigh_color = 'cyan'$/;"	v	language:Vim
+g:ophigh_color_gui	/home/bml/.vim/dein/repos/github.com/roflcopter4/PersonalVimStuff/plugin/operator_highlight.vim	/^    let g:ophigh_color_gui = g:ophigh_color$/;"	v	language:Vim
+g:ophigh_filetypes	/home/bml/.vim/dein/repos/github.com/roflcopter4/PersonalVimStuff/plugin/operator_highlight.vim	/^    let g:ophigh_filetypes = [ 'c', 'cpp', 'rust']$/;"	v	language:Vim
+g:ophigh_highlight_link_group	/home/bml/.vim/dein/repos/github.com/roflcopter4/PersonalVimStuff/plugin/operator_highlight.vim	/^    let g:ophigh_highlight_link_group = ''$/;"	v	language:Vim
+g:structderef_color	/home/bml/.vim/dein/repos/github.com/roflcopter4/PersonalVimStuff/plugin/operator_highlight.vim	/^    let g:structderef_color = 'cyan'$/;"	v	language:Vim
+g:structderef_color_gui	/home/bml/.vim/dein/repos/github.com/roflcopter4/PersonalVimStuff/plugin/operator_highlight.vim	/^    let g:structderef_color_gui = g:structderef_color$/;"	v	language:Vim
+g:structderef_highlight_link_group	/home/bml/.vim/dein/repos/github.com/roflcopter4/PersonalVimStuff/plugin/operator_highlight.vim	/^    let g:structderef_highlight_link_group = ''$/;"	v	language:Vim
+Operator_Higlight	/home/bml/.vim/dein/repos/github.com/roflcopter4/PersonalVimStuff/plugin/operator_highlight.vim	/^augroup Operator_Higlight$/;"	a	language:Vim
+s:HighlightOperators	/home/bml/.vim/dein/repos/github.com/roflcopter4/PersonalVimStuff/plugin/operator_highlight.vim	/^fun! s:HighlightOperators()$/;"	f	language:Vim
