@@ -182,6 +182,7 @@ syn match  perlFiledescStatement	"\<\u\w*\>" contained
 " ADDED START:: Special handling for capturing roups and for the '|' separator (ie 'or') symbol.
 syn region perlCaptureGroup 		matchgroup=MatchGroupStartEnd  start="(\([?!]\)\@!" end=")" contained transparent
 syn region perlNonCaptureGroup 		matchgroup=MatchGroupStartEnd2 start="(?[#:=!]"     end=")" contained transparent
+syn region perlNonCaptureGroup 		matchgroup=MatchGroupStartEnd2 start="(?\%(<=\|<!\)"     end=")" contained transparent
 syn match  perlPatSep			"|" contained
 " ADDED END:
 
@@ -194,7 +195,8 @@ syn match  perlSpecialMatch	"\\g\%(\d\+\|{\%(-\=\d\+\|\h\w*\)}\)" contained
 syn match  perlSpecialMatch	"\\k\%(<\h\w*>\|'\h\w*'\)" contained
 syn match  perlSpecialMatch	"{\d\+\%(,\%(\d\+\)\=\)\=}" contained
 syn match  perlSpecialMatch	"\[[]-]\=[^\[\]]*[]-]\=\]" contained extend
-syn match  perlSpecialMatch	"[+*.]" contained
+syn match  perlSpecialMatch	"[+*.?]" contained
+" syn match  perlSpecialMatch	"\%((\)\@3<!?\%(:\)\@!" contained
 "syn match  perlSpecialMatch	"(?[#:=!]" contained
 syn match  perlSpecialMatch	"(?[impsx]*\%(-[imsx]\+\)\=)" contained
 syn match  perlSpecialMatch	"(?\%([-+]\=\d\+\|R\))" contained

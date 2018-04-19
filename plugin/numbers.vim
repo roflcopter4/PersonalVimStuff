@@ -19,7 +19,7 @@ let s:numbers_version = '0.5.0'
     "let g:numbers_default_norelative=1
 "endif
 
-if exists("g:loaded_numbers") && g:loaded_numbers
+if exists('g:loaded_numbers') && g:loaded_numbers
     finish
 endif
 let g:loaded_numbers = 1
@@ -29,18 +29,18 @@ if (!exists('g:enable_numbers'))
 endif
 
 if (!exists('g:numbers_exclude'))
-    let g:numbers_exclude = ['unite', 'tagbar', 'startify', 'gundo', 'vimshell', 'w3m', 'nerdtree']
+    let g:numbers_exclude = ['unite', 'tagbar', 'startify', 'gundo', 'vimshell', 'w3m', 'nerdtree', 'Mundo', 'MundoDiff']
 endif
 
 if v:version < 703 || &cp
     echomsg "numbers.vim: you need at least Vim 7.3 and 'nocp' set"
-    echomsg "Failed loading numbers.vim"
+    echomsg 'Failed loading numbers.vim'
     finish
 endif
 
 
 "Allow use of line continuation
-let s:save_cpo = &cpo
+let s:save_cpo = &cpoptions
 set cpo&vim
 
 let s:mode=0
