@@ -21,7 +21,7 @@
 " let perl_include_pod = 1
 " unlet perl_no_scope_in_variables
 " unlet perl_no_extended_vars
-" unlet perl_string_as_statement
+let perl_string_as_statement = 1
 " unlet perl_no_sync_on_sub
 " unlet perl_no_sync_on_global_var
 " let perl_sync_dist = 100
@@ -139,36 +139,39 @@ syn match  perlPackageRef	 "[$@#%*&]\%(\%(::\|'\)\=\I\i*\%(\%(::\|'\)\I\i*\)*\)\
 " just set the variable "perl_no_extended_vars"...
 
 if !get(g:, 'perl_no_scope_in_variables', 0)
-  syn match  perlVarPlain       "\%([@$]\|\$#\)\$*\%(\I\i*\)\=\%(\%(::\|'\)\I\i*\)*\%(::\|\i\@<=\)" contains=perlPackageRef nextgroup=perlVarMember,perlVarSimpleMember,perlPostDeref
-  syn match  perlVarPlain2                   "%\$*\%(\I\i*\)\=\%(\%(::\|'\)\I\i*\)*\%(::\|\i\@<=\)" contains=perlPackageRef nextgroup=perlVarMember,perlVarSimpleMember,perlPostDeref
-  syn match  perlFunctionName                "&\$*\%(\I\i*\)\=\%(\%(::\|'\)\I\i*\)*\%(::\|\i\@<=\)" contains=perlPackageRef nextgroup=perlVarMember,perlVarSimpleMember,perlPostDeref
+  syn match  perlVarPlain       "\%([@$]\|\$#\)\$*\%(\I\i*\)\=\%(\%(::\|'\)\I\i*\)*\%(::\|\i\@<=\)" contains=perlPackageRef nextgroup=perlVarMember,perlVarSimpleMember,perlPostDeref,perlSpecPostDeref
+  syn match  perlVarPlain2                   "%\$*\%(\I\i*\)\=\%(\%(::\|'\)\I\i*\)*\%(::\|\i\@<=\)" contains=perlPackageRef nextgroup=perlVarMember,perlVarSimpleMember,perlPostDeref,perlSpecPostDeref
+  syn match  perlFunctionName                "&\$*\%(\I\i*\)\=\%(\%(::\|'\)\I\i*\)*\%(::\|\i\@<=\)" contains=perlPackageRef nextgroup=perlVarMember,perlVarSimpleMember,perlPostDeref,perlSpecPostDeref
 else
-  syn match  perlVarPlain       "\%([@$]\|\$#\)\$*\%(\I\i*\)\=\%(\%(::\|'\)\I\i*\)*\%(::\|\i\@<=\)" nextgroup=perlVarMember,perlVarSimpleMember,perlPostDeref
-  syn match  perlVarPlain2                   "%\$*\%(\I\i*\)\=\%(\%(::\|'\)\I\i*\)*\%(::\|\i\@<=\)" nextgroup=perlVarMember,perlVarSimpleMember,perlPostDeref
-  syn match  perlFunctionName                "&\$*\%(\I\i*\)\=\%(\%(::\|'\)\I\i*\)*\%(::\|\i\@<=\)" nextgroup=perlVarMember,perlVarSimpleMember,perlPostDeref
+  syn match  perlVarPlain       "\%([@$]\|\$#\)\$*\%(\I\i*\)\=\%(\%(::\|'\)\I\i*\)*\%(::\|\i\@<=\)" nextgroup=perlVarMember,perlVarSimpleMember,perlPostDeref,perlSpecPostDeref
+  syn match  perlVarPlain2                   "%\$*\%(\I\i*\)\=\%(\%(::\|'\)\I\i*\)*\%(::\|\i\@<=\)" nextgroup=perlVarMember,perlVarSimpleMember,perlPostDeref,perlSpecPostDeref
+  syn match  perlFunctionName                "&\$*\%(\I\i*\)\=\%(\%(::\|'\)\I\i*\)*\%(::\|\i\@<=\)" nextgroup=perlVarMember,perlVarSimpleMember,perlPostDeref,perlSpecPostDeref
 endif
 
 syn match  perlVarPlain2	 "%[-+]"
 
-if !get(g:, 'perl_no_extended_vars', 0)
+" if !get(g:, 'perl_no_extended_vars', 0)
   syn cluster perlExpr		contains=perlStatementIndirObjWrap,perlStatementScalar,perlStatementRegexp,perlStatementNumeric,perlStatementList,perlStatementHash,perlStatementFiles,perlStatementTime,perlStatementMisc,perlVarPlain,perlVarPlain2,perlVarNotInMatches,perlVarSlash,perlVarBlock,perlVarBlock2,perlShellCommand,perlFloat,perlNumber,perlStringUnexpanded,perlString,perlQQ,perlArrow,perlBraces
-  syn region perlArrow		matchgroup=perlArrow start="->\s*(" end=")" contains=@perlExpr nextgroup=perlVarMember,perlVarSimpleMember,perlPostDeref contained
-  syn region perlArrow		matchgroup=perlArrow start="->\s*\[" end="\]" contains=@perlExpr nextgroup=perlVarMember,perlVarSimpleMember,perlPostDeref contained
-  syn region perlArrow		matchgroup=perlArrow start="->\s*{" end="}" contains=@perlExpr nextgroup=perlVarMember,perlVarSimpleMember,perlPostDeref contained
-  syn match  perlArrow		"->\s*{\s*\I\i*\s*}" contains=perlVarSimpleMemberName nextgroup=perlVarMember,perlVarSimpleMember,perlPostDeref contained
-  syn region perlVarBlock	matchgroup=perlVarPlain start="\%($#\|[$@]\)\$*{" skip="\\}" end=+}\|\%(\%(<<\%('\|"\)\?\)\@=\)+ contains=@perlExpr nextgroup=perlVarMember,perlVarSimpleMember,perlPostDeref extend
-  syn region perlVarBlock2	matchgroup=perlVarPlain start="[%&*]\$*{" skip="\\}" end=+}\|\%(\%(<<\%('\|"\)\?\)\@=\)+ contains=@perlExpr nextgroup=perlVarMember,perlVarSimpleMember,perlPostDeref extend
-  syn match  perlVarPlain2	"[%&*]\$*{\I\i*}" nextgroup=perlVarMember,perlVarSimpleMember,perlPostDeref extend
-  syn match  perlVarPlain	"\%(\$#\|[@$]\)\$*{\I\i*}" nextgroup=perlVarMember,perlVarSimpleMember,perlPostDeref extend
+  syn match  perlSpecPostDeref  "->\s*\w\+" transparent contained nextgroup=perlVarSimpleMember,perlVarMember,perlPostDeref,perlSpecPostDeref extend
+  syn region perlArrow		matchgroup=perlArrow start="->\s*(" end=")" contains=@perlExpr nextgroup=perlVarMember,perlVarSimpleMember,perlPostDeref,perlSpecPostDeref contained
+  syn region perlArrow		matchgroup=perlArrow start="->\s*\[" end="\]" contains=@perlExpr nextgroup=perlVarMember,perlVarSimpleMember,perlPostDeref,perlSpecPostDeref contained
+  syn region perlArrow		matchgroup=perlArrow start="->\s*{" end="}" contains=@perlExpr nextgroup=perlVarMember,perlVarSimpleMember,perlPostDeref,perlSpecPostDeref contained
+  syn match  perlArrow		"->\s*{\s*\I\i*\s*}" contains=perlVarSimpleMemberName nextgroup=perlVarMember,perlVarSimpleMember,perlPostDeref,perlSpecPostDeref contained
+  syn region perlVarBlock	matchgroup=perlVarPlain start="\%($#\|[$@]\)\$*{" skip="\\}" end=+}\|\%(\%(<<\%('\|"\)\?\)\@=\)+ contains=@perlExpr nextgroup=perlVarMember,perlVarSimpleMember,perlPostDeref,perlSpecPostDeref extend
+  syn region perlVarBlock2	matchgroup=perlVarPlain start="[%&*]\$*{" skip="\\}" end=+}\|\%(\%(<<\%('\|"\)\?\)\@=\)+ contains=@perlExpr nextgroup=perlVarMember,perlVarSimpleMember,perlPostDeref,perlSpecPostDeref extend
+  syn match  perlVarPlain2	"[%&*]\$*{\I\i*}" nextgroup=perlVarMember,perlVarSimpleMember,perlPostDeref,perlSpecPostDeref extend
+  syn match  perlVarPlain	"\%(\$#\|[@$]\)\$*{\I\i*}" nextgroup=perlVarMember,perlVarSimpleMember,perlPostDeref,perlSpecPostDeref extend
   syn region perlVarMember	matchgroup=perlVarPlain start="\%(->\)\={" skip="\\}" end="}" contained contains=@perlExpr nextgroup=perlVarMember,perlVarSimpleMember,perlPostDeref extend
-  syn match  perlVarSimpleMember	"\%(->\)\={\s*\I\i*\s*}" nextgroup=perlVarMember,perlVarSimpleMember,perlPostDeref contains=perlVarSimpleMemberName contained extend
+  syn match  perlVarSimpleMember	"\%(->\)\={\s*\I\i*\s*}" nextgroup=perlVarMember,perlVarSimpleMember,perlPostDeref,perlSpecPostDeref contains=perlVarSimpleMemberName contained extend
   syn match  perlVarSimpleMemberName	"\I\i*" contained
   syn region perlVarMember	matchgroup=perlVarPlain start="\%(->\)\=\[" skip="\\]" end="]" contained contains=@perlExpr nextgroup=perlVarMember,perlVarSimpleMember,perlPostDeref extend
-  syn match perlPackageConst	"__PACKAGE__" nextgroup=perlPostDeref
-  syn match  perlPostDeref	"->\%($#\|[$@%&*]\)\*" contained nextgroup=perlVarSimpleMember,perlVarMember,perlPostDeref
-  syn region  perlPostDeref	start="->\%($#\|[$@%&*]\)\[" skip="\\]" end="]" contained contains=@perlExpr nextgroup=perlVarSimpleMember,perlVarMember,perlPostDeref
-  syn region  perlPostDeref	matchgroup=perlPostDeref start="->\%($#\|[$@%&*]\){" skip="\\}" end="}" contained contains=@perlExpr nextgroup=perlVarSimpleMember,perlVarMember,perlPostDeref
-endif
+  syn match perlPackageConst	"__PACKAGE__" nextgroup=perlPostDeref,perlSpecPostDeref
+  syn match  perlPostDeref	"->\%($#\|[$@%&*]\)\*" contained nextgroup=perlVarSimpleMember,perlVarMember,perlPostDeref,perlSpecPostDeref
+  syn region  perlPostDeref	start="->\%($#\|[$@%&*]\)\[" skip="\\]" end="]" contained contains=@perlExpr nextgroup=perlVarSimpleMember,perlVarMember,perlPostDeref,perlSpecPostDeref
+  syn region  perlPostDeref	matchgroup=perlPostDeref start="->\%($#\|[$@%&*]\){" skip="\\}" end="}" contained contains=@perlExpr nextgroup=perlVarSimpleMember,perlVarMember,perlPostDeref,perlSpecPostDeref
+" endif
+
+" syn region perlArrow		matchgroup=perlArrow start="->\s*{" end="}" contains=@perlExpr nextgroup=perlVarMember,perlVarSimpleMember,perlPostDeref
 
 " File Descriptors
 syn match  perlFiledescRead	"<\h\w*>"
@@ -474,6 +477,7 @@ hi def link perlStatementStorageExtra	perlType
 hi def link perlStatementStorage	perlTypeSpec
 hi def link perlPatSep			SpecialChar
 hi def link perlModuleFunctions		perlStatement
+" hi def link perlSpecPostDeref		perlSpecDeref
 
 " The default highlighting.
 hi def link perlSharpBang		PreProc
@@ -500,7 +504,8 @@ hi def link perlSubAttributesCont	perlSubAttributes
 hi def link perlComment			Comment
 hi def link perlTodo			Todo
 if get(g:, 'perl_string_as_statement', 0)
-  hi def link perlStringStartEnd	perlStatement
+  " hi def link perlStringStartEnd	perlStatement
+  hi def link perlStringStartEnd	Operator
 else
   hi def link perlStringStartEnd	perlString
 endif
