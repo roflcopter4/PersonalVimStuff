@@ -7,13 +7,13 @@
 " Basic syntax highlighting for Makefile of FreeBSD's ports system.
 
 " some directives
-syn match makePreCondit	"^\. *\(if\>\|ifeq\>\|else\>\|elif\>\|endif\>\|ifneq\>\|ifdef\>\|ifndef\>\)"
-syn match makeInclude	"^\. *include"
-syn match makeStatement	"^\. *\(for\|endfor\)"
-syn match makeExport    "^\. *\(export\|unexport\)\>"
-syn match makeOverride	"^\. *MAKEOVERRIDES"
-syn match makeSpecial   "\%(\%([+:!?]=\|=\|:\)\|||\|&&\)"
-"syn match makeSpecialOp  "\%(\%([+:!?]=\|=\|:\)\|||\|&&\)"
+syn match bmakePreCondit	"^\. *\%(if\>\|ifeq\>\|else\>\|elif\>\|endif\>\|ifneq\>\|ifdef\>\|ifndef\>\)"
+syn match makeInclude		"^\. *include"
+syn match makeStatement		"^\. *\%(for\|endfor\)"
+syn match makeExport		"^\. *\%(export\|unexport\)\>"
+syn match makeOverride		"^\. *MAKEOVERRIDES"
+syn match makeSpecial		"\%(\%([+:!?]=\|=\|:\)\|||\|&&\)"
+"syn match makeSpecialOp	"\%(\%([+:!?]=\|=\|:\)\|||\|&&\)"
 
 " make targets
 syn match makeSpecTarget	"^\.\%(SUFFIXES\|PHONY\|DEFAULT\|PRECIOUS\|IGNORE\|MAIN\|SILENT\|EXPORT_ALL_VARIABLES\|KEEP_STATE\|LIBPATTERNS\|NOTPARALLEL\|DELETE_ON_ERROR\|INTERMEDIATE\|POSIX\|SECONDARY\)\>"
@@ -45,13 +45,14 @@ syn region makePortsMacros start="\$(" skip="\\)\|\\\\" end=")" contains=makePor
 syn region makePortsMacros start="\${" skip="\\}\|\\\\" end="}" contains=makePortsMacros
 syn match makePortsMacros "INSTALL_PROGRAM"
 
-syn match makePortsOptions "OPTIONS_\(\(GROUP\|MULTI\|RADIO\)_[A-Z0-9]*\|\(GROUP\|MULTI\|RADIO\|DEFINE\|DEFAULT\)\)"
+syn match makePortsOptions "OPTIONS_\%(\%(GROUP\|MULTI\|RADIO\)_[A-Z0-9]*\|\(GROUP\|MULTI\|RADIO\|DEFINE\|DEFAULT\)\)"
 syn match makePortsOptions ".*_DESC"
 
 syn match makePortsError "BROKEN_.*\|FORBIDDEN_.*\|IGNORE_.*\|BROKEN\|FORBIDDEN\|IGNORE\|ONLY_FOR_ARCHS\|NOT_FOR_ARCHS"
 
 hi! def link makeTarget  SpecialKey
 
+highlight def link bmakePreCondit Conditional
 hi! def link makePortsIdent     Label
 hi! def link makePortsUseIdent  Type
 hi! def link makePortsMacros    Macro

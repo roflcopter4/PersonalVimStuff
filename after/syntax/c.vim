@@ -3,13 +3,15 @@ syntax keyword cStdlibFuncs malloc calloc realloc free
 syntax keyword cExtraConstants STDIN_FILENO STDOUT_FILENO STDERR_FILENO
 " syntax keyword cSizeOf sizeof
 
-" syn keyword	cExtraConstants	_MSC_VER
+syn keyword	cExtraConstants	_MSC_VER
 syn keyword	cStorageClass	__restrict __inline
+syn keyword	CExtraTypes	pthread_t
 
 " highlight def link cExtraConstants	Constant
 highlight def link cExtraNonStandard	cMiscFuncs
 highlight def link cStdlibFuncs		cMiscFuncs
 highlight def link cExtraConstants	Number
+highlight def link cExtraTypes		Type
 highlight! link cSizeOf Keyword
 highlight! link cStructure		C_Struct
 
@@ -25,14 +27,19 @@ syntax region	cDefine		matchgroup=c_preproc start="^\s*\zs\(%:\|#\)\s*\(define\|
 
 "hi! link cPreProc Precondit
 
-syn region	cPreCondit	    matchgroup=c_preproc start="^\s*\zs\(%:\|#\)\s*\(if\|ifdef\|ifndef\|elif\)\>" skip="\\$" end="$" keepend contains=cComment,cCommentL,cCppString,cCharacter,cCppParen,cParenError,cNumbers,cCommentError,cSpaceError
-syn match	cPreConditMatch	display "^\s*\zs\(%:\|#\)\s*\(else\|endif\)\>"
+syntax region	cPreCondit  matchgroup=c_preproc start="^\s*\zs\(%:\|#\)\s*\(\%(if\%(\s0\)\@!\)\|ifdef\|ifndef\|elif\)\>" skip="\\$" end="$" keepend 
+			\ contains=cComment,cCommentL,cCppString,cCharacter,cCppParen,cParenError,cNumbers,cCommentError,cSpaceError,cppOutIf,_Neotags_c_d_cPreProcTag
+" syntax region	cPreCondit  matchgroup=c_preproc start="^\s*\zs\(%:\|#\)\s*\(if\|ifdef\|ifndef\|elif\)\>" skip="\\$" end="$" keepend contains=cComment,cCommentL,cCppString,cCharacter,cCppParen,cParenError,cNumbers,cCommentError,cSpaceError,cppOutIf
+syntax match	cPreConditMatch	display "^\s*\zs\(%:\|#\)\s*\(else\|endif\)\>"
 
-hi! link cPreProc c_preproc
-hi! link cCppSkip c_preproc
-hi! link cPreConditMatch c_preproc
+highlight! link cPreProc	c_preproc
+highlight! link cCppSkip	c_preproc
+highlight! link cPreConditMatch	c_preproc
 
-syntax keyword cDefined defined containedin=cPreCondit
-hi def link cDefined c_preproc
+syntax keyword		cDefined	defined		containedin=cPreCondit
+highlight def link	cDefined	c_preproc
+
+syntax region		cppError_	matchgroup=c_preproc	start=+^\s*#\s*error+	end=+\n+	skip=+\\\n+
+highlight def link	cppError_	String
 
 " vim: sts=4 sw=0 noexpandtab
