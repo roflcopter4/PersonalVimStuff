@@ -76,6 +76,8 @@ let s:nova_blue        = '#42A5F5'
 let s:newMagenta       = '#CD00CD'
 let s:MSVC_Violet      = '#AE81FF'  " << Same as light_purple
 
+let s:muted_yellow     = '#908B25'
+
 " NOTE: comment_grey is NOT used at all, only left in for legacy.
 "       shiney_grey is used for comments
 let s:comment_grey     = '#878787'
