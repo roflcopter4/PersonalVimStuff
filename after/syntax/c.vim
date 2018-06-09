@@ -1,6 +1,7 @@
-syntax keyword cExtraNonStandard xmalloc xcalloc xrealloc xfree
-syntax keyword cStdlibFuncs malloc calloc realloc free
+syntax keyword cExtraNonStandard xmalloc xcalloc xrealloc xfree xreallocarray nmalloc nrealloc
+syntax keyword cStdlibFuncs malloc calloc realloc reallocarray free
 syntax keyword cExtraConstants STDIN_FILENO STDOUT_FILENO STDERR_FILENO
+syntax keyword cAnsiFunction	asprintf vasprintf getline getdelim strsep memmem alloca isblank
 " syntax keyword cSizeOf sizeof
 
 syn keyword	cExtraConstants	_MSC_VER
@@ -41,5 +42,10 @@ highlight def link	cDefined	c_preproc
 
 syntax region		cppError_	matchgroup=c_preproc	start=+^\s*#\s*error+	end=+\n+	skip=+\\\n+
 highlight def link	cppError_	String
+
+
+" highlight link cStorageClass	Keyword
+" highlight link cStorageClass	Operator
+highlight link cInclude		c_preproc
 
 " vim: sts=4 sw=0 noexpandtab

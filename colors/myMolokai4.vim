@@ -77,13 +77,14 @@ let s:newMagenta       = '#CD00CD'
 let s:MSVC_Violet      = '#AE81FF'  " << Same as light_purple
 
 let s:muted_yellow     = '#908B25'
+let s:function_green   = '#16DB2A'
 
 " NOTE: comment_grey is NOT used at all, only left in for legacy.
 "       shiney_grey is used for comments
 let s:comment_grey     = '#878787'
 let s:shiny_grey       = '#7E8E91'
 let s:grey4            = '#658494'
-let s:gray5            = '#b7bdc0' 
+let s:grey5            = '#b7bdc0' 
 let s:grey6            = '#aebbc5'
 
 let s:diff_brown       = '#4C4745'
@@ -164,7 +165,7 @@ endif
 "call s:HL('PreProc',       s:MSVC_Violet,      '',                s:none)
 "call s:HL('SpecialChar',   s:bright_pink,      '',                s:bold)
 
-call s:HL('Boolean',        s:light_purple,     '',                s:none)
+call s:HL('Boolean',        s:light_purple,     '',                s:bold)
 call s:HL('Character',      s:light_yellow,     '',                s:none)
 call s:HL('Comment',        s:comment,          '',                s:none)
 call s:HL('Conditional',    s:bright_pink,      '',                s:bold)
@@ -235,6 +236,7 @@ call s:HL('VisualNOS',      '',                 s:grey_brown,      s:none)
 call s:HL('WarningMsg',     s:white_,           s:warning_grey,    s:bold)
 call s:HL('WildMenu',       s:cyan_,            s:black_,          s:none)
 call s:HL('c_preproc',      s:light_purple,     '',                s:none)
+" call s:HL('c_preproc',      s:muted_yellow,     '',                s:none)
 
 if has('spell')
     hi SpellBad    guisp=#FF0000  gui=undercurl
@@ -244,9 +246,8 @@ if has('spell')
 endif
 
 " NONSTANDARD
-" call s:HL('mutedFunc',        '#c8c8c8',          '', s:none)
-" call s:HL('mutedFunc',         '#e58cb9',          '', s:none)
-call s:HL('mutedFunc',         s:gray5,          '', s:none)
+" call s:HL('mutedFunc',        '#c8c8c8',      '', s:none)
+" call s:HL('mutedFunc',         '#e58cb9',       '', s:none)
 "call s:HL('CFuncTag',        s:nova_light_green, '', s:none)
 "call s:HL('CFuncTag',        s:nova_teal,        '', s:none)
 "call s:HL('CMember',         '#c8c8c8',          '', s:none)
@@ -256,19 +257,24 @@ call s:HL('mutedFunc',         s:gray5,          '', s:none)
 "call s:HL('Enum',            s:cyan_,            '', s:bold)
 "call s:HL('Enum',            s:nova_blue,        '', s:bold)
 "call s:HL('OperatorChars',   s:debug_grey,       '', s:bold)
-call s:HL('CFuncTag',         '#16db2a',          '', s:none)
-call s:HL('CMember',          '#e55ca1',          '', s:none)
-call s:HL('C_Struct',         s:cyan_,            '', s:bold)
-call s:HL('Enum',             s:nova_blue,        '', s:none)
-call s:HL('LightPinkR',       s:bright_pink,      '', s:none)
-call s:HL('NegationChar',     s:red_,             '', s:bold)
-call s:HL('OperatorChars',    s:debug_grey,       '', s:none)
-call s:HL('PerlSpecialChar',  s:debug_grey,       '', s:bold)
-call s:HL('PerlSpecialChar2', s:debug_grey,       '', s:bold)
-call s:HL('PreProcB',         s:lime_,            '', s:bold)
-call s:HL('cMiscFuncs',       s:light_purple,     '', s:bold)
-call s:HL('perlTypeSpec',     s:cyan_,            '', s:bold)
-call s:HL('pythonDocstring',  s:comment,          '', s:none)
+" call s:HL('CMember',          '#e55ca1',          '', s:none)
+call s:HL('CFuncTag',         s:function_green, '', s:none)
+call s:HL('CMember',          s:grey5,          '', s:none)
+call s:HL('C_Struct',         s:cyan_,          '', s:bold)
+call s:HL('Enum',             s:nova_blue,      '', s:none)
+call s:HL('LightPinkR',       s:bright_pink,    '', s:none)
+call s:HL('NegationChar',     s:red_,           '', s:bold)
+call s:HL('OperatorChars',    s:debug_grey,     '', s:none)
+call s:HL('PerlSpecialChar',  s:debug_grey,     '', s:bold)
+call s:HL('PerlSpecialChar2', s:debug_grey,     '', s:bold)
+call s:HL('PreProcB',         s:lime_,          '', s:bold)
+call s:HL('mutedFunc',        s:grey5,          '', s:bold)
+" call s:HL('cMiscFuncs',       s:light_purple,     '', s:bold)
+" call s:HL('cMiscFuncs',       s:orange_,     '', s:none)
+call s:HL('cMiscFuncs',       s:orange_red,     '', s:bold)
+
+call s:HL('perlTypeSpec',     s:cyan_,          '', s:bold)
+call s:HL('pythonDocstring',  s:comment,        '', s:none)
 
 
 set background=dark

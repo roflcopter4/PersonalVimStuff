@@ -1,4 +1,5 @@
-syn keyword pythonExceptions2	FileNotFoundError 
+syn keyword pythonExceptions2	FileNotFoundError NvimError
 syn keyword pythonTodo		NOTE NOTES contained
 
-hi def link pythonExceptions2	Structure
+highlight def link pythonExceptions2	Structure
+highlight link pythonFunction		CFuncTag
