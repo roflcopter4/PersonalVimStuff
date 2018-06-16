@@ -47,5 +47,6 @@ highlight def link	cppError_	String
 " highlight link cStorageClass	Keyword
 " highlight link cStorageClass	Operator
 highlight link cInclude		c_preproc
+hi! link cSpecialCharacter Special
 
 " vim: sts=4 sw=0 noexpandtab

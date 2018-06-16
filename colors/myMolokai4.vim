@@ -14,7 +14,7 @@ if v:version > 580
 endif
 let g:colors_name='myMolokai4'
 
-fun! s:HL(group, guifg, guibg, guif)
+function! s:HL(group, guifg, guibg, guif)
     let l:histring = 'hi ' . a:group
 
     if a:guifg !=# ''
@@ -30,7 +30,7 @@ fun! s:HL(group, guifg, guibg, guif)
     endif
 
     execute l:histring
-endfun
+endfunction
 
 " ---------------------------------------------------------------------
 " Readable Color Definitions
@@ -258,23 +258,26 @@ endif
 "call s:HL('Enum',            s:nova_blue,        '', s:bold)
 "call s:HL('OperatorChars',   s:debug_grey,       '', s:bold)
 " call s:HL('CMember',          '#e55ca1',          '', s:none)
-call s:HL('CFuncTag',         s:function_green, '', s:none)
-call s:HL('CMember',          s:grey5,          '', s:none)
-call s:HL('C_Struct',         s:cyan_,          '', s:bold)
-call s:HL('Enum',             s:nova_blue,      '', s:none)
-call s:HL('LightPinkR',       s:bright_pink,    '', s:none)
-call s:HL('NegationChar',     s:red_,           '', s:bold)
-call s:HL('OperatorChars',    s:debug_grey,     '', s:none)
-call s:HL('PerlSpecialChar',  s:debug_grey,     '', s:bold)
-call s:HL('PerlSpecialChar2', s:debug_grey,     '', s:bold)
-call s:HL('PreProcB',         s:lime_,          '', s:bold)
-call s:HL('mutedFunc',        s:grey5,          '', s:bold)
 " call s:HL('cMiscFuncs',       s:light_purple,     '', s:bold)
 " call s:HL('cMiscFuncs',       s:orange_,     '', s:none)
-call s:HL('cMiscFuncs',       s:orange_red,     '', s:bold)
 
-call s:HL('perlTypeSpec',     s:cyan_,          '', s:bold)
-call s:HL('pythonDocstring',  s:comment,        '', s:none)
+call s:HL('CFuncTag',         s:function_green,   '', s:none)
+call s:HL('CMember',          s:grey5,            '', s:none)
+call s:HL('C_Struct',         s:cyan_,            '', s:bold)
+call s:HL('Enum',             s:nova_blue,        '', s:none)
+call s:HL('LightPinkR',       s:bright_pink,      '', s:none)
+call s:HL('NegationChar',     s:red_,             '', s:bold)
+call s:HL('OperatorChars',    s:debug_grey,       '', s:none)
+call s:HL('PerlSpecialChar',  s:debug_grey,       '', s:bold)
+call s:HL('PerlSpecialChar2', s:debug_grey,       '', s:bold)
+call s:HL('PreProcB',         s:lime_,            '', s:bold)
+call s:HL('cMiscFuncs',       s:orange_red,       '', s:bold)
+call s:HL('cNumberPrefix',    s:nova_light_green, '', s:none)
+call s:HL('cNumberSuffix',    s:nova_light_green, '', s:none)
+call s:HL('mutedFunc',        s:grey5,            '', s:bold)
+call s:HL('perlTypeSpec',     s:cyan_,            '', s:bold)
+call s:HL('pythonDocstring',  s:comment,          '', s:none)
+call s:HL('cSpecial', s:light_cyan,      '', s:none)
 
 
 set background=dark
