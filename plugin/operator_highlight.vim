@@ -105,8 +105,8 @@ fun! s:HighlightOperators()
     "   block params | hightlighting
     if (&filetype ==# 'ruby')
         "syn match OperatorChars +/\(.\{-}/\)\@!+ " FIXME: regex region match
-        syn match OperatorChars /::\|:\(\w\)\@!/
-        syn match OperatorChars /||\||=\||\(\d\)\@=\||\(\w\)\@!\(.\{-\}|\)\@!/
+        syn match OperatorChars /::\|:\%(\w\)\@!/
+        syn match OperatorChars /||\||=\||\%(\d\)\@=\||\%(\w\)\@!\%(.\{-\}|\)\@!/
     else
         syn match OperatorChars /[|]/
     endif
@@ -118,7 +118,7 @@ fun! s:HighlightOperators()
 
     " Lua comment edgecase: highlight -, but not --
     if (&filetype ==# 'lua')
-        syn match OperatorChars /-\(-\)\@!/
+        syn match OperatorChars /-\%(-\)\@!/
     else
         syn match OperatorChars /-/
     endif
@@ -126,23 +126,26 @@ fun! s:HighlightOperators()
     " Go type assertion edgecase: consuming both . and ( clobers go type assertion
     " region matching
     if (&filetype ==# 'go')
-        syn match OperatorChars /\.\((\)\@!/
+        syn match OperatorChars /\.\%((\)\@!/
     else
         syn match OperatorChars /\./
     endif
 
     "syn match OperatorChars +/\(/\|\*\)\@!+
     " These are generally safe...
-    syn match OperatorChars /[?+*<>&!~=]/
+    syn match OperatorChars /[?+*<>&!~=^]/
 
     if (&filetype ==# 'c' || &filetype ==# 'cpp')
-        syn match OperatorChars /[:]/
+        syn match OperatorChars /\[\]/
+        syn match OperatorChars /[:\[\]]/
         syn match StructDeref /->/
+        syn match CommaSemicolon /[;,]/
         "syn match StructDeref /\%(\w\)\(\.\)[A-Za-z]/
         "syn match StructDeref /\([A-Za-z)\]]\d*\)\@<=\.\(\d\)\@!/
-        syn match StructDeref /\([A-Za-z)\]]\d*\)\@<=\./
+        syn match StructDeref /\%([A-Za-z)\]]\d*\)\@2<=\./
+        " syn match StructDeref /\%([A-Za-z)\]]\d*\)\zs\./
     endif
-    syn match NegationChar /!\(=\)\@!/
+    syn match NegationChar /!\%(=\)\@!/
 
 
     if g:ophigh_highlight_link_group !=# ''

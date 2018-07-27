@@ -4,10 +4,10 @@
 "
 " Note: Extensively edited by RoflCopter4
 
-hi clear
+highlight clear
 
 if v:version > 580
-    hi clear
+    highlight clear
     if exists('syntax_on')
         syntax reset
     endif
@@ -78,6 +78,13 @@ let s:MSVC_Violet      = '#AE81FF'  " << Same as light_purple
 
 let s:muted_yellow     = '#908B25'
 let s:function_green   = '#16DB2A'
+let s:new_yellow       = '#bbbd4f'
+
+let s:resharper_light_blue   = '#ADD8E6'  " Functions
+let s:resharper_light_purple = '#DDA0DD'  " Struct members
+let s:resharper_light_green  = '#90EE90'
+let s:MSVC_darker_green      = '#4EC94C'
+
 
 " NOTE: comment_grey is NOT used at all, only left in for legacy.
 "       shiney_grey is used for comments
@@ -209,14 +216,21 @@ call s:HL('PmenuSel',       '',                 s:border_grey,     s:none)
 call s:HL('PmenuThumb',     s:cyan_,            '',                s:none)
 call s:HL('PreCondit',      s:beige_,           '',                s:none)
 call s:HL('PreProc',        s:lime_,            '',                s:none)
+" call s:HL('PreProc',        s:resharper_light_green,            '',                s:none)
 call s:HL('Question',       s:cyan_,            '',                s:none)
 call s:HL('Repeat',         s:bright_pink,      '',                s:bold)
 call s:HL('Search',         s:black_,           s:beige_,          s:none)
 call s:HL('SignColumn',     s:lime_,            s:lighter_bg,      s:none)
+
 call s:HL('Special',        s:cyan_,            'bg',              s:none)
+" call s:HL('Special',        s:resharper_light_green,            'bg',              s:none)
+
 call s:HL('SpecialChar',    s:bright_pink,      '',                s:none)
 call s:HL('SpecialComment', s:shiny_grey,       '',                s:none)
+
 call s:HL('SpecialKey',     s:cyan_,            '',                s:none)
+" call s:HL('SpecialKey',     s:resharper_light_green,            '',                s:none)
+
 call s:HL('Statement',      s:bright_pink,      '',                s:bold)
 call s:HL('StatusLine',     s:very_dark_grey,   'fg',              s:none)
 call s:HL('StatusLineNC',   s:border_grey,      s:near_black_,     s:none)
@@ -235,8 +249,9 @@ call s:HL('Visual',         '',                 s:grey_brown,      s:none)
 call s:HL('VisualNOS',      '',                 s:grey_brown,      s:none)
 call s:HL('WarningMsg',     s:white_,           s:warning_grey,    s:bold)
 call s:HL('WildMenu',       s:cyan_,            s:black_,          s:none)
-call s:HL('c_preproc',      s:light_purple,     '',                s:none)
+" call s:HL('c_preproc',      s:light_purple,     '',                s:none)
 " call s:HL('c_preproc',      s:muted_yellow,     '',                s:none)
+call s:HL('c_preproc',      s:baby_blue,     '',                s:none)
 
 if has('spell')
     hi SpellBad    guisp=#FF0000  gui=undercurl
@@ -261,10 +276,18 @@ endif
 " call s:HL('cMiscFuncs',       s:light_purple,     '', s:bold)
 " call s:HL('cMiscFuncs',       s:orange_,     '', s:none)
 
-call s:HL('CFuncTag',         s:function_green,   '', s:none)
+" call s:HL('CFuncTag',         s:function_green,   '', s:none)
+call s:HL('CFuncTag',         s:MSVC_darker_green,   '', s:none)
 call s:HL('CMember',          s:grey5,            '', s:none)
+" call s:HL('CFuncTag',         s:resharper_light_blue,   '', s:none)
+" call s:HL('CMember',          s:resharper_light_purple, '', s:none)
+" call s:HL('GlobalVarTag',     s:new_yellow,     '', s:none)
+call s:HL('GlobalVarTag',     s:resharper_light_blue,     '', s:none)
+call s:HL('cSpecial',         s:light_cyan,       '', s:none)
+
 call s:HL('C_Struct',         s:cyan_,            '', s:bold)
 call s:HL('Enum',             s:nova_blue,        '', s:none)
+" call s:HL('GlobalVarTag',     s:muted_yellow,     '', s:none)
 call s:HL('LightPinkR',       s:bright_pink,      '', s:none)
 call s:HL('NegationChar',     s:red_,             '', s:bold)
 call s:HL('OperatorChars',    s:debug_grey,       '', s:none)
@@ -277,7 +300,11 @@ call s:HL('cNumberSuffix',    s:nova_light_green, '', s:none)
 call s:HL('mutedFunc',        s:grey5,            '', s:bold)
 call s:HL('perlTypeSpec',     s:cyan_,            '', s:bold)
 call s:HL('pythonDocstring',  s:comment,          '', s:none)
-call s:HL('cSpecial', s:light_cyan,      '', s:none)
+
+call s:HL('perlQuoteSE',      s:muted_yellow,     '', s:bold)
+call s:HL('perlMatchSE',      s:newMagenta,     '', s:bold)
+
+call s:HL('CommaSemicolon',   '',        '',  s:bold)
 
 
 set background=dark

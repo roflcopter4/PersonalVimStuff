@@ -161,7 +161,7 @@ else
   else
     syn region	cParen		transparent start='(' end=')' end='}'me=s-1 contains=ALLBUT,cBlock,@cParenGroup,cCppParen,cErrInBracket,cCppBracket,@cStringGroup,@Spell
     " cCppParen: same as cParen but ends at end-of-line; used in cDefine
-    syn region	cCppParen	transparent start='(' skip='\\$' excludenl end=')' end='$' contained contains=ALLBUT,@cParenGroup,cErrInBracket,cParen,cBracket,cString,@Spell
+    syn region	cCppParen	transparent start='(' skip='\\$' excludenl end=')' end='$' contained contains=ALLBUT,@cParenGroup,cErrInBracket,cParen,cBracket,cString,cConstant,cExtraConstants,_tag_highlight_c_d_cPreProcTag,@Spell
     syn match	cParenError	display "[\])]"
     syn match	cErrInParen	display contained "[\]{}]\|<%\|%>"
     syn region	cBracket	transparent start='\[\|<::\@!' end=']\|:>' end='}'me=s-1 contains=ALLBUT,cBlock,@cParenGroup,cErrInParen,cCppParen,cCppBracket,@cStringGroup,@Spell
@@ -180,21 +180,22 @@ syn case ignore
 syn match	cNumbers	display transparent "\<\d\|\.\d" contains=cNumber,cFloat,cOctalError,cOctal,cBinary,cBinaryError,cHexadecimal,cHexError,cNumberSuffix
 " Same, but without octal error (for comments)
 syn match	cNumbersCom	display contained transparent "\<\d\|\.\d" contains=cNumber,cFloat,cOctal,cNumberSuffix
-syn match	cNumber		display contained "\d\+\%(u\=l\{0,2}\|ll\=u\)\>" contains=cNumberSuffix
+syn match	cNumber		display contained "\d\+[ul]\{0,3}\>" contains=cNumberSuffix
 "hex number
 " syn match	cNumber		display contained "0x\x\+\(u\=l\{0,2}\|ll\=u\)\>"
 " Flag the first zero of an octal number as something special
-syn match	cOctal		display contained "0\o\+\%(u\=l\{0,2}\|ll\=u\)\>" contains=cOctalZero,cNumberSuffix
+syn match	cOctal		display contained "0\o\+[ul]\{0,3}\>" contains=cOctalZero,cNumberSuffix
 syn match	cOctalZero	display contained "\<0"
 syn match	cFloat		display contained "\d\+f"
 "floating point number, with dot, optional exponent
-syn match	cFloat		display contained "\d\+\.\d*\%(e[-+]\=\d\+\)\=[fl]\="
+syn match	cFloat		display contained "\d\+\.\d*\%(e[-+]\=\d\+\)\=[fl]\=" contains=cNumberSuffix
 "floating point number, starting with a dot, optional exponent
 syn match	cFloat		display contained "\.\d\+\%(e[-+]\=\d\+\)\=[fl]\=\>"
 "floating point number, without dot, with exponent
 syn match	cFloat		display contained "\d\+e[-+]\=\d\+[fl]\=\>"
 
-syn match	cHexadecimal	display contained "0x\x\+\%(u\=l\{0,2}\|ll\=u\)\>" contains=cHexPrefix,cNumberSuffix
+" syn match	cHexadecimal	display contained "0x\x\+\%(u\=l\{0,2}\|ll\=u\)\>" contains=cHexPrefix,cNumberSuffix
+syn match	cHexadecimal	display contained "\<0x\x\+[ul]\{0,3}\>" contains=cHexPrefix,cNumberSuffix
 " syn match	cHexError	display contained "0x\x\+[g-km-tvyz][[:alnum:]]*"
 syn match	cHexPrefix	display contained "\<0x"
 
@@ -212,7 +213,8 @@ endif
 
 " flag an octal number with wrong digits
 syn match	cOctalError	display contained "0\o*[89]\d*"
-syn match	cNumberSuffix	display contained "\%(0x\x\+\|0b[01]\+\|0\o\+\|\d\+\)\zs\%(l\{0,2}u\?\)"
+" syn match	cNumberSuffix	contained "\%(\x\+\|[01]\+\|\o\+\|\d\+\)\zs\%(u\=l\{0,2}\|ll\=u\)"
+syn match	cNumberSuffix	display contained "\%(0x\x\+\|0b[01]\+\|0\o\+\|\d\+\)\@10<=[ul]\{1,3}"
 " syn match	cNumberSuffix	contained "\x\zs\%(u\=l\{0,2}\|ll\=u\)\>"
 syn case match
 
