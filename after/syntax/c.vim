@@ -2,15 +2,16 @@ syntax keyword cExtraNonStandard xmalloc xcalloc xrealloc xfree xreallocarray nm
 syntax keyword cStdlibFuncs1 malloc calloc realloc reallocarray
 syntax match   cStdlibFuncs2 "\%(\.\|->\)\@3<!\<\%(free\)\%(\%(\s*)\)*\s*(\)\@="
 syntax keyword cExtraConstants STDIN_FILENO STDOUT_FILENO STDERR_FILENO
-syntax keyword cExtraConstants O_RDONLY O_WRONLY O_RDWR
+syntax keyword cExtraConstants O_RDONLY O_WRONLY O_RDWR O_DIRECTORY O_BINARY
 syntax keyword cExtraConstants O_APPEND O_ASYNC O_CLOEXEC O_CREAT O_DIRECT O_DIRECTORY O_DSYNC O_EXCL O_LARGEFILE
 syntax keyword cExtraConstants O_NOATIME O_NOCTTY O_NOFOLLOW O_NONBLOCK O_NDELAY O_PATH O_SYNC O_TMPFILE O_TRUNC 
 syntax keyword cExtraConstants PATH_MAX
 
-syntax keyword cExtentionFunc  asprintf vasprintf getline getdelim strsep memmem alloca isblank strchrnul
+syntax keyword cExtentionFunc  asprintf vasprintf dprintf vdprintf getline getdelim strsep strchrnul memmem
+syntax keyword cExtentionFunc  isblank alloca
 syntax keyword cPosixFunction  link unlink mkfifo mkdir symlink mknod truncate ftruncate pipe
 syntax keyword cPosixFunction  chown chmod stat lstat fstat fstat64 readlink sync syncfs fsync fdopen
-syntax keyword cPosixFunction  fstatat openat
+syntax keyword cPosixFunction  fstatat openat fileno
 syntax keyword cPosixFunction  sysconf isatty ttyname sigaction socket connect
 syntax keyword cPosixFunction  realpath dirname scandir
 " syntax keyword cLinuxFunction  readlinkat mknodat mkdirat unlinkat mkfifoat linkat symlinkat fstatat64 fstatat dup3
@@ -23,7 +24,7 @@ syntax keyword cMiscOperators __extension__
 
 syn keyword	cExtraConstants	_MSC_VER __clang__ __cplusplus __GNUC_MINOR__ __FreeBSD__ _WIN32 _WIN64 WIN32 
 syn keyword	cStorageClass	__restrict __inline __thread
-syn keyword	CExtraTypes	pthread_t pthread_mutex_t
+syn keyword	cExtraTypes	pthread_t pthread_mutex_t pthread_attr_t
 
 " highlight def link cExtraConstants	Constant
 highlight def link cExtentionFunc	cAnsiFunction

@@ -214,7 +214,7 @@ endif
 " flag an octal number with wrong digits
 syn match	cOctalError	display contained "0\o*[89]\d*"
 " syn match	cNumberSuffix	contained "\%(\x\+\|[01]\+\|\o\+\|\d\+\)\zs\%(u\=l\{0,2}\|ll\=u\)"
-syn match	cNumberSuffix	display contained "\%(0x\x\+\|0b[01]\+\|0\o\+\|\d\+\)\@10<=[ul]\{1,3}"
+syn match	cNumberSuffix	display contained "\%(0x\x\+\|0b[01]\+\|0\o\+\|\d\+\)\@23<=[ul]\{1,3}"
 " syn match	cNumberSuffix	contained "\x\zs\%(u\=l\{0,2}\|ll\=u\)\>"
 syn case match
 
