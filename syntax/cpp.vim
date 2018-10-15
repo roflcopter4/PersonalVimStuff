@@ -67,7 +67,7 @@ highlight def link cppCast			cppStatement
 highlight def link cppExceptions		Exception
 highlight def link cppOperator			Operator
 highlight def link cppStatement			Statement
-highlight def link cppModifier			Type
+highlight def link cppModifier			StorageClass
 highlight def link cppType			Type
 highlight def link cppStorageClass		StorageClass
 highlight def link cppStructure			Structure
