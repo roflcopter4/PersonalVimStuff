@@ -314,5 +314,4 @@ call s:HL('DereferenceStar',  s:debug_grey, '', s:bold)
 call s:HL('newClassColor',    s:resharper_light_purple, '', s:none)
 call s:HL('newTemplateColor', s:resharper_light_purple, '', s:bold)
 
-
 set background=dark

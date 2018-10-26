@@ -30,7 +30,7 @@ syntax match   cForkAsKeyword  "\<v\=fork()"
 
 syntax keyword cGNUAutoType __auto_type auto_type Auto
 syntax keyword cAssertion assert
-syntax keyword cMiscOperators __extension__ __typeof__ _Pragma
+syntax keyword cMiscOperators __extension__ __typeof__
 
 syn keyword	cExtraConstants	_MSC_VER __clang__ __cplusplus __GNUC_MINOR__ __FreeBSD__ _WIN32 _WIN64 WIN32 
 syn keyword	cStorageClass	__restrict __inline __thread
