@@ -276,6 +276,7 @@ if !exists('c_no_c99') " ISO C99
 endif
 if exists('c_gnu')
   syn keyword	cType		__label__ __complex__ __volatile__
+  syn keyword	cStorageClass	__inline__
 endif
 
 syn keyword	cStructure	struct union enum typedef

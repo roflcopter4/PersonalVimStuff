@@ -144,6 +144,18 @@ fun! s:HighlightOperators()
         "syn match StructDeref /\([A-Za-z)\]]\d*\)\@<=\.\(\d\)\@!/
         syn match StructDeref /\%([A-Za-z)\]]\d*\)\@2<=\./
         " syn match StructDeref /\%([A-Za-z)\]]\d*\)\zs\./
+
+        " syn match DereferenceStar /\<\*\%(\%(--\|++\)\=\w\)\@=/
+        " syn match DereferenceStar /\%(^\|\s\|[\[({]\|++\|--\)\@<=\zs\*\+\ze\%((\=\%(--\|++\)\=(\=\a\)\@=\%(\s*=\)\@!/
+        " syn match DereferenceStar /\%(^\s*\%(static\|extern\)[a-zA-Z_ ]*\)\@<=\*\+/
+        syn match DereferenceStar /\%(^\|\s\|[\[({]\)\@1<=\*\+\%(\%(++\|--\)\**\%(\a\|_\|(\)\)\@=/
+        syn match DereferenceStar /\%(++\|--\)\@2<=\*\+\%(\a\|_\|(\)\@=/
+        syn match DereferenceStar /\%(^\|\s\|[\[({]\)\@1<=\*\+\%(\%((\=\**\%(--\|++\)\=\**\)*\%(\a\|_\)\)\@=\%(\s*=\)\@!/
+        syn match DereferenceStar /\*\+\%()\|\n\)\@=/
+        syn match DereferenceStar /\%(^\s*\%(\a\|[ _\t]\)*\)\@<=\*\+\%(\s*\%(\a\|_\)\)\@=/
+
+        " syn match AddressOperator /&\%(\a\|(\)\@=/
+        " hi def link AddressOperator DereferenceStar
     endif
     syn match NegationChar /!\%(=\)\@!/
 

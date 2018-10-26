@@ -141,9 +141,9 @@ endif
 
 
 syn match	vimPatSep2	contained	"|"
-syn region	vimPatSepZone	oneline   contained   matchgroup=vimPatSepZ start="\\v.*\zs%\ze(" skip="\\\\" end=")\|[^\]['"]"	contains=@vimStringGroup,vimPatSep2
+syn region	vimPatSepZone	oneline   contained   matchgroup=vimPatSepZ start="\\v.*\zs%\ze(" skip="\\\\" end=")\|[^\]['"]"	contains=@vimStringGroup,vimPatSep2,@vimSubstSpecChars
 syn region	vimPatRegion	contained transparent matchgroup=vimPatSepR start="\\v.*\zs[z%](" end=")" contains=@vimSubstList,vimPatSep2 oneline
-syn region	vimPatSepZone	oneline   contained   matchgroup=vimPatSepZ start="\\v.*\zs\ze(" skip="\\\\" end=")\|[^\]['"]"	contains=@vimStringGroup,vimPatSep2
+syn region	vimPatSepZone	oneline   contained   matchgroup=vimPatSepZ start="\\v.*\zs\ze(" skip="\\\\" end=")\|[^\]['"]"	contains=@vimStringGroup,vimPatSep2,@vimSubstSpecChars
 syn region	vimPatRegion	contained transparent matchgroup=vimPatSepR start="\\v.*\zs(" end=")" contains=@vimSubstList,vimPatSep2 oneline
 
 
@@ -359,7 +359,7 @@ syn region	vimPatSepZone	oneline   contained   matchgroup=vimPatSepZ start="\\%\
 syn region	vimPatRegion	contained transparent matchgroup=vimPatSepR start="\\[z%]\=(" end="\\)"	contains=@vimSubstList oneline
 syn match	vimNotPatSep	contained	"\\\\"
 " syn cluster	vimStringGroup	contains=vimEscapeBrace,vimPatSep,vimNotPatSep,vimPatSepErr,vimPatSepZone
-syn cluster	vimStringGroup	contains=vimEscapeBrace,vimPatSep,vimNotPatSep,vimPatSepErr,vimPatSepZone
+syn cluster	vimStringGroup	contains=vimEscapeBrace,vimPatSep,vimNotPatSep,vimPatSepErr,vimPatSepZone,@vimSubstSpecChars
 " syn cluster	vimStringGroup	contains=vimEscapeBrace,vimPatSep,vimNotPatSep,vimPatSepErr,vimPatSepZone,vimEscapeBrace2,vimPatSep2,vimNotPatSep2,vimPatSepErr2,vimPatSepZone2,@Spell
 syn region	vimString	oneline keepend	start=+[^a-zA-Z>!\\@]"+lc=1 skip=+\\\\\|\\"+ end=+"+	contains=@vimStringGroup
 syn region	vimString	oneline keepend	start=+[^a-zA-Z>!\\@]'+lc=1 end=+'+
@@ -372,7 +372,20 @@ syn match	vimStringCont	contained	+\(\\\\\|.\)\{-}[^\\]"+
 
 " Substitutions: {{{2
 " =============
-syn cluster	vimSubstList	contains=vimPatSep,vimPatRegion,vimPatSepErr,vimSubstTwoBS,vimSubstRange,vimNotation
+
+
+syn match	vimSubstSpecChars1 contained "\\\\\|\\]\|\\<\|\\>\|\\=\|\\?\|\\+\|\\{-}"
+syn match	vimSubstSpecChars1 contained "\%([^\\]\|\%([^\\]\%(\\\\\)\+\)\)\@<=\%(\^\|\$\|\*\)"
+syn match         vimSubstSpecChars1 contained "\\@\%(!\|=\|\d*<!\|\d*<=\)"
+syn match	vimSubstSpecChars2 contained "\\w\|\\a\|\\s\|\\S\|\\x\|\\o"
+syn match	vimSubstSpecChars3 contained "\\\%(zs\|ze\)"
+syn cluster vimSubstSpecChars contains=vimSubstSpecChars1,vimSubstSpecChars2,vimSubstSpecChars3
+hi def link vimSubstSpecChars1 cSpecial
+hi def link vimSubstSpecChars2 PerlSpecialChar
+hi def link vimSubstSpecChars3 SpecialChar
+
+
+syn cluster	vimSubstList	contains=vimPatSep,vimPatRegion,vimPatSepErr,vimSubstTwoBS,vimSubstRange,vimNotation,@vimSubstSpecChars
 syn cluster	vimSubstRepList	contains=vimSubstSubstr,vimSubstTwoBS,vimNotation
 syn cluster	vimSubstList	add=vimCollection
 syn match	vimSubst	"\(:\+\s*\|^\s*\||\s*\)\<\%(\<s\%[ubstitute]\>\|\<sm\%[agic]\>\|\<sno\%[magic]\>\)[:#[:alpha:]]\@!" nextgroup=vimSubstPat
@@ -382,7 +395,7 @@ syn match	vimSubst	"\(:\+\s*\|^\s*\)s\ze#.\{-}#.\{-}#"		nextgroup=vimSubstPat
 syn match	vimSubst1       contained	"\<s\%[ubstitute]\>"	nextgroup=vimSubstPat
 syn region	vimSubstPat     contained	matchgroup=vimSubstDelim start="\z([^a-zA-Z( \t[\]&]\)"rs=s+1 skip="\\\\\|\\\z1" end="\z1"re=e-1,me=e-1	 contains=@vimSubstList	nextgroup=vimSubstRep4	oneline
 syn region	vimSubstRep4    contained	matchgroup=vimSubstDelim start="\z(.\)" skip="\\\\\|\\\z1" end="\z1" matchgroup=vimNotation end="<[cC][rR]>" contains=@vimSubstRepList	nextgroup=vimSubstFlagErr	oneline
-syn region	vimCollection   contained transparent	start="\\\@<!\[" skip="\\\[" end="\]"	contains=vimCollClass
+syn region	vimCollection   contained transparent	start="\\\@<!\[" skip="\\\[" end="\]"	contains=vimCollClass,@vimSubstSpecChars matchgroup=PerlSpecialChar
 syn match	vimCollClassErr contained	"\[:.\{-\}:\]"
 syn match	vimCollClass    contained transparent	"\[:\(alnum\|alpha\|blank\|cntrl\|digit\|graph\|lower\|print\|punct\|space\|upper\|xdigit\|return\|tab\|escape\|backspace\):\]"
 syn match	vimSubstSubstr  contained	"\\z\=\d"
@@ -514,8 +527,8 @@ syn match	vimNormCmds contained	".*$"
 
 " Syntax {{{2
 "=======
-syn match	vimGroupList	contained	"@\=[^ \t,]*"	contains=vimGroupSpecial,vimPatSep,vimPatSep2
-syn match	vimGroupList	contained	"@\=[^ \t,]*,"	nextgroup=vimGroupList contains=vimGroupSpecial,vimPatSep
+syn match	vimGroupList	contained	"@\=[^ \t,]*"	contains=vimGroupSpecial,vimPatSep,vimPatSep2,@vimSubstSpecChars
+syn match	vimGroupList	contained	"@\=[^ \t,]*,"	nextgroup=vimGroupList contains=vimGroupSpecial,vimPatSep,@vimSubstSpecChars
 syn keyword	vimGroupSpecial	contained	ALL	ALLBUT	CONTAINED	TOP
 if !exists("g:vimsyn_noerror") && !exists("g:vimsyn_novimsynerror")
  syn match	vimSynError	contained	"\i\+"
@@ -577,7 +590,7 @@ syn cluster vimFuncBodyList add=vimSynMtchGroup
 syn keyword	vimSynType	contained	enable	list	manual	off	on	reset
 
 " " Syntax: region {{{2
-syn cluster	vimSynRegPatGroup	contains=vimPatSep,vimNotPatSep,vimSynPatRange,vimSynNotPatRange,vimSubstSubstr,vimPatRegion,vimPatSepErr,vimNotation
+syn cluster	vimSynRegPatGroup	contains=vimPatSep,vimNotPatSep,vimSynPatRange,vimSynNotPatRange,vimSubstSubstr,vimPatRegion,vimPatSepErr,vimNotation,@vimSubstSpecChars
 syn cluster	vimSynRegGroup	contains=vimSynContains,vimSynNextgroup,vimSynRegOpt,vimSynReg,vimSynMtchGrp
 syn keyword	vimSynType	contained	region	skipwhite nextgroup=vimSynRegion
 syn region	vimSynRegion	contained keepend	matchgroup=vimGroupName start="\h\w*" skip="\\\\\|\\|" end="|\|$" contains=@vimSynRegGroup

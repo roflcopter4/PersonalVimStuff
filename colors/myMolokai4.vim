@@ -236,7 +236,7 @@ call s:HL('StatusLine',     s:very_dark_grey,   'fg',              s:none)
 call s:HL('StatusLineNC',   s:border_grey,      s:near_black_,     s:none)
 call s:HL('StorageClass',   s:orange_,          '',                s:none)
 call s:HL('String',         s:light_yellow,     '',                s:none)
-call s:HL('Structure',      s:cyan_,            '',                s:none)
+call s:HL('Structure',      s:cyan_,            '',                s:bold)
 call s:HL('Substitute',     s:orange_,          s:black_,          s:none)
 call s:HL('Tag',            s:bright_pink,      '',                s:italic)
 call s:HL('Title',          s:orange_red,       '',                s:none)
@@ -293,8 +293,9 @@ call s:HL('Enum',             s:nova_blue,        '', s:none)
 call s:HL('LightPinkR',       s:bright_pink,      '', s:none)
 call s:HL('NegationChar',     s:red_,             '', s:bold)
 call s:HL('OperatorChars',    s:debug_grey,       '', s:none)
-call s:HL('PerlSpecialChar',  s:debug_grey,       '', s:bold)
-call s:HL('PerlSpecialChar2', s:debug_grey,       '', s:bold)
+call s:HL('PerlSpecialChar',  s:bright_pink,      '', s:bold)
+call s:HL('PerlSpecialChar2', s:orange_red,       '', s:bold)
+call s:HL('PerlMulti',        s:cyan_,            '', s:bold)
 call s:HL('PreProcB',         s:lime_,            '', s:bold)
 call s:HL('cMiscFuncs',       s:orange_red,       '', s:bold)
 call s:HL('cNumberPrefix',    s:nova_light_green, '', s:none)
@@ -303,10 +304,15 @@ call s:HL('mutedFunc',        s:grey5,            '', s:bold)
 call s:HL('perlTypeSpec',     s:cyan_,            '', s:bold)
 call s:HL('pythonDocstring',  s:comment,          '', s:none)
 
-call s:HL('perlQuoteSE',      s:muted_yellow,     '', s:bold)
-call s:HL('perlMatchSE',      s:newMagenta,     '', s:bold)
+call s:HL('perlQuoteSE',      s:lime_,     '', s:bold)
+call s:HL('perlMatchSE',      s:lime_,     '', s:bold)
 
 call s:HL('CommaSemicolon',   '',        '',  s:bold)
+
+call s:HL('DereferenceStar',  s:debug_grey, '', s:bold)
+
+call s:HL('newClassColor',    s:resharper_light_purple, '', s:none)
+call s:HL('newTemplateColor', s:resharper_light_purple, '', s:bold)
 
 
 set background=dark
