@@ -1,6 +1,7 @@
 syntax keyword cExtraNonStandard xmalloc xcalloc xrealloc xfree xreallocarray nmalloc nrealloc
 syntax keyword cExtraNonStandard talloc talloc_array talloc_free talloc_realloc talloc_size talloc_realloc_size talloc_zero talloc_zero_size
-syntax keyword cExtraOther       talloc_reference talloc_unlink talloc_total_size talloc_move talloc_steal talloc_reparent
+syntax keyword cExtraNonStandard talloc_realloc_array talloc_free_children talloc_named_const talloc_named
+syntax keyword cExtraOther       talloc_reference talloc_unlink talloc_total_size talloc_move talloc_reparent talloc_steal
 syntax keyword cExtraOther       talloc_asprintf talloc_vasprintf talloc_strdup talloc_memdup talloc_autofree_context talloc_set_destructor
 syntax keyword cExtraOther       brk sbrk
 
@@ -12,6 +13,28 @@ syntax keyword cExtraConstants O_APPEND O_ASYNC O_CLOEXEC O_CREAT O_DIRECT O_DIR
 syntax keyword cExtraConstants O_NOATIME O_NOCTTY O_NOFOLLOW O_NONBLOCK O_NDELAY O_PATH O_SYNC O_TMPFILE O_TRUNC 
 syntax keyword cExtraConstants PATH_MAX CLOCK_REALTIME MSG_WAITALL
 syntax keyword cExtraConstants PROT_READ PROT_WRITE MAP_ANON MAP_PRIVATE MAP_SHARED
+
+"******************************************************************************* 
+"** ARDUINO **
+syntax keyword arduinoConstant HIGH LOW INPUT OUTPUT LED_BUILTIN INPUT_PULLUP
+syntax keyword arduinoConstant DEC BIN HEX OCT BYTE PI HALF_PI TWO_PI
+syntax keyword arduinoConstant CHANGE FALLING RISING SERIAL DISPLAY LSBFIRST MSBFIRST 
+syntax keyword arduinoConstant DEFAULT EXTERNAL INTERNAL INTERNAL1V1 INTERNAL2V56
+
+syn keyword arduinoFunc analogReference analogRead analogWrite 
+syn keyword arduinoFunc attachInterrupt detachInterrupt interrupts noInterrupts 
+syn keyword arduinoFunc lowByte highByte bitRead bitWrite bitSet bitClear
+syn keyword arduinoFunc millis micros delay delayMicroseconds 
+syn keyword arduinoFunc pinMode digitalWrite digitalRead 
+syn keyword arduinoFunc tone noTone pulseIn shiftOut 
+syn keyword arduinoFunc digitalPinToInterrupt
+
+syn keyword arduinoType boolean byte word String
+
+highlight default link arduinoConstant Constant
+highlight default link arduinoType     Type
+highlight default link arduinoFunc     cAnsiFunction
+"******************************************************************************* 
 
 syntax keyword cC11Function    quick_exit at_quick_exit thrd_create thrd_exit mtx_lock mtx_unlock
 syntax keyword cExtentionFunc  asprintf vasprintf dprintf vdprintf getline getdelim strsep strchrnul memmem

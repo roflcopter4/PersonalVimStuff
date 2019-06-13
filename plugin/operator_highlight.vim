@@ -133,9 +133,14 @@ fun! s:HighlightOperators()
 
     "syn match OperatorChars +/\(/\|\*\)\@!+
     " These are generally safe...
-    syn match OperatorChars /[?+*<>&!~=^]/
+    if (&filetype ==# 'x4c')
+        syn match OperatorChars /[+*&!~=^]/
+        syn match OperatorChars /\%(\w\)\@1<![<>]/
+    else
+        syn match OperatorChars /[?+*<>&!~=^]/
+    endif
 
-    if (&filetype ==# 'c' || &filetype ==# 'cpp')
+    if (&filetype ==# 'c' || &filetype ==# 'cpp' || &filetype ==# 'go' || &filetype ==# 'rust')
         syn match OperatorChars /\[\]/
         syn match OperatorChars /[:\[\]]/
         syn match StructDeref /->/

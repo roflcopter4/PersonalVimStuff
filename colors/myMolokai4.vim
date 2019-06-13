@@ -194,7 +194,6 @@ call s:HL('Exception',      s:lime_,            '',                s:bold)
 call s:HL('Float',          s:light_purple,     '',                s:none)
 call s:HL('FoldColumn',     s:dark_grey,        s:black_,          s:none)
 call s:HL('Folded',         s:dark_grey,        s:black_,          s:none)
-call s:HL('Function',       s:lime_,            '',                s:none)
 call s:HL('Identifier',     s:orange_,          '',                s:none)
 call s:HL('Ignore',         s:border_grey,      'bg',              s:none)
 call s:HL('IncSearch',      s:orange_,          s:black_,          s:none)
@@ -277,8 +276,12 @@ endif
 " call s:HL('cMiscFuncs',       s:orange_,     '', s:none)
 
 " call s:HL('CFuncTag',         s:function_green,   '', s:none)
-call s:HL('CFuncTag',         s:MSVC_darker_green,   '', s:none)
-call s:HL('CMember',          s:grey5,            '', s:none)
+
+" call s:HL('Function',         s:MSVC_darker_green, '',                s:none)
+call s:HL('Function',         s:lime_, '',                s:none)
+call s:HL('CFuncTag',         s:MSVC_darker_green, '', s:none)
+call s:HL('CMember',          s:grey5,             '', s:none)
+
 " call s:HL('CFuncTag',         s:resharper_light_blue,   '', s:none)
 " call s:HL('CMember',          s:resharper_light_purple, '', s:none)
 " call s:HL('GlobalVarTag',     s:new_yellow,     '', s:none)
@@ -313,5 +316,6 @@ call s:HL('DereferenceStar',  s:debug_grey, '', s:bold)
 
 call s:HL('newClassColor',    s:resharper_light_purple, '', s:none)
 call s:HL('newTemplateColor', s:resharper_light_purple, '', s:bold)
+call s:HL('boldOrange',       s:orange_,                '', s:bold)
 
 set background=dark
