@@ -57,13 +57,14 @@ syntax keyword cMiscOperators __extension__ __typeof__
 
 syn keyword	cExtraConstants	_MSC_VER __clang__ __cplusplus __GNUC_MINOR__ __FreeBSD__ _WIN32 _WIN64 WIN32 
 syn keyword	cStorageClass	__restrict __inline __thread
+syn match       cStdStruct	"\%(struct\s\)\@7<=\%(stat\)\>"
 " syn keyword	cExtraTypes	pthread_t pthread_mutex_t pthread_attr_t pthread_cond_t pthread_cond_attr_t
 " syn match       cStdStructs     "\%(struct\s\)\@7<=\%(timeval\|timespec\|stat\|dirent\|sockaddr\%(_un\)\=\)\>"
 
 highlight def link cExtentionFunc	cAnsiFunction
 highlight def link cExtraConstants	Constant
 highlight def link cExtraNonStandard	cMiscFuncs
-highlight def link cExtraTypes		Type
+highlight def link cStdStruct		Type
 highlight def link cGNUAutoType		C_Struct
 highlight def link cMiscOperators	Operator
 highlight def link cPosixFunction	cAnsiFunction

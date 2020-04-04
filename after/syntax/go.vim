@@ -37,7 +37,11 @@ hi def link goExtraOperators cAnsiFunction
 
 " syntax keyword goLightKeywords1 panic recover map interface struct
 syntax keyword goLightKeywords1 map interface struct
-" syntax keyword goLightKeywords2 append make new len panic recover 
+syntax keyword goLightKeywords2 append make new len panic recover 
 " hi! link goLightKeywords1 cMiscFuncs
+" hi! link goLightKeywords2 boldOrange
+hi! link goLightKeywords2 Operator
+" hi! link goLightKeywords1 Structure
 hi! link goLightKeywords1 boldOrange
-hi! link goLightKeywords2 StorageClass
+
+hi! link goOperator LightPinkR

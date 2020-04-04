@@ -91,6 +91,10 @@ endif
 "call s:IgnoreFiletypeIfNotSet('haml')
 "call s:IgnoreFiletypeIfNotSet('coffee')
 
+fun! s:IsC()
+    return &filetype ==# 'c' || &filetype ==# 'cpp'
+endfun
+
 fun! s:HighlightOperators()
     "if get( g:ophigh_filetypes_to_ignore, &filetype, 0 )
         "return
@@ -123,6 +127,10 @@ fun! s:HighlightOperators()
         syn match OperatorChars /-/
     endif
 
+    if (s:IsC() || &filetype == 'go')
+        syn match OperatorChars /\.\.\./
+    endif
+
     " Go type assertion edgecase: consuming both . and ( clobers go type assertion
     " region matching
     if (&filetype ==# 'go')
@@ -140,15 +148,18 @@ fun! s:HighlightOperators()
         syn match OperatorChars /[?+*<>&!~=^]/
     endif
 
-    if (&filetype ==# 'c' || &filetype ==# 'cpp' || &filetype ==# 'go' || &filetype ==# 'rust')
+    if (s:IsC() || &filetype ==# 'go' || &filetype ==# 'rust')
         syn match OperatorChars /\[\]/
         syn match OperatorChars /[:\[\]]/
-        syn match StructDeref /->/
         syn match CommaSemicolon /[;,]/
         "syn match StructDeref /\%(\w\)\(\.\)[A-Za-z]/
         "syn match StructDeref /\([A-Za-z)\]]\d*\)\@<=\.\(\d\)\@!/
-        syn match StructDeref /\%([A-Za-z)\]]\d*\)\@2<=\./
+        syn match StructDeref /\%([A-Za-z)\]]\d*\)\@2<=\.\%(\s*\%(\w\|[()]\)\)\@=/
         " syn match StructDeref /\%([A-Za-z)\]]\d*\)\zs\./
+        
+        if (s:IsC())
+            syn match StructDeref /->/
+        endif
 
         " syn match DereferenceStar /\<\*\%(\%(--\|++\)\=\w\)\@=/
         " syn match DereferenceStar /\%(^\|\s\|[\[({]\|++\|--\)\@<=\zs\*\+\ze\%((\=\%(--\|++\)\=(\=\a\)\@=\%(\s*=\)\@!/

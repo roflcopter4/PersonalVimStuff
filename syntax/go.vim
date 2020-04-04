@@ -117,7 +117,7 @@ if go#config#HighlightFormatStrings()
         \@<=%[-#0 +]*\
         \%(\%(\%(\[\d\+\]\)\=\*\)\|\d\+\)\=\
         \%(\.\%(\%(\%(\[\d\+\]\)\=\*\)\|\d\+\)\=\)\=\
-        \%(\[\d\+\]\)\=[vTtbcdoqxXUeEfFgGsp]/ contained containedin=goString,goRawString
+        \%(\[\d\+\]\)\=[vTtbcdoqxXUeEfFgGspw]/ contained containedin=goString,goRawString
   hi def link     goFormatSpecifier   SpecialChar
 endif
 
@@ -307,20 +307,21 @@ endif
 hi def link     goOperator          Operator
 
 " Functions;
-if go#config#HighlightFunctions() || go#config#HighlightFunctionArguments()
-  syn match goDeclaration       /\<func\>/ nextgroup=goReceiver,goFunction,goSimpleArguments skipwhite skipnl
+if go#config#HighlightFunctions() || go#config#HighlightFunctionParameters()
+  syn match goDeclaration       /\<func\>/ nextgroup=goReceiver,goFunction,goSimpleParams skipwhite skipnl
   syn match goReceiverVar       /\w\+\ze\s\+\%(\w\|\*\)/ nextgroup=goPointerOperator,goReceiverType skipwhite skipnl contained
   syn match goPointerOperator   /\*/ nextgroup=goReceiverType contained skipwhite skipnl
-  syn match goFunction          /\w\+/ nextgroup=goSimpleArguments contained skipwhite skipnl
+  syn match goFunction          /\w\+/ nextgroup=goSimpleParams contained skipwhite skipnl
   syn match goReceiverType      /\w\+/ contained
-if go#config#HighlightFunctionArguments()
-  syn match goSimpleArguments   /(\%(\w\|\_s\|[*\.\[\],\{\}<>-]\)*)/ contained contains=goArgumentName nextgroup=goSimpleArguments skipwhite skipnl
-  syn match goArgumentName      /\w\+\(\s*,\s*\w\+\)*\ze\s\+\%(\w\|\.\|\*\|\[\)/ contained nextgroup=goArgumentType skipwhite skipnl
-  syn match goArgumentType      /\%([^,)]\|\_s\)\+,\?/ contained nextgroup=goArgumentName skipwhite skipnl
-                        \ contains=goVarArgs,goType,goSignedInts,goUnsignedInts,goFloats,goComplexes,goDeclType,goBlock
-  hi def link   goReceiverVar       goArgumentName
-  hi def link   goArgumentName      Identifier
-endif
+  if go#config#HighlightFunctionParameters()
+    syn match goSimpleParams      /(\%(\w\|\_s\|[*\.\[\],\{\}<>-]\)*)/ contained contains=goParamName,goType nextgroup=goFunctionReturn skipwhite skipnl
+    syn match goFunctionReturn   /(\%(\w\|\_s\|[*\.\[\],\{\}<>-]\)*)/ contained contains=goParamName,goType skipwhite skipnl
+    syn match goParamName        /\w\+\%(\s*,\s*\w\+\)*\ze\s\+\%(\w\|\.\|\*\|\[\)/ contained nextgroup=goParamType skipwhite skipnl
+    syn match goParamType        /\%([^,)]\|\_s\)\+,\?/ contained nextgroup=goParamName skipwhite skipnl
+                          \ contains=goVarArgs,goType,goSignedInts,goUnsignedInts,goFloats,goComplexes,goDeclType,goBlock
+    hi def link   goReceiverVar    goParamName
+    hi def link   goParamName      Identifier
+  endif
   syn match goReceiver          /(\s*\w\+\%(\s\+\*\?\s*\w\+\)\?\s*)\ze\s*\w/ contained nextgroup=goFunction contains=goReceiverVar skipwhite skipnl
 else
   syn keyword goDeclaration func
@@ -335,7 +336,20 @@ hi def link     goFunctionCall      Type
 
 " Fields;
 if go#config#HighlightFields()
-  syn match goField                 /\.\w\+\%([.\ \n\r\:\)\[,]\)\@=/hs=s+1
+  " 1. Match a sequence of word characters coming after a '.'
+  " 2. Require the following but dont match it: ( \@= see :h E59)
+  "    - The symbols: / - + * %   OR
+  "    - The symbols: [] {} <> )  OR
+  "    - The symbols: \n \r space OR
+  "    - The symbols: , : .
+  " 3. Have the start of highlight (hs) be the start of matched
+  "    pattern (s) offsetted one to the right (+1) (see :h E401)
+  syn match       goField   /\.\w\+\
+        \%(\%([\/\-\+*%]\)\|\
+        \%([\[\]{}<\>\)]\)\|\
+        \%([\!=\^|&]\)\|\
+        \%([\n\r\ ]\)\|\
+        \%([,\:.]\)\)\@=/hs=s+1
 endif
 hi def link    goField              Identifier
 
@@ -418,8 +432,10 @@ function! s:hi()
   hi def      goCoverageUncover    ctermfg=red guifg=#F92672
 
   " :GoDebug commands
-  hi GoDebugBreakpoint term=standout ctermbg=117 ctermfg=0 guibg=#BAD4F5  guifg=Black
-  hi GoDebugCurrent    term=reverse  ctermbg=12  ctermfg=7 guibg=DarkBlue guifg=White
+  if go#config#HighlightDebug()
+    hi GoDebugBreakpoint term=standout ctermbg=117 ctermfg=0 guibg=#BAD4F5  guifg=Black
+    hi GoDebugCurrent term=reverse  ctermbg=12  ctermfg=7 guibg=DarkBlue guifg=White
+  endif
 endfunction
 
 augroup vim-go-hi

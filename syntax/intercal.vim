@@ -91,7 +91,7 @@ hi link ickLabel      Tag
 hi link ickUnaryVar   Normal
 hi link ickVariable   Identifier
 hi link ickArrayVar   Special
-hi link ickConstant   Constant
+hi link ickConstant   Number
 hi link ickIdentifier PreProc
 hi link ickComment    Comment
 
