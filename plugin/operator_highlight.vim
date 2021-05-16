@@ -200,7 +200,7 @@ fun! s:HighlightOperators()
 endfunction
 
 augroup Operator_Higlight
-    au Syntax * call s:HighlightOperators()
-    au ColorScheme * call s:HighlightOperators()
+    autocmd Syntax * call s:HighlightOperators()
+    autocmd ColorScheme * call s:HighlightOperators()
 augroup END
 

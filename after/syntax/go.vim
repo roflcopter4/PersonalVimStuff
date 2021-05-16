@@ -35,6 +35,13 @@ hi def link goExtraOperators cAnsiFunction
 " syntax keyword goMap map interface struct
 " hi! link goMap boldOrange
 
+
+syn match	goUserLabel	display "^\s*\zs\I\i*\s*:$"
+syn match	goUserLabel	display ";\s*\zs\I\i*\s*:$"
+
+hi def link goUserLabel Label
+
+
 " syntax keyword goLightKeywords1 panic recover map interface struct
 syntax keyword goLightKeywords1 map interface struct
 syntax keyword goLightKeywords2 append make new len panic recover 

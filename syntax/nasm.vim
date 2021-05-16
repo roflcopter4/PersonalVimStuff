@@ -222,7 +222,7 @@ syn cluster nasmGrpPreCondits	contains=nasmPreConditDef,@nasmGrpInPreCondits,nas
 syn match   nasmPreProc		"^\s*%\(rep\|use\)\>"hs=e-3
 syn match   nasmPreProc		"^\s*%line\>"hs=e-4
 syn match   nasmPreProc		"^\s*%\(clear\|error\|fatal\)\>"hs=e-5
-syn match   nasmPreProc		"^\s*%\(endrep\|strlen\|substr\|strcat\|defstr\|deftok\)\>"hs=e-6
+syn match   nasmPreProc		"^\s*%\(endrep\|strlen\|substr\|strcat\|defstr\|deftok\|pragma\)\>"hs=e-6
 syn match   nasmPreProc		"^\s*%\(exitrep\|warning\)\>"hs=e-7
 syn match   nasmDefine		"^\s*%undef\>"hs=e-5
 syn match   nasmDefine		"^\s*%\(assign\|define\)\>"hs=e-6
@@ -467,7 +467,7 @@ hi def link nasmInCommentTodo	Todo
 hi def link nasmString		String
 hi def link nasmCString	String
 hi def link nasmStringError	Error
-hi def link nasmCStringEscape	SpecialChar
+hi def link nasmCStringEscape	Special
 hi def link nasmCStringFormat	SpecialChar
 hi def link nasmBinNumber	Number
 hi def link nasmOctNumber	Number

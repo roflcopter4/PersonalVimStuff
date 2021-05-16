@@ -377,7 +377,8 @@ syn match	vimStringCont	contained	+\(\\\\\|.\)\{-}[^\\]"+
 syn match	vimSubstSpecChars1 contained "\\\\\|\\]\|\\<\|\\>\|\\=\|\\?\|\\+\|\\{-}"
 syn match	vimSubstSpecChars1 contained "\%([^\\]\|\%([^\\]\%(\\\\\)\+\)\)\@<=\%(\^\|\$\|\*\)"
 syn match         vimSubstSpecChars1 contained "\\@\%(!\|=\|\d*<!\|\d*<=\)"
-syn match	vimSubstSpecChars2 contained "\\w\|\\a\|\\s\|\\S\|\\x\|\\o"
+" syn match	vimSubstSpecChars2 contained "\\w\|\\a\|\\s\|\\S\|\\x\|\\o\|\\h"
+syn match	vimSubstSpecChars2 contained "\\[sSdDxXoOwWhHaAlLuU]"
 syn match	vimSubstSpecChars3 contained "\\\%(zs\|ze\)"
 syn cluster vimSubstSpecChars contains=vimSubstSpecChars1,vimSubstSpecChars2,vimSubstSpecChars3
 hi def link vimSubstSpecChars1 cSpecial

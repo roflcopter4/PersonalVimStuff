@@ -80,9 +80,12 @@ let s:muted_yellow     = '#908B25'
 let s:function_green   = '#16DB2A'
 let s:new_yellow       = '#bbbd4f'
 
-let s:resharper_light_blue   = '#ADD8E6'  " Functions
+"let s:resharper_namespace    = '#E6D8AD'
+let s:resharper_namespace    = '#ADD8E6'
+let s:resharper_light_blue   = '#ADD8E6'
 let s:resharper_light_purple = '#DDA0DD'  " Struct members
 let s:resharper_light_green  = '#90EE90'
+let s:resharper_operator     = '#4EC9B0'
 let s:MSVC_darker_green      = '#4EC94C'
 
 
@@ -93,6 +96,7 @@ let s:shiny_grey       = '#7E8E91'
 let s:grey4            = '#658494'
 let s:grey5            = '#b7bdc0' 
 let s:grey6            = '#aebbc5'
+let s:grey7            = '#5F87AF'
 
 let s:diff_brown       = '#4C4745'
 let s:grey_brown       = '#403D3D'
@@ -278,9 +282,14 @@ endif
 " call s:HL('CFuncTag',         s:function_green,   '', s:none)
 
 " call s:HL('Function',         s:MSVC_darker_green, '',                s:none)
-call s:HL('Function',         s:lime_, '',                s:none)
+call s:HL('Function',         s:lime_,             '', s:none)
 call s:HL('CFuncTag',         s:MSVC_darker_green, '', s:none)
 call s:HL('CMember',          s:grey5,             '', s:none)
+call s:HL('BoldGrey',         s:grey5,             '', s:bold)
+
+call s:HL('Namespace',  s:resharper_namespace, '', s:none)
+call s:HL('BNamespace', s:resharper_namespace, '', s:bold)
+call s:HL('Method',     s:resharper_light_green, '', s:none)
 
 " call s:HL('CFuncTag',         s:resharper_light_blue,   '', s:none)
 " call s:HL('CMember',          s:resharper_light_purple, '', s:none)
@@ -306,6 +315,8 @@ call s:HL('cNumberSuffix',    s:nova_light_green, '', s:none)
 call s:HL('mutedFunc',        s:grey5,            '', s:bold)
 call s:HL('perlTypeSpec',     s:cyan_,            '', s:bold)
 call s:HL('pythonDocstring',  s:comment,          '', s:none)
+
+call s:HL('OverloadedOperator', s:resharper_operator, '', s:none)
 
 call s:HL('perlQuoteSE',      s:lime_,     '', s:bold)
 call s:HL('perlMatchSE',      s:lime_,     '', s:bold)
