@@ -1,6 +1,7 @@
 syntax keyword cExtraNonStandard xmalloc xcalloc xrealloc xfree xreallocarray nmalloc nrealloc
 syntax keyword cExtraNonStandard talloc talloc_array talloc_free talloc_realloc talloc_size talloc_realloc_size talloc_zero talloc_zero_size
-syntax keyword cExtraNonStandard talloc_realloc_array talloc_free_children talloc_named_const talloc_named
+syntax keyword cExtraNonStandard talloc_free_children talloc_named_const talloc_named
+syntax keyword cExtraNonStandard TALLOC_FREE
 syntax keyword cExtraOther       talloc_reference talloc_unlink talloc_total_size talloc_move talloc_reparent talloc_steal
 syntax keyword cExtraOther       talloc_asprintf talloc_vasprintf talloc_strdup talloc_memdup talloc_autofree_context talloc_set_destructor
 syntax keyword cExtraOther       brk sbrk
@@ -42,7 +43,8 @@ syntax keyword cExtentionFunc  isblank alloca strdup strdupa mkostemp mkostemps 
 syntax keyword cPosixFunction  link unlink mkfifo mkdir symlink mknod truncate ftruncate pipe
 syntax keyword cPosixFunction  chown chmod lstat fstat fstat64 readlink sync syncfs fsync fdopen
 syntax keyword cPosixFunction  fstatat openat fileno realpath dirname scandir
-syntax keyword cPosixFunction  sysconf isatty ttyname sigaction socket connect recv recvfrom
+syntax keyword cPosixFunction  sysconf isatty ttyname sigaction
+syntax keyword cPosixFunction  socket connect bind accept recv recvfrom send recvmsg sendmsg listen
 syntax keyword cPosixFunction  gettimeofday clock_gettime mmap sbrk munmap
 syntax keyword cPosixFunction  execl execle execlp execv execvp execvpe execve wait waitpid pause
 syntax keyword cPosixFunction  posix_spawn posix_spawnp

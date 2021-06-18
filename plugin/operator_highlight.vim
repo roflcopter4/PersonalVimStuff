@@ -127,7 +127,7 @@ fun! s:HighlightOperators()
         syn match OperatorChars /-/
     endif
 
-    if (s:IsC() || &filetype == 'go')
+    if (s:IsC() || &filetype ==# 'go')
         syn match OperatorChars /\.\.\./
     endif
 
@@ -148,6 +148,9 @@ fun! s:HighlightOperators()
         syn match OperatorChars /[?+*<>&!~=^]/
     endif
 
+    if (&filetype ==# 'cpp')
+        syn match cppAccessor /\%([A-Za-z)\]]\d*\)\@2<=::\%(\s*\%(\w\|[~<\[()]\)\)\@=/
+    endif
     if (s:IsC() || &filetype ==# 'go' || &filetype ==# 'rust')
         syn match OperatorChars /\[\]/
         syn match OperatorChars /[:\[\]]/
@@ -175,6 +178,10 @@ fun! s:HighlightOperators()
     endif
     syn match NegationChar /!\%(=\)\@!/
 
+    " hi cppAccessor guifg='#FFA726' gui=BOLD
+    " hi cppAccessor guifg='#FFCA28' gui=BOLD
+    " hi cppAccessor guifg='#C4BE89' gui=BOLD
+    hi cppAccessor guifg='#ECEFF1' gui=NONE
 
     if g:ophigh_highlight_link_group !=# ''
         exec 'hi def link OperatorChars ' . g:ophigh_highlight_link_group
@@ -200,7 +207,7 @@ fun! s:HighlightOperators()
 endfunction
 
 augroup Operator_Higlight
-    au Syntax * call s:HighlightOperators()
-    au ColorScheme * call s:HighlightOperators()
+    autocmd Syntax * call s:HighlightOperators()
+    autocmd ColorScheme * call s:HighlightOperators()
 augroup END
 

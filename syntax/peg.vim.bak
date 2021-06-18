@@ -1,0 +1,53 @@
+" Vim syntax file
+" Language: Parser Expression Grammars (PEG)
+" Maintainer: RoflCopter4
+" Latest Revision: Aug 23, 2020
+
+if exists("b:current_syntax")
+    finish
+endif
+
+" Go
+syntax include @goSyntax syntax/go.vim
+"syntax region Inline_C_Data	matchgroup=perlInline start="__C__"	                          end="\ze__\w\+__" contains=@cSyntax containedin=perlDATA contained
+"syntax region Inline_C_Heredoc	matchgroup=perlInline start="\%(/\* INLINE C \*/\|// INLINE C\)$" end="\%(/\* INLINE C \*/\|// INLINE C\)$" contains=@cSyntax containedin=perlHereDoc,perlIndentedHereDoc contained
+
+
+" Main Syntax
+
+
+syn match   pegRuleIdentifier   /^\a\+/ skipwhite skipnl skipempty nextgroup=pegRuleSeparator
+syn match   pegRuleSeparator    /<-/ contained skipwhite skipnl skipempty nextgroup=@pegRuleDefinition
+
+syn cluster pegRuleDefinition   contains=pegGrouping,pegOr,pegQuantifier,pegUnicode
+
+syn region  pegGrouping         start="(" end=")" contained skipwhite display transparent
+
+syn match   pegOr               "[/|]" contained
+syn match   pegSpecial          "[!&]" contained
+
+syn match   pegQuantifier       /[+\*?]/ contained display
+syn match   pegQuantifier       /{\d\+,\d\+}/ contained display
+syn match   pegQuantifier       /{\d\+}/ contained display
+syn match   pegUnicode          /U+[A-F0-9]\{4,6}/ contained display
+syn region  pegRange            matchgroup=pegDelimiter start=/\[^/ start=/\[/ end=/\]/ contained skipwhite contains=pegRangeValue,pegUnicode display
+syn match   pegRangeValue       /\d\+-\d\+/ contained display
+syn match   pegRangeValue       /\a\+-\a\+/ contained display
+
+
+
+syn match   pegGoKeyword /^\%(import\|type\|package\)/ skipwhite
+
+
+hi def link pegGoKeyword        Keyword
+hi def link pegRuleIdentifier   Identifier
+hi def link pegRuleSeparator    Conditional
+hi def link pegDelimiter        Delimiter
+
+hi def link pegOr pegDelimiter
+
+hi def link pegQuantifier     Function
+hi def link pegUnicode        Constant
+
+
+let b:current_syntax = "peg"

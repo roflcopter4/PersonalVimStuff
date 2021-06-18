@@ -11,9 +11,9 @@ else
  syn keyword	shTodo	contained		COMBAK FIXME TODO XXX NOTE
 endif
 
-syntax region shColonComment oneline matchgroup=shColon start=":" end="$"
+"syntax region shColonComment oneline matchgroup=shColon start=":" end="$"
 
 hi def link shTodo	Todo
 hi def link shBang	PreProc
-hi def link shColonComment shComment
+"hi def link shColonComment shComment
 "hi link shLoop	Repeat

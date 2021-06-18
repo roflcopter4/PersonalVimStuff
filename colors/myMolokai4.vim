@@ -51,7 +51,8 @@ let s:debug_grey       = '#BCA3A3'
 let s:cyan_            = '#66D9EF'
 let s:lime_            = '#A6E22E'
 let s:orange_          = '#FD971F'
-let s:orange_red       = '#ef5939'
+let s:nova_deep_orange = '#FF7043'
+let s:orange_red       = '#EF5939'
 let s:dark_blue        = '#13354A'
 let s:dark_magenta     = '#960050'
 let s:very_dark_red    = '#1E0010'
@@ -69,20 +70,32 @@ let s:key_grey         = '#888A85'
 let s:cursorline_grey  = '#293739'
 let s:warning_grey     = '#333333'
 
-let s:nova_teal        = '#26A69A'
 let s:nova_light_green = '#66BB6A'
-let s:palevioletred_   = '#d33682'
-let s:nova_blue        = '#42A5F5'
+let s:palevioletred_   = '#D33682'
 let s:newMagenta       = '#CD00CD'
-let s:MSVC_Violet      = '#AE81FF'  " << Same as light_purple
 
 let s:muted_yellow     = '#908B25'
 let s:function_green   = '#16DB2A'
-let s:new_yellow       = '#bbbd4f'
+let s:new_yellow       = '#BBBD4F'
 
-let s:resharper_light_blue   = '#ADD8E6'  " Functions
+let s:resharper_beige        = '#E6D8AD'
+let s:nova_yellow            = '#FFEE58'
+let s:nova_amber             = '#FFCA28'
+let s:nova_orange            = '#FFA726'
 let s:resharper_light_purple = '#DDA0DD'  " Struct members
+let s:lighter_pink           = '#E58CB9'
+let s:nifty_pink             = '#E55CA1'
+let s:idunno                 = '#F7A6DA'
+let s:idunno2                = '#ed92c0'
+let s:resharper_light_blue   = '#ADD8E6'
+"let s:cyan_                 = '#66D9EF'
+let s:darker_cyan            = '#39acc2'
+let s:nova_cyan              = '#26C6DA'
+let s:nova_light_blue        = '#29B6F6'
+let s:nova_blue              = '#42A5F5'
+let s:nova_teal              = '#26A69A'
 let s:resharper_light_green  = '#90EE90'
+let s:resharper_operator     = '#4EC9B0'
 let s:MSVC_darker_green      = '#4EC94C'
 
 
@@ -91,8 +104,9 @@ let s:MSVC_darker_green      = '#4EC94C'
 let s:comment_grey     = '#878787'
 let s:shiny_grey       = '#7E8E91'
 let s:grey4            = '#658494'
-let s:grey5            = '#b7bdc0' 
-let s:grey6            = '#aebbc5'
+let s:grey5            = '#B7BDC0' 
+let s:grey6            = '#AEBBC5'
+let s:grey7            = '#5F87AF'
 
 let s:diff_brown       = '#4C4745'
 let s:grey_brown       = '#403D3D'
@@ -278,9 +292,16 @@ endif
 " call s:HL('CFuncTag',         s:function_green,   '', s:none)
 
 " call s:HL('Function',         s:MSVC_darker_green, '',                s:none)
-call s:HL('Function',         s:lime_, '',                s:none)
+call s:HL('Function',         s:lime_,             '', s:none)
 call s:HL('CFuncTag',         s:MSVC_darker_green, '', s:none)
 call s:HL('CMember',          s:grey5,             '', s:none)
+call s:HL('BoldGrey',         s:grey5,             '', s:bold)
+
+" call s:HL('Namespace',  s:resharper_beige, '', s:none)
+" call s:HL('BNamespace', s:resharper_beige, '', s:bold)
+call s:HL('Namespace',  s:resharper_light_blue, '', s:none)
+call s:HL('BNamespace', s:resharper_light_blue, '', s:bold)
+call s:HL('Method',     s:resharper_light_green, '', s:none)
 
 " call s:HL('CFuncTag',         s:resharper_light_blue,   '', s:none)
 " call s:HL('CMember',          s:resharper_light_purple, '', s:none)
@@ -295,7 +316,6 @@ call s:HL('Enum',             s:nova_blue,        '', s:none)
 " call s:HL('GlobalVarTag',     s:muted_yellow,     '', s:none)
 call s:HL('LightPinkR',       s:bright_pink,      '', s:none)
 call s:HL('NegationChar',     s:red_,             '', s:bold)
-call s:HL('OperatorChars',    s:debug_grey,       '', s:bold)
 call s:HL('PerlSpecialChar',  s:bright_pink,      '', s:bold)
 call s:HL('PerlSpecialChar2', s:orange_red,       '', s:bold)
 call s:HL('PerlMulti',        s:cyan_,            '', s:bold)
@@ -307,15 +327,29 @@ call s:HL('mutedFunc',        s:grey5,            '', s:bold)
 call s:HL('perlTypeSpec',     s:cyan_,            '', s:bold)
 call s:HL('pythonDocstring',  s:comment,          '', s:none)
 
+call s:HL('OverloadedOperator', s:resharper_operator, '', s:none)
+
 call s:HL('perlQuoteSE',      s:lime_,     '', s:bold)
 call s:HL('perlMatchSE',      s:lime_,     '', s:bold)
 
 call s:HL('CommaSemicolon',   '',        '',  s:bold)
 
-call s:HL('DereferenceStar',  s:debug_grey, '', s:bold)
 
 call s:HL('newClassColor',    s:resharper_light_purple, '', s:none)
 call s:HL('newTemplateColor', s:resharper_light_purple, '', s:bold)
+" call s:HL('newTemplateColor', s:nifty_pink, '', s:bold)
+" call s:HL('newTemplateColor', s:lighter_pink, '', s:bold)
 call s:HL('boldOrange',       s:orange_,                '', s:bold)
+" call s:HL('magentaIGuess',    s:lighter_pink,  '', s:none)
+" call s:HL('magentaIGuess',    s:idunno2,  '', s:none)
+" call s:HL('magentaIGuess',    s:darker_cyan,  '', s:none)
+" call s:HL('magentaIGuess',    s:nova_amber,  '', s:none)
+call s:HL('magentaIGuess',    s:resharper_light_purple, '', s:none)
+" call s:HL('OperatorChars',    s:debug_grey,       '', s:bold)
+" call s:HL('OperatorChars',    s:resharper_beige,       '', s:bold)
+" call s:HL('OperatorChars',    s:white_,       '', s:bold)
+call s:HL('OperatorChars',    s:debug_grey,       '', s:bold)
+call s:HL('DereferenceStar',  s:debug_grey, '', s:bold)
+" call s:HL('DereferenceStar',  s:resharper_beige, '', s:bold)
 
 set background=dark

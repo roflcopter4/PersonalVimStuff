@@ -15,9 +15,11 @@ let s:ft = matchstr(&filetype, '^\([^.]\)\+')
 
 " A bunch of useful C keywords
 syn keyword	cStatement	goto break return continue asm
-syn keyword	cLabel		case default
 syn keyword	cConditional	if else switch
 syn keyword	cRepeat		while for do
+syn keyword	cLabel		case
+syn match	cLabel		"\<\%(default\)\>\%(\s*:\)\@="
+syn match	cppDelete	"\<\%(default\)\>\%(\s*:\)\@!"
 
 syn match	cTodo		contained "\%(TODO\|FIXME\|XXX\|NOTE\):\="
 

@@ -61,8 +61,8 @@ else
   syn match   nasmSpecialLabel	"\<\$\.\.@\(\h\|[?@]\)\k*\>"ms=s+1
 endif
 "  Labels can be dereferenced with '$' to destinguish them from reserved words
-" syn match   nasmLabelError	"\<\$\K\k*\s*:"
-" syn match   nasmLabelError	"^\s*\$\K\k*\>"
+syn match   nasmLabelError	"\<\$\K\k*\s*:"
+syn match   nasmLabelError	"^\s*\$\K\k*\>"
 syn match   nasmLabelError	"\<\~\s*\(\k*\s*:\|\$\=\.\k*\)"
 
 
@@ -219,16 +219,16 @@ syn cluster nasmGrpInPreCondits	contains=nasmPreCondit,nasmInPreCondit,nasmCtxPr
 syn cluster nasmGrpPreCondits	contains=nasmPreConditDef,@nasmGrpInPreCondits,nasmCtxPreProc,nasmCtxLocLabel
 
 "  Other pre-processor statements
-syn match   nasmPreProc		"^\s*%\(rep\|use\)\>"hs=e-3
+syn match   nasmPreProc		"^\s*%\%(rep\|use\)\>"hs=e-3
 syn match   nasmPreProc		"^\s*%line\>"hs=e-4
-syn match   nasmPreProc		"^\s*%\(clear\|error\|fatal\)\>"hs=e-5
-syn match   nasmPreProc		"^\s*%\(endrep\|strlen\|substr\|strcat\|defstr\|deftok\)\>"hs=e-6
-syn match   nasmPreProc		"^\s*%\(exitrep\|warning\)\>"hs=e-7
+syn match   nasmPreProc		"^\s*%\%(clear\|error\|fatal\)\>"hs=e-5
+syn match   nasmPreProc		"^\s*%\%(endrep\|strlen\|substr\|strcat\|defstr\|deftok\|pragma\)\>"hs=e-6
+syn match   nasmPreProc		"^\s*%\%(exitrep\|warning\)\>"hs=e-7
 syn match   nasmDefine		"^\s*%undef\>"hs=e-5
-syn match   nasmDefine		"^\s*%\(assign\|define\)\>"hs=e-6
-syn match   nasmDefine		"^\s*%i\(assign\|define\)\>"hs=e-7
-syn match   nasmDefine		"^\s*%x\(assign\|define\)\>"hs=e-7
-syn match   nasmDefine		"^\s*%ix\(assign\|define\)\>"hs=e-8
+syn match   nasmDefine		"^\s*%\%(assign\|define\)\>"hs=e-6
+syn match   nasmDefine		"^\s*%i\%(assign\|define\)\>"hs=e-7
+syn match   nasmDefine		"^\s*%x\%(assign\|define\)\>"hs=e-7
+syn match   nasmDefine		"^\s*%ix\%(assign\|define\)\>"hs=e-8
 syn match   nasmDefine		"^\s*%unmacro\>"hs=e-7
 syn match   nasmInclude		"^\s*%include\>"hs=e-7
 " Todo: Treat the line tail after %fatal, %error, %warning as text
@@ -242,21 +242,24 @@ syn cluster nasmGrpPreProcs	contains=nasmMacroDef,@nasmGrpInMacros,@nasmGrpPreCo
 " Register Identifiers:
 "  Register operands:
 syn match   nasmGen08Register	"\<[A-D][HL]\>"
-syn match   nasmGen16Register	"\<\([A-D]X\|[DS]I\|[BS]P\)\>"
-syn match   nasmGen32Register	"\<E\([A-D]X\|[DS]I\|[BS]P\)\>"
-syn match   nasmGen64Register	"\<R\([A-D]X\|[DS]I\|[BS]P\|[89]\|1[0-5]\|[89][WD]\|1[0-5][WD]\)\>"
+syn match   nasmGen16Register	"\<\%([A-D]X\|[DS]I\|[BS]P\)\>"
+syn match   nasmGen32Register	"\<E\%([A-D]X\|[DS]I\|[BS]P\)\>"
+syn match   nasmGen64Register	"\<R\%([A-D]X\|[DS]I\|[BS]P\|[89]\|1[0-5]\|[89][WDB]\|1[0-5][WDB]\)\>"
+syn match   nasmExtRegister     "\<\%([SB]PL\|[SD]IL\)\>"
 syn match   nasmSegRegister	"\<[C-GS]S\>"
 syn match   nasmSpcRegister	"\<E\=IP\>"
 syn match   nasmFpuRegister	"\<ST\o\>"
 syn match   nasmMmxRegister	"\<MM\o\>"
-syn match   nasmSseRegister	"\<XMM\o\>"
+syn match   nasmSseRegister	"\<XMM\d[0-5]\=\>"
+syn match   nasmAvxRegister	"\<YMM\d[0-5]\=\>"
+syn match   nasmAvx512Register	"\<ZMM\%([12]\d\|3[01]\|\d\)\>"
 syn match   nasmCtrlRegister	"\<CR\o\>"
 syn match   nasmDebugRegister	"\<DR\o\>"
 syn match   nasmTestRegister	"\<TR\o\>"
-syn match   nasmRegisterError	"\<\(CR[15-9]\|DR[4-58-9]\|TR[0-28-9]\)\>"
+syn match   nasmRegisterError	"\<\%(CR[15-9]\|DR[4-58-9]\|TR[0-28-9]\)\>"
 syn match   nasmRegisterError	"\<X\=MM[8-9]\>"
-syn match   nasmRegisterError	"\<ST\((\d)\|[8-9]\>\)"
-syn match   nasmRegisterError	"\<E\([A-D][HL]\|[C-GS]S\)\>"
+syn match   nasmRegisterError	"\<ST\%((\d)\|[8-9]\>\)"
+syn match   nasmRegisterError	"\<E\%([A-D][HL]\|[C-GS]S\)\>"
 "  Memory reference operand (address):
 syn match   nasmMemRefError	"[[\]]"
 syn cluster nasmGrpCntnMemRef	contains=ALLBUT,@nasmGrpComments,@nasmGrpPreProcs,@nasmGrpInStrucs,nasmMemReference,nasmMemRefError
@@ -300,8 +303,11 @@ syn keyword nasmFmtDirective	LIBRARY
 syn case match
 syn keyword nasmFmtDirective	_GLOBAL_OFFSET_TABLE_ __GLOBAL_OFFSET_TABLE_
 syn keyword nasmFmtDirective	..start ..got ..gotoff ..gotpc ..plt ..sym
+
 syn case ignore
 
+syn keyword nasmDirective	DEFAULT
+syn keyword nasmStorageModifier	REL ABS BND NOBND
 
 
 " Standard Instructions:
@@ -434,6 +440,20 @@ syn keyword nasmUndInstruction	CMPXCHG486 IBTS ICEBP INT01 INT03 LOADALL
 syn keyword nasmUndInstruction	LOADALL286 LOADALL386 SALC SMI UD1 UMOV XBTS
 
 
+" Additional Modern Instructions: (BMI, BMI2, AVX, AVX2)
+syn keyword nasmBmiInstruction  ANDN BEXTR BLSI BLSMSK BLSR TZCNT POPCNT LZCNT
+syn keyword nasmBmiInstruction  PDEP PEXT BZHI MULX RORX SARX SHRX SHLX
+syn match   nasmAvxInstruction  "\<VBROADCAST\%(S[DS]\|[FI]128\)\>"
+syn match   nasmAvxInstruction  "\<VPBROADCAST[BWDQ]\>"
+syn keyword nasmAvxInstruction  VINSERTI128 VINSERTF128 VEXTRACTI128 VEXTRACTF128
+syn keyword nasmAvxInstruction  VZEROALL VZEROUPPER VPBLENDD VPSRAVD
+syn match   nasmAvxInstruction "\<VMASKMOVP[SD]\>"
+syn match   nasmAvxInstruction "\<VPMASKMOV[DQ]\>"
+syn match   nasmAvxInstruction "\<VGATHER[DQ]P[DS]\>"
+syn match   nasmAvxInstruction "\<VPGATHER[DQ][DQ]\>"
+syn match   nasmAvxInstruction "\<VPERM\%(ILP[SD]\|2[FI]128\|P[SD]\|[DQ]\)\>"
+syn match   nasmAvxInstruction "\<VPS[LR]LV[DQ]\>"
+
 
 " Synchronize Syntax:
 syn sync clear
@@ -467,7 +487,7 @@ hi def link nasmInCommentTodo	Todo
 hi def link nasmString		String
 hi def link nasmCString	String
 hi def link nasmStringError	Error
-hi def link nasmCStringEscape	SpecialChar
+hi def link nasmCStringEscape	Special
 hi def link nasmCStringFormat	SpecialChar
 hi def link nasmBinNumber	Number
 hi def link nasmOctNumber	Number
@@ -506,6 +526,8 @@ hi def link nasmDirective	Keyword
 hi def link nasmStdDirective	PreProc
 hi def link nasmFmtDirective	Keyword
 
+hi def link nasmStorageModifier	Special
+
 " Register Group:
 hi def link nasmCtrlRegister	Special
 hi def link nasmDebugRegister	Debug
@@ -525,6 +547,9 @@ hi def link nasmAmdInstruction	Special
 hi def link nasmCrxInstruction	Special
 hi def link nasmUndInstruction	Todo
 hi def link nasmInstructnError	Error
+
+hi def link nasmBmiInstruction	Statement
+hi def link nasmAvxInstruction	Statement
 
 
 let b:current_syntax = "nasm"
