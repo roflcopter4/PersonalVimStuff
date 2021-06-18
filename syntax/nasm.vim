@@ -81,7 +81,7 @@ syn match   nasmCStringEscape	display contained "\\\(u\x\{4}\|U\x\{8}\)"
 " ISO C99 format strings (copied from cFormat in runtime/syntax/c.vim)
 syn match   nasmCStringFormat	display "%\(\d\+\$\)\=[-+' #0*]*\(\d*\|\*\|\*\d\+\$\)\(\.\(\d*\|\*\|\*\d\+\$\)\)\=\([hlLjzt]\|ll\|hh\)\=\([aAbdiuoxXDOUfFeEgGcCsSpn]\|\[\^\=.[^]]*\]\)" contained
 syn match   nasmCStringFormat	display "%%" contained
-syn match   nasmString		+\("[^"]\{-}"\|'[^']\{-}'\)+
+syn match   nasmString		+\%("[^"]\{-}"\|'[^']\{-}'\)+
 " Highlight C escape- and format-sequences within ``-strings
 syn match   nasmCString	+\(`[^`]\{-}`\)+ contains=nasmCStringEscape,nasmCStringFormat extend
 syn case ignore
