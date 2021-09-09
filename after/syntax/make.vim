@@ -29,7 +29,7 @@ syn match makePortsIdent  "CATEGORIES\|MASTER_SITES\|DISTNAME\|MAINTAINER"
 syn match makePortsIdent  "COMMENT\|LICENSE_FILE\|LICENSE"
 syn match makePortsIdent  "BUILD_DEPENDS\|LIB_DEPENDS\|RUN_DEPENDS"
 
-syn match makePortsBool "\<yes\|no\>"
+syn match makePortsBool "\<\%(yes\|no\)\>"
 
 syn match makePortsUseIdent "\%(LD\|C\%(\|PP\)\)FLAGS"
 syn match makePortsUseIdent "GNU_CONFIGURE\|CONFIGURE_ARGS"

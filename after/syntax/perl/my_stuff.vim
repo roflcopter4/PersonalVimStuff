@@ -13,7 +13,9 @@ syntax keyword perlConstant			true false
 syntax keyword perlStatementStorageExtra	new struct
 syntax keyword perlStatementFunction		getcwd looks_like_number which
 syntax keyword perlStatementFunction		shell_quote tempdir cleanup 
-syntax keyword perlStatementFunction		mv cp dircopy clone GetOptions rel2abs splitpath catfile 
+syntax keyword perlStatementFunction		mv cp dircopy clone GetOptions
+syntax keyword perlStatementFunction		abs2rel canonpath catfile catdir rel2abs splitpath 
+syntax keyword perlStdioFiles			STDIN STDOUT STDERR
 
 hi def link perlStatementStorageExtra	perlType
 hi def link perlStatementStorage	perlTypeSpec
@@ -39,5 +41,6 @@ hi link perlStatementNetwork		mutedFunc
 hi link perlStatementPword		mutedFunc
 hi link perlStatementTime		mutedFunc
 hi link perlStatementFiledesc		mutedFunc
+hi def link perlStdioFiles		operator
 
 " hi link perlConstant			Constant

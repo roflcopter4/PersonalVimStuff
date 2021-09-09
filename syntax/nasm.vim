@@ -11,13 +11,11 @@
 
 " Setup Syntax:
 " quit when a syntax file was already loaded
-if exists("b:current_syntax")
+if exists('b:current_syntax')
   finish
 endif
 "  Assembler syntax is case insensetive
 syn case ignore
-
-
 
 " Vim search and movement commands on identifers
 "  Comments at start of a line inside which to skip search for indentifiers
@@ -25,6 +23,10 @@ setlocal comments=:;
 "  Identifier Keyword characters (defines \k)
 setlocal iskeyword=@,48-57,#,$,.,?,@-@,_,~
 
+
+" let g:nasm_loose_syntax = 1
+" let g:nasm_no_warn = 1
+let g:nasm_ctx_outside_macro = 1
 
 " Comments:
 syn region  nasmComment		start=";" keepend end="$" contains=@nasmGrpInComments
@@ -34,7 +36,6 @@ syn cluster nasmGrpInComments	contains=nasmInCommentTodo
 syn cluster nasmGrpComments	contains=@nasmGrpInComments,nasmComment,nasmSpecialComment
 
 
-
 " Label Identifiers:
 "  in NASM: 'Everything is a Label'
 "  Definition Label = label defined by %[i]define or %[i]assign
@@ -42,16 +43,17 @@ syn cluster nasmGrpComments	contains=@nasmGrpInComments,nasmComment,nasmSpecialC
 syn match   nasmLabelError	"$\=\(\d\+\K\|[#.@]\|\$\$\k\)\k*\>"
 syn match   nasmLabel		"\<\(\h\|[?@]\)\k*\>"
 syn match   nasmLabel		"[\$\~]\(\h\|[?@]\)\k*\>"lc=1
+syn match   nasmFuncLabel	"\<\(\h\|[?@]\)\k*\>:"he=e-1
 "  Labels starting with one or two '.' are special
 syn match   nasmLocalLabel	"\<\.\(\w\|[#$?@~]\)\k*\>"
 syn match   nasmLocalLabel	"\<\$\.\(\w\|[#$?@~]\)\k*\>"ms=s+1
-if !exists("nasm_no_warn")
+if !exists('nasm_no_warn')
   syn match  nasmLabelWarn	"\<\~\=\$\=[_.][_.\~]*\>"
 endif
-if exists("nasm_loose_syntax")
+if exists('nasm_loose_syntax')
   syn match   nasmSpecialLabel	"\<\.\.@\k\+\>"
   syn match   nasmSpecialLabel	"\<\$\.\.@\k\+\>"ms=s+1
-  if !exists("nasm_no_warn")
+  if !exists('nasm_no_warn')
     syn match   nasmLabelWarn	"\<\$\=\.\.@\(\d\|[#$\.~]\)\k*\>"
   endif
   " disallow use of nasm internal label format
@@ -81,7 +83,7 @@ syn match   nasmCStringEscape	display contained "\\\(u\x\{4}\|U\x\{8}\)"
 " ISO C99 format strings (copied from cFormat in runtime/syntax/c.vim)
 syn match   nasmCStringFormat	display "%\(\d\+\$\)\=[-+' #0*]*\(\d*\|\*\|\*\d\+\$\)\(\.\(\d*\|\*\|\*\d\+\$\)\)\=\([hlLjzt]\|ll\|hh\)\=\([aAbdiuoxXDOUfFeEgGcCsSpn]\|\[\^\=.[^]]*\]\)" contained
 syn match   nasmCStringFormat	display "%%" contained
-syn match   nasmString		+\%("[^"]\{-}"\|'[^']\{-}'\)+
+syn match   nasmString		/\%("[^"]\{-}"\|'[^']\{-}'\)/
 " Highlight C escape- and format-sequences within ``-strings
 syn match   nasmCString	+\(`[^`]\{-}`\)+ contains=nasmCStringEscape,nasmCStringFormat extend
 syn case ignore
@@ -103,11 +105,15 @@ syn match   nasmNumberError	"\<\~\s*\d\+\.\d*\(e[+-]\=\d\+\)\=\>"
 "  Storage types
 syn keyword nasmTypeError	DF EXTRN FWORD RESF TBYTE
 syn keyword nasmType		FAR NEAR SHORT
-syn keyword nasmType		BYTE WORD DWORD QWORD DQWORD HWORD DHWORD TWORD
+syn keyword nasmType		BYTE WORD DWORD QWORD DQWORD OWORD HWORD DHWORD TWORD
 syn keyword nasmType		CDECL FASTCALL NONE PASCAL STDCALL
+syn keyword nasmStorage		EXTERN GLOBAL COMMON
 syn keyword nasmStorage		DB DW DD DQ DDQ DT
 syn keyword nasmStorage		RESB RESW RESD RESQ RESDQ REST
-syn keyword nasmStorage		EXTERN GLOBAL COMMON
+syn case match
+syn keyword nasmStorage		DO RESO
+syn case ignore
+
 "  Structured storage types
 syn match   nasmTypeError	"\<\(AT\|I\=\(END\)\=\(STRUCT\=\|UNION\)\|I\=END\)\>"
 syn match   nasmStructureLabel	contained "\<\(AT\|I\=\(END\)\=\(STRUCT\=\|UNION\)\|I\=END\)\>"
@@ -127,7 +133,7 @@ syn cluster nasmGrpInStrucs	contains=nasmStructure,nasmInStructure,nasmStructure
 " PreProcessor Instructions:
 " NAsm PreProcs start with %, but % is not a character
 syn match   nasmPreProcError	"%{\=\(%\=\k\+\|%%\+\k*\|[+-]\=\d\+\)}\="
-if exists("nasm_loose_syntax")
+if exists('nasm_loose_syntax')
   syn cluster nasmGrpNxtCtx	contains=nasmStructureLabel,nasmLabel,nasmLocalLabel,nasmSpecialLabel,nasmLabelError,nasmPreProcError
 else
   syn cluster nasmGrpNxtCtx	contains=nasmStructureLabel,nasmLabel,nasmLabelError,nasmPreProcError
@@ -137,11 +143,11 @@ endif
 "  Multi-line macro
 syn cluster nasmGrpCntnMacro	contains=ALLBUT,@nasmGrpInComments,nasmStructureDef,@nasmGrpInStrucs,nasmMacroDef,@nasmGrpPreCondits,nasmMemReference,nasmInMacPreCondit,nasmInMacStrucDef
 syn region  nasmMacroDef	matchgroup=nasmMacro keepend start="^\s*%macro\>"hs=e-5 start="^\s*%imacro\>"hs=e-6 end="^\s*%endmacro\>"re=e-9 contains=@nasmGrpCntnMacro,nasmInMacStrucDef
-if exists("nasm_loose_syntax")
+if exists('nasm_loose_syntax')
   syn match  nasmInMacLabel	contained "%\(%\k\+\>\|{%\k\+}\)"
   syn match  nasmInMacLabel	contained "%\($\+\(\w\|[#\.?@~]\)\k*\>\|{$\+\(\w\|[#\.?@~]\)\k*}\)"
   syn match  nasmInMacPreProc	contained "^\s*%\(push\|repl\)\>"hs=e-4 skipwhite nextgroup=nasmStructureLabel,nasmLabel,nasmInMacParam,nasmLocalLabel,nasmSpecialLabel,nasmLabelError,nasmPreProcError
-  if !exists("nasm_no_warn")
+  if !exists('nasm_no_warn')
     syn match nasmInMacLblWarn	contained "%\(%[$\.]\k*\>\|{%[$\.]\k*}\)"
     syn match nasmInMacLblWarn	contained "%\($\+\(\d\|[#\.@~]\)\k*\|{\$\+\(\d\|[#\.@~]\)\k*}\)"
     hi link nasmInMacCatLabel	nasmInMacLblWarn
@@ -155,7 +161,7 @@ else
 endif
 syn match   nasmInMacCatLabel	contained "\d\K\k*"lc=1
 syn match   nasmInMacLabel	contained "\d}\k\+"lc=2
-if !exists("nasm_no_warn")
+if !exists('nasm_no_warn')
   syn match  nasmInMacLblWarn	contained "%\(\($\+\|%\)[_~][._~]*\>\|{\($\+\|%\)[_~][._~]*}\)"
 endif
 syn match   nasmInMacPreProc	contained "^\s*%pop\>"hs=e-3
@@ -167,7 +173,7 @@ syn region  nasmInMacStrucDef	contained transparent matchgroup=nasmStructure kee
 "   union types are not part of nasm (yet)
 "syn region  nasmInMacStrucDef	contained transparent matchgroup=nasmStructure keepend start="^\s*UNION\>"hs=e-4 end="^\s*ENDUNION\>"re=e-8 contains=@nasmGrpCntnMacro
 "syn region  nasmInMacStrucDef	contained transparent matchgroup=nasmStructure keepend start="\<IUNION\>" end="\<IEND\(UNION\)\=\>" contains=@nasmGrpCntnMacro,nasmInStructure
-syn region  nasmInMacPreConDef	contained transparent matchgroup=nasmInMacPreCondit start="^\s*%ifnidni\>"hs=e-7 start="^\s*%if\(idni\|n\(ctx\|def\|idn\|num\|str\)\)\>"hs=e-6 start="^\s*%if\(ctx\|def\|idn\|nid\|num\|str\)\>"hs=e-5 start="^\s*%ifid\>"hs=e-4 start="^\s*%if\>"hs=e-2 end="%endif\>" contains=@nasmGrpCntnMacro,nasmInMacPreCondit,nasmInPreCondit
+syn region  nasmInMacPreConDef	contained transparent matchgroup=nasmInMacPreCondit start="^\s*%if\%(nidni\|token\)\>"hs=e-7 start="^\s*%if\(idni\|n\(ctx\|def\|idn\|num\|str\)\)\>"hs=e-6 start="^\s*%if\(ctx\|def\|idn\|nid\|num\|str\)\>"hs=e-5 start="^\s*%ifid\>"hs=e-4 start="^\s*%if\>"hs=e-2 end="%endif\>" contains=@nasmGrpCntnMacro,nasmInMacPreCondit,nasmInPreCondit
 " Todo: allow STRUC/ISTRUC to be used inside preprocessor conditional block
 syn match   nasmInMacPreCondit	contained transparent "ctx\s"lc=3 skipwhite nextgroup=@nasmGrpNxtCtx
 syn match   nasmInMacPreCondit	contained "^\s*%elifctx\>"hs=e-7 skipwhite nextgroup=@nasmGrpNxtCtx
@@ -184,10 +190,10 @@ syn match   nasmInMacParam	contained "%\([+-]\=\d\+\|{[+-]\=\d\+}\)"
 syn cluster nasmGrpInMacros	contains=nasmMacro,nasmInMacMacro,nasmInMacParam,nasmInMacParamNum,nasmInMacDirective,nasmInMacLabel,nasmInMacLblWarn,nasmInMacMemRef,nasmInMacPreConDef,nasmInMacPreCondit,nasmInMacPreProc,nasmInMacStrucDef
 
 "   Context pre-procs that are better used inside a macro
-if exists("nasm_ctx_outside_macro")
+if exists('nasm_ctx_outside_macro')
   syn region nasmPreConditDef	transparent matchgroup=nasmCtxPreCondit start="^\s*%ifnctx\>"hs=e-6 start="^\s*%ifctx\>"hs=e-5 end="%endif\>" contains=@nasmGrpCntnPreCon
   syn match  nasmCtxPreProc	"^\s*%pop\>"hs=e-3
-  if exists("nasm_loose_syntax")
+  if exists('nasm_loose_syntax')
     syn match   nasmCtxLocLabel	"%$\+\(\w\|[#.?@~]\)\k*\>"
   else
     syn match   nasmCtxLocLabel	"%$\+\(\h\|[?@]\)\k*\>"
@@ -196,7 +202,7 @@ if exists("nasm_ctx_outside_macro")
   syn match nasmCtxPreCondit	contained transparent "ctx\s"lc=3 skipwhite nextgroup=@nasmGrpNxtCtx
   syn match nasmCtxPreCondit	contained "^\s*%elifctx\>"hs=e-7 skipwhite nextgroup=@nasmGrpNxtCtx
   syn match nasmCtxPreCondit	contained "^\s*%elifnctx\>"hs=e-8 skipwhite nextgroup=@nasmGrpNxtCtx
-  if exists("nasm_no_warn")
+  if exists('nasm_no_warn')
     hi link nasmCtxPreCondit	nasmPreCondit
     hi link nasmCtxPreProc	nasmPreProc
     hi link nasmCtxLocLabel	nasmLocalLabel
@@ -208,24 +214,28 @@ if exists("nasm_ctx_outside_macro")
 endif
 
 "  Conditional assembly
+" syn cluster nasmGrpCntnPreCon	contains=ALLBUT,@nasmGrpInComments,@nasmGrpInMacros,@nasmGrpInStrucs
 syn cluster nasmGrpCntnPreCon	contains=ALLBUT,@nasmGrpInComments,@nasmGrpInMacros,@nasmGrpInStrucs
-syn region  nasmPreConditDef	transparent matchgroup=nasmPreCondit start="^\s*%ifnidni\>"hs=e-7 start="^\s*%if\(idni\|n\(def\|idn\|num\|str\)\)\>"hs=e-6 start="^\s*%if\(def\|idn\|nid\|num\|str\)\>"hs=e-5 start="^\s*%ifid\>"hs=e-4 start="^\s*%if\>"hs=e-2 end="%endif\>" contains=@nasmGrpCntnPreCon
+syn region  nasmPreConditDef	transparent matchgroup=nasmPreCondit start="^\s*%if\%(nidni\|token\)\>"hs=e-7 start="^\s*%if\(idni\|n\(def\|idn\|num\|str\)\)\>"hs=e-6 start="^\s*%if\(def\|idn\|nid\|num\|str\)\>"hs=e-5 start="^\s*%ifid\>"hs=e-4 start="^\s*%if\>"hs=e-2 end="%endif\>" contains=@nasmGrpCntnPreCon
 syn match   nasmInPreCondit	contained "^\s*%el\(if\|se\)\>"hs=e-4
 syn match   nasmInPreCondit	contained "^\s*%elifid\>"hs=e-6
 syn match   nasmInPreCondit	contained "^\s*%elif\(def\|idn\|nid\|num\|str\)\>"hs=e-7
 syn match   nasmInPreCondit	contained "^\s*%elif\(n\(def\|idn\|num\|str\)\|idni\)\>"hs=e-8
-syn match   nasmInPreCondit	contained "^\s*%elifnidni\>"hs=e-9
+syn match   nasmInPreCondit	contained "^\s*%elif\%(nidni\|token\)\>"hs=e-9
 syn cluster nasmGrpInPreCondits	contains=nasmPreCondit,nasmInPreCondit,nasmCtxPreCondit
 syn cluster nasmGrpPreCondits	contains=nasmPreConditDef,@nasmGrpInPreCondits,nasmCtxPreProc,nasmCtxLocLabel
 
 "  Other pre-processor statements
 syn match   nasmPreProc		"^\s*%\%(rep\|use\)\>"hs=e-3
 syn match   nasmPreProc		"^\s*%line\>"hs=e-4
-syn match   nasmPreProc		"^\s*%\%(clear\|error\|fatal\)\>"hs=e-5
 syn match   nasmPreProc		"^\s*%\%(endrep\|strlen\|substr\|strcat\|defstr\|deftok\|pragma\)\>"hs=e-6
 syn match   nasmPreProc		"^\s*%\%(exitrep\|warning\)\>"hs=e-7
+syn match   nasmPreProc		"^\s*%\%(clear\|error\|fatal\)\>"
+syn region  nasmPPMsg		 matchgroup=nasmPreProc start="^\s*%\%(warning\|error\|fatal\)\>" end="\n"
+
 syn match   nasmDefine		"^\s*%undef\>"hs=e-5
 syn match   nasmDefine		"^\s*%\%(assign\|define\)\>"hs=e-6
+syn match   nasmDefine		"^\s*%\%(assign\|define\|defstr\|deftok\)\>"hs=e-6
 syn match   nasmDefine		"^\s*%i\%(assign\|define\)\>"hs=e-7
 syn match   nasmDefine		"^\s*%x\%(assign\|define\)\>"hs=e-7
 syn match   nasmDefine		"^\s*%ix\%(assign\|define\)\>"hs=e-8
@@ -233,9 +243,11 @@ syn match   nasmDefine		"^\s*%unmacro\>"hs=e-7
 syn match   nasmInclude		"^\s*%include\>"hs=e-7
 " Todo: Treat the line tail after %fatal, %error, %warning as text
 
+syn match   nasmPunct		"[()+\-*/<>!=]"
+
 "  Multiple pre-processor instructions on single line detection (obsolete)
 "syn match   nasmPreProcError	+^\s*\([^\t "%';][^"%';]*\|[^\t "';][^"%';]\+\)%\a\+\>+
-syn cluster nasmGrpPreProcs	contains=nasmMacroDef,@nasmGrpInMacros,@nasmGrpPreCondits,nasmPreProc,nasmDefine,nasmInclude,nasmPreProcWarn,nasmPreProcError
+syn cluster nasmGrpPreProcs	contains=nasmMacroDef,@nasmGrpInMacros,@nasmGrpPreCondits,nasmPreProc,nasmDefine,nasmInclude,nasmPreProcWarn,nasmPreProcError,nasmPunct
 
 
 
@@ -273,6 +285,7 @@ syn match   nasmMemReference	"\[[^;[\]]\{-}\]" contains=@nasmGrpCntnMemRef,nasmP
 syn keyword nasmConstant	__BITS__ __DATE__ __FILE__ __FORMAT__ __LINE__
 syn keyword nasmConstant	__NASM_MAJOR__ __NASM_MINOR__ __NASM_VERSION__
 syn keyword nasmConstant	__TIME__
+syn keyword nasmSpecialMacro	__float32__ __float64__
 "  Instruction modifiers
 syn match   nasmInstructnError	"\<TO\>"
 syn match   nasmInstrModifier	"\(^\|:\)\s*[C-GS]S\>"ms=e-1
@@ -288,21 +301,25 @@ syn keyword nasmDirective	ENDSECTION ENDSEGMENT
 syn keyword nasmDirective	__SECT__
 "  Macro created standard directives: (requires %include)
 syn case match
-syn keyword nasmStdDirective	ENDPROC EPILOGUE LOCALS PROC PROLOGUE USES
+syn keyword nasmStdDirective	EPILOGUE PROLOGUE
 syn keyword nasmStdDirective	ENDIF ELSE ELIF ELSIF IF
 syn keyword nasmStdDirective	THEN LAND LOR
+"syn keyword nasmStdDirective	PROC ENDPROC LOCALS USES
 "syn keyword nasmStdDirective	BREAK CASE DEFAULT ENDSWITCH SWITCH
 "syn keyword nasmStdDirective	CASE OF ENDCASE
-syn keyword nasmStdDirective	DO ENDFOR ENDWHILE FOR REPEAT UNTIL WHILE EXIT
+"syn keyword nasmStdDirective	DO ENDFOR ENDWHILE FOR REPEAT UNTIL WHILE EXIT
 syn case ignore
 "  Format specific directives: (all formats)
 "  (excluded: extension directives to section, global, common and extern)
 syn keyword nasmFmtDirective	ORG
-syn keyword nasmFmtDirective	EXPORT IMPORT GROUP UPPERCASE SEG WRT
+" syn keyword nasmFmtDirective	EXPORT IMPORT 
+syn keyword nasmFmtDirective	GROUP UPPERCASE SEG
 syn keyword nasmFmtDirective	LIBRARY
+syn keyword nasmWRT		WRT
+
 syn case match
 syn keyword nasmFmtDirective	_GLOBAL_OFFSET_TABLE_ __GLOBAL_OFFSET_TABLE_
-syn keyword nasmFmtDirective	..start ..got ..gotoff ..gotpc ..plt ..sym
+syn keyword nasmWRTlocation	..start ..got ..gotoff ..gotpc ..plt ..sym
 
 syn case ignore
 
@@ -455,6 +472,26 @@ syn match   nasmAvxInstruction "\<VPERM\%(ILP[SD]\|2[FI]128\|P[SD]\|[DQ]\)\>"
 syn match   nasmAvxInstruction "\<VPS[LR]LV[DQ]\>"
 
 
+" Some junk:
+syn case match
+syn keyword nasmNasmxKeyword  DEFAULT 
+syn case ignore
+syn keyword nasmNasmxKeyword  INVOKE USES CASE NASMX_AT LOCAL
+syn keyword nasmNasmxType     NASMX_STRUC NASMX_UNION NASMX_CLASS NASMX_ALIGN NASMX_RESERVE
+syn keyword nasmNasmxType     NASMX_ENDSTRUC NASMX_ENDUNION NASMX_ENDCLASS
+syn keyword nasmNasmxKeywordStrong SWITCH CONTINUE BREAK RETURN
+syn keyword nasmNasmxKeywordStrong ENTRY LOCALS PROC
+syn keyword nasmNasmxKeywordStrong ENDSWITCH ENDLOCALS ENDPROC
+syn keyword nasmNasmxKeywordStrong IMPORT
+
+syn match   nasmNasmxMacro    "\<\%(var\|argv\|[@]\)\>"
+
+hi def link nasmNasmxKeyword		PreProc
+hi def link nasmNasmxType		Type
+hi def link nasmNasmxKeywordStrong	Method
+hi def link nasmNasmxMacro		PreProc
+
+
 " Synchronize Syntax:
 syn sync clear
 syn sync minlines=50		"for multiple region nesting
@@ -485,7 +522,7 @@ hi def link nasmInCommentTodo	Todo
 
 " Constant Group:
 hi def link nasmString		String
-hi def link nasmCString	String
+hi def link nasmCString		String
 hi def link nasmStringError	Error
 hi def link nasmCStringEscape	Special
 hi def link nasmCStringFormat	SpecialChar
@@ -503,18 +540,24 @@ hi def link nasmSpecialLabel	Special
 hi def link nasmLabelError	Error
 hi def link nasmLabelWarn	Todo
 
+hi def link nasmFuncLabel	Function
+
 " PreProc Group:
-hi def link nasmPreProc		PreProc
-hi def link nasmDefine		Define
-hi def link nasmInclude		Include
-hi def link nasmMacro		Macro
-hi def link nasmPreCondit	PreCondit
+hi def link nasmPreProc		PreCondit
+hi def link nasmDefine		c_preproc
+hi def link nasmInclude		PreCondit
+hi def link nasmMacro		c_preproc
+hi def link nasmPreCondit	PreProc
 hi def link nasmPreProcError	Error
 hi def link nasmPreProcWarn	Todo
 
+hi def link nasmSpecialMacro	Operator
+
+hi def link nasmPPMsg		String
+
 " Type Group:
 hi def link nasmType		Type
-hi def link nasmStorage		Operator
+hi def link nasmStorage		Type
 hi def link nasmStructure	Structure
 hi def link nasmTypeError	Error
 
@@ -522,11 +565,13 @@ hi def link nasmTypeError	Error
 hi def link nasmConstant	Constant
 hi def link nasmInstrModifier	Operator
 hi def link nasmRepeat		Repeat
-hi def link nasmDirective	Keyword
 hi def link nasmStdDirective	PreProc
 hi def link nasmFmtDirective	Keyword
+hi def link nasmDirective	newTemplateColor
 
+hi def link nasmWRT		Structure
 hi def link nasmStorageModifier	Special
+hi def link nasmWRTlocation	Special
 
 " Register Group:
 hi def link nasmCtrlRegister	Special
@@ -552,6 +597,6 @@ hi def link nasmBmiInstruction	Statement
 hi def link nasmAvxInstruction	Statement
 
 
-let b:current_syntax = "nasm"
+let b:current_syntax = 'nasm'
 
 " vim:ts=8 sw=4
