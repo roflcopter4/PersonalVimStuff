@@ -24,6 +24,10 @@ else
     let g:loaded_operator_highlight = 1
 endif
 
+if ! get(g:, 'operator_highlight_enable', 0)
+    finish
+endif
+
 
 if !exists( 'g:ophigh_color' )
     let g:ophigh_color = 'cyan'
@@ -59,7 +63,7 @@ endif
 
 
 if !exists( 'g:ophigh_filetypes' )
-    let g:ophigh_filetypes = [ 'c', 'cpp', 'rust']
+    let g:ophigh_filetypes = ['c', 'cpp', 'rust', 'vim', 'go']
 endif
 
 "if !exists( 'g:ophigh_filetypes_to_ignore' )
@@ -100,7 +104,7 @@ fun! s:HighlightOperators()
         "return
     "endif
 
-    if index( g:ophigh_filetypes, &filetype ) < 0
+    if index(g:ophigh_filetypes, &filetype) < 0
         return
     endif
 
@@ -109,7 +113,7 @@ fun! s:HighlightOperators()
     "   block params | hightlighting
     if (&filetype ==# 'ruby')
         "syn match OperatorChars +/\(.\{-}/\)\@!+ " FIXME: regex region match
-        syn match OperatorChars /::\|:\%(\w\)\@!/
+        syn match OperatorChars /:\%(\w\)\@!/
         syn match OperatorChars /||\||=\||\%(\d\)\@=\||\%(\w\)\@!\%(.\{-\}|\)\@!/
     else
         syn match OperatorChars /[|]/
@@ -136,7 +140,7 @@ fun! s:HighlightOperators()
     if (&filetype ==# 'go')
         syn match OperatorChars /\.\%((\)\@!/
     else
-        syn match OperatorChars /\./
+        syn match OperatorChars /\%(\x\)\@1<!\.\%(\x\)\@!/
     endif
 
     "syn match OperatorChars +/\(/\|\*\)\@!+
@@ -145,19 +149,16 @@ fun! s:HighlightOperators()
         syn match OperatorChars /[+*&!~=^]/
         syn match OperatorChars /\%(\w\)\@1<![<>]/
     else
-        syn match OperatorChars /[?+*<>&!~=^]/
+        syn match OperatorChars /[?+*<>&!=^~]/
     endif
 
-    if (&filetype ==# 'cpp')
-        syn match cppAccessor /\%([A-Za-z)\]]\d*\)\@2<=::\%(\s*\%(\w\|[~<\[()]\)\)\@=/
-    endif
     if (s:IsC() || &filetype ==# 'go' || &filetype ==# 'rust')
         syn match OperatorChars /\[\]/
         syn match OperatorChars /[:\[\]]/
         syn match CommaSemicolon /[;,]/
         "syn match StructDeref /\%(\w\)\(\.\)[A-Za-z]/
         "syn match StructDeref /\([A-Za-z)\]]\d*\)\@<=\.\(\d\)\@!/
-        syn match StructDeref /\%([A-Za-z)\]]\d*\)\@2<=\.\%(\s*\%(\w\|[()]\)\)\@=/
+        syn match StructDeref /\%(\h\%([)\]]\|\w\)\=\)\@3<=\.\%(\s*\%(\w\|[()]\)\)\@=/
         " syn match StructDeref /\%([A-Za-z)\]]\d*\)\zs\./
         
         if (s:IsC())
@@ -176,12 +177,27 @@ fun! s:HighlightOperators()
         " syn match AddressOperator /&\%(\a\|(\)\@=/
         " hi def link AddressOperator DereferenceStar
     endif
+
+    if (&filetype ==# 'cpp')
+        syn match operatorCharsIgnore /\~\%(\h\w*()\)\@=/
+        " syn region operatorCharsAttribute matchgroup=Operator start="\[\[" end="\]\]" transparent contains=ALLBUT,.*
+        syn region operatorCharsAttribute matchgroup=Operator start="\[\[" end="\]\]" transparent contains=OperatorChars
+        "\%(\[\[\|\]\]\)"
+        " highlight operatorCharsIgnore guifg='#FF0000'
+        highlight def link operatorCharsIgnore    Method
+        highlight def link operatorCharsAttribute Operator
+
+        syn match cppAccessor /\%([A-Za-z)\]]\d*\s*\)\@3<=::\%(\s*\%(\w\|[~<\[()]\)\)\@=/
+    endif
+
+
+
     syn match NegationChar /!\%(=\)\@!/
 
     " hi cppAccessor guifg='#FFA726' gui=BOLD
     " hi cppAccessor guifg='#FFCA28' gui=BOLD
     " hi cppAccessor guifg='#C4BE89' gui=BOLD
-    hi cppAccessor guifg='#ECEFF1' gui=NONE
+    " hi cppAccessor guifg='#ECEFF1' gui=BOLD
 
     if g:ophigh_highlight_link_group !=# ''
         exec 'hi def link OperatorChars ' . g:ophigh_highlight_link_group
@@ -209,5 +225,8 @@ endfunction
 augroup Operator_Higlight
     autocmd Syntax * call s:HighlightOperators()
     autocmd ColorScheme * call s:HighlightOperators()
+    autocmd BufEnter * call s:HighlightOperators()
+    " autocmd VimEnter * call s:HighlightOperators()
+    " autocmd BufReadPost * call s:HighlightOperators()
 augroup END
 

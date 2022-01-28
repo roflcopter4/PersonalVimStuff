@@ -1,5 +1,5 @@
 "===== METHODS =====
-syntax match goStdlibMethods "\%(\%(\w\|[)\]]\)\.\)\@2<=\%(Lock\|Unlock\|Close\|Read\|Write\%(String\)\=\)\>"
+" syntax match goStdlibMethods "\%(\%(\w\|[)\]]\)\.\)\@2<=\%(Lock\|Unlock\|Close\|Read\|Write\%(String\)\=\)\>"
 hi def link goStdlibMethods cAnsiFunction
 
 "===== CONSTANTS =====
@@ -25,8 +25,10 @@ hi def link goExtraConstants Constant
 " syntax match goStdlibFuncs "\%(strings\.\|bytes\.\)\@8<=\%(Join\|Split\|Index\%(Byte\|Rune\|Any\)\=\|HasPrefix\)\>"
 " syntax match goStdlibFuncs "\%(ioutil\.\)\@7<=\%(Read\%(All\|Dir\|File\)\|WriteFile\)\>"
 " syntax match goStdlibFuncs "\%(filepath\.\)\@9<=\%(Dir\|Base\|Ext\|Join\)\>"
-syntax keyword goStdlibFuncs Open OpenFile LookupEnv Mkdir Executable IsExist Exit Environ Getwd GOMAXPROCS Print Printf Println Fprint Fprintf Fprintln Sprint Sprintf Sprintln Close Read Write
+" syntax keyword goStdlibFuncs Open OpenFile LookupEnv Mkdir Executable IsExist Exit Environ Getwd GOMAXPROCS Print Printf Println Fprint Fprintf Fprintln Sprint Sprintf Sprintln Close Read Write
 hi def link goStdlibFuncs cAnsiFunction
+
+syntax keyword goKeyword any
 
 "===== OTHER =====
 syntax match goExtraOperators "\<bytes.Equal\>"
@@ -50,5 +52,6 @@ syntax keyword goLightKeywords2 append make new len panic recover
 hi! link goLightKeywords2 Operator
 " hi! link goLightKeywords1 Structure
 hi! link goLightKeywords1 boldOrange
+highlight def link goKeyword Keyword
 
 hi! link goOperator LightPinkR

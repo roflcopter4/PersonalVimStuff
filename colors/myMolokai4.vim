@@ -91,7 +91,6 @@ let s:nifty_pink             = '#E55CA1'
 let s:idunno                 = '#F7A6DA'
 let s:idunno2                = '#ed92c0'
 let s:resharper_light_blue   = '#ADD8E6'
-"let s:cyan_                 = '#66D9EF'
 let s:darker_cyan            = '#39acc2'
 let s:nova_cyan              = '#26C6DA'
 let s:nova_light_blue        = '#29B6F6'
@@ -188,6 +187,7 @@ endif
 "call s:HL('PreCondit',     s:lime_,            '',                s:bold)
 "call s:HL('PreProc',       s:MSVC_Violet,      '',                s:none)
 "call s:HL('SpecialChar',   s:bright_pink,      '',                s:bold)
+" call s:HL('Include',        s:lime_,            '',                s:none)
 
 call s:HL('Boolean',        s:light_purple,     '',                s:bold)
 call s:HL('Character',      s:light_yellow,     '',                s:none)
@@ -214,7 +214,7 @@ call s:HL('Folded',         s:dark_grey,        s:black_,          s:none)
 call s:HL('Identifier',     s:orange_,          '',                s:none)
 call s:HL('Ignore',         s:border_grey,      'bg',              s:none)
 call s:HL('IncSearch',      s:orange_,          s:black_,          s:none)
-call s:HL('Include',        s:lime_,            '',                s:none)
+call s:HL('Include',        s:baby_blue,        '',                s:none)
 call s:HL('Keyword',        s:bright_pink,      '',                s:bold)
 call s:HL('Label',          s:light_yellow,     '',                s:none)
 call s:HL('LineNr',         s:very_light_grey,  s:lighter_bg,      s:none)
@@ -330,7 +330,13 @@ call s:HL('mutedFunc',        s:grey5,            '', s:bold)
 call s:HL('perlTypeSpec',     s:cyan_,            '', s:bold)
 call s:HL('pythonDocstring',  s:comment,          '', s:none)
 
+call s:HL('Bold', '', '', s:bold)
+call s:HL('BoldRed', s:red_, '', s:bold)
+call s:HL('DelimiterBold', s:light_grey, '', s:bold)
+
 call s:HL('OverloadedOperator', s:resharper_operator, '', s:none)
+call s:HL('OverloadedDecl', s:nova_amber, '', s:none)
+" call s:HL('overloadedDecl', s:nifty_pink, '', s:none)
 
 call s:HL('perlQuoteSE',      s:lime_,     '', s:bold)
 call s:HL('perlMatchSE',      s:lime_,     '', s:bold)
@@ -338,8 +344,10 @@ call s:HL('perlMatchSE',      s:lime_,     '', s:bold)
 call s:HL('CommaSemicolon',   '',        '',  s:bold)
 
 
-call s:HL('newClassColor',    s:resharper_light_purple, '', s:none)
-call s:HL('newTemplateColor', s:resharper_light_purple, '', s:bold)
+call s:HL('NewClassColor',     s:resharper_light_purple, '', s:none)
+call s:HL('NewTemplateColor',  s:resharper_light_purple, '', s:bold)
+" call s:HL('NonTypeTemplParam', s:nova_light_green, '', s:none)
+call s:HL('NonTypeTemplParam', s:muted_yellow, '', s:none)
 " call s:HL('newTemplateColor', s:nifty_pink, '', s:bold)
 " call s:HL('newTemplateColor', s:lighter_pink, '', s:bold)
 call s:HL('boldOrange',       s:orange_,                '', s:bold)
@@ -351,8 +359,16 @@ call s:HL('magentaIGuess',    s:resharper_light_purple, '', s:none)
 " call s:HL('OperatorChars',    s:debug_grey,       '', s:bold)
 " call s:HL('OperatorChars',    s:resharper_beige,       '', s:bold)
 " call s:HL('OperatorChars',    s:white_,       '', s:bold)
-call s:HL('OperatorChars',    s:debug_grey,       '', s:bold)
+" call s:HL('OperatorChars',    s:debug_grey,       '', s:bold)
 call s:HL('DereferenceStar',  s:debug_grey, '', s:bold)
 " call s:HL('DereferenceStar',  s:resharper_beige, '', s:bold)
+
+
+call s:HL('ExperimentalColor01r', s:idunno, '', s:none)
+call s:HL('ExperimentalColor01b', s:idunno, '', s:bold)
+call s:HL('ExperimentalColor02r', s:idunno2, '', s:none)
+call s:HL('ExperimentalColor02b', s:idunno2, '', s:bold)
+call s:HL('ExperimentalColor03r', s:lighter_pink, '', s:none)
+call s:HL('ExperimentalColor03b', s:lighter_pink, '', s:bold)
 
 set background=dark

@@ -265,6 +265,7 @@ syn match   nasmMmxRegister	"\<MM\o\>"
 syn match   nasmSseRegister	"\<XMM\d[0-5]\=\>"
 syn match   nasmAvxRegister	"\<YMM\d[0-5]\=\>"
 syn match   nasmAvx512Register	"\<ZMM\%([12]\d\|3[01]\|\d\)\>"
+syn match   nasmAvx512Register	"\<K[0-7]\>"
 syn match   nasmCtrlRegister	"\<CR\o\>"
 syn match   nasmDebugRegister	"\<DR\o\>"
 syn match   nasmTestRegister	"\<TR\o\>"
@@ -430,7 +431,7 @@ syn keyword nasmSseInstruction	MAXPS MAXSS MINPS MINSS MOVAPS MOVHLPS MOVHPS
 syn keyword nasmSseInstruction	MOVLHPS MOVLPS MOVMSKPS MOVNTPS MOVSS MOVUPS
 syn keyword nasmSseInstruction	MULPS MULSS
 syn keyword nasmSseInstruction	ORPS RCPPS RCPSS RSQRTPS RSQRTSS
-syn keyword nasmSseInstruction	SHUFPS SQRTPS SQRTSS STMXCSR SUBPS SUBSS
+syn keyword nasmSseInstruction	SHUFPS SQRTPS SQRTSS STMXCSR SUBPS SUBSS SQRTSD
 syn keyword nasmSseInstruction	UCOMISS UNPCKHPS UNPCKLPS XORPS
 
 
@@ -460,16 +461,19 @@ syn keyword nasmUndInstruction	LOADALL286 LOADALL386 SALC SMI UD1 UMOV XBTS
 " Additional Modern Instructions: (BMI, BMI2, AVX, AVX2)
 syn keyword nasmBmiInstruction  ANDN BEXTR BLSI BLSMSK BLSR TZCNT POPCNT LZCNT
 syn keyword nasmBmiInstruction  PDEP PEXT BZHI MULX RORX SARX SHRX SHLX
-syn match   nasmAvxInstruction  "\<VBROADCAST\%(S[DS]\|[FI]128\)\>"
-syn match   nasmAvxInstruction  "\<VPBROADCAST[BWDQ]\>"
+syn match   nasmAvxInstruction  /\<VBROADCAST\%(S[DS]\|[FI]128\)\>/
+syn match   nasmAvxInstruction  /\<VPBROADCAST[BWDQ]\>/
 syn keyword nasmAvxInstruction  VINSERTI128 VINSERTF128 VEXTRACTI128 VEXTRACTF128
 syn keyword nasmAvxInstruction  VZEROALL VZEROUPPER VPBLENDD VPSRAVD
 syn match   nasmAvxInstruction "\<VMASKMOVP[SD]\>"
-syn match   nasmAvxInstruction "\<VPMASKMOV[DQ]\>"
-syn match   nasmAvxInstruction "\<VGATHER[DQ]P[DS]\>"
-syn match   nasmAvxInstruction "\<VPGATHER[DQ][DQ]\>"
-syn match   nasmAvxInstruction "\<VPERM\%(ILP[SD]\|2[FI]128\|P[SD]\|[DQ]\)\>"
-syn match   nasmAvxInstruction "\<VPS[LR]LV[DQ]\>"
+syn match   nasmAvxInstruction /\<VPMASKMOV[DQ]\>/
+syn match   nasmAvxInstruction /\<VGATHER[DQ]P[DS]\>/
+syn match   nasmAvxInstruction /\<VPGATHER[DQ][DQ]\>/
+syn match   nasmAvxInstruction /\<VPERM\%(ILP[SD]\|2[FI]128\|P[SD]\|[DQ]\)\>/
+syn match   nasmAvxInstruction /\<VPS[LR]LV[DQ]\>/
+syn match   nasmAvxInstruction /\<VMOVDQ\%(A\%(64\|32\)\=\|U\%(8\|16\|32\|64\)\)\=\>/
+
+syn keyword nasmAvx512Instruction SQRTS[DS] VSQRTS[DS]
 
 
 " Some junk:
@@ -484,8 +488,13 @@ syn keyword nasmNasmxKeywordStrong ENTRY LOCALS PROC
 syn keyword nasmNasmxKeywordStrong ENDSWITCH ENDLOCALS ENDPROC
 syn keyword nasmNasmxKeywordStrong IMPORT
 
+syn case match
+syn keyword nasmNasmxPlusKeywordStrong APROC 
+syn case ignore
+
 syn match   nasmNasmxMacro    "\<\%(var\|argv\|[@]\)\>"
 
+hi def link nasmNasmxPlusKeywordStrong  nasmNasmxKeywordStrong
 hi def link nasmNasmxKeyword		PreProc
 hi def link nasmNasmxType		Type
 hi def link nasmNasmxKeywordStrong	Method
@@ -595,6 +604,7 @@ hi def link nasmInstructnError	Error
 
 hi def link nasmBmiInstruction	Statement
 hi def link nasmAvxInstruction	Statement
+hi def link nasmAvx512Instruction nasmAvxInstruction
 
 
 let b:current_syntax = 'nasm'

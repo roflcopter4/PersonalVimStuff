@@ -2,6 +2,7 @@ syntax keyword cExtraNonStandard xmalloc xcalloc xrealloc xfree xreallocarray nm
 syntax keyword cExtraNonStandard talloc talloc_array talloc_free talloc_realloc talloc_size talloc_realloc_size talloc_zero talloc_zero_size
 syntax keyword cExtraNonStandard talloc_free_children talloc_named_const talloc_named
 syntax keyword cExtraNonStandard TALLOC_FREE
+syntax keyword cExtraNonStandard GC_MALLOC GC_REALLOC GC_FREE
 syntax keyword cExtraOther       talloc_reference talloc_unlink talloc_total_size talloc_move talloc_reparent talloc_steal
 syntax keyword cExtraOther       talloc_asprintf talloc_vasprintf talloc_strdup talloc_memdup talloc_autofree_context talloc_set_destructor
 syntax keyword cExtraOther       brk sbrk
@@ -12,25 +13,28 @@ syntax keyword cExtraConstants STDIN_FILENO STDOUT_FILENO STDERR_FILENO
 syntax keyword cExtraConstants O_RDONLY O_WRONLY O_RDWR O_DIRECTORY O_BINARY
 syntax keyword cExtraConstants O_APPEND O_ASYNC O_CLOEXEC O_CREAT O_DIRECT O_DIRECTORY O_DSYNC O_EXCL O_LARGEFILE
 syntax keyword cExtraConstants O_NOATIME O_NOCTTY O_NOFOLLOW O_NONBLOCK O_NDELAY O_PATH O_SYNC O_TMPFILE O_TRUNC 
-syntax keyword cExtraConstants PATH_MAX CLOCK_REALTIME MSG_WAITALL
+syntax keyword cExtraConstants PATH_MAX CLOCK_REALTIME
 syntax keyword cExtraConstants PROT_READ PROT_WRITE MAP_ANON MAP_PRIVATE MAP_SHARED
+syntax keyword cExtraConstants __COUNTER__
 
 "******************************************************************************* 
 "** ARDUINO **
-syntax keyword arduinoConstant HIGH LOW INPUT OUTPUT LED_BUILTIN INPUT_PULLUP
-syntax keyword arduinoConstant DEC BIN HEX OCT BYTE PI HALF_PI TWO_PI
-syntax keyword arduinoConstant CHANGE FALLING RISING SERIAL DISPLAY LSBFIRST MSBFIRST 
-syntax keyword arduinoConstant DEFAULT EXTERNAL INTERNAL INTERNAL1V1 INTERNAL2V56
-
-syn keyword arduinoFunc analogReference analogRead analogWrite 
-syn keyword arduinoFunc attachInterrupt detachInterrupt interrupts noInterrupts 
-syn keyword arduinoFunc lowByte highByte bitRead bitWrite bitSet bitClear
-syn keyword arduinoFunc millis micros delay delayMicroseconds 
-syn keyword arduinoFunc pinMode digitalWrite digitalRead 
-syn keyword arduinoFunc tone noTone pulseIn shiftOut 
-syn keyword arduinoFunc digitalPinToInterrupt
-
-syn keyword arduinoType boolean byte word String
+" syntax keyword arduinoConstant HIGH LOW INPUT OUTPUT LED_BUILTIN INPUT_PULLUP
+" syntax keyword arduinoConstant DEC BIN HEX OCT BYTE PI HALF_PI TWO_PI
+" syntax keyword arduinoConstant CHANGE FALLING RISING SERIAL DISPLAY LSBFIRST MSBFIRST 
+" syntax keyword arduinoConstant DEFAULT EXTERNAL INTERNAL INTERNAL1V1 INTERNAL2V56
+" 
+" syn keyword arduinoFunc analogReference analogRead analogWrite 
+" syn keyword arduinoFunc attachInterrupt detachInterrupt interrupts noInterrupts 
+" syn keyword arduinoFunc lowByte highByte bitRead bitWrite bitSet bitClear
+" syn keyword arduinoFunc millis micros delay delayMicroseconds 
+" syn keyword arduinoFunc pinMode digitalWrite digitalRead 
+" syn keyword arduinoFunc tone noTone pulseIn shiftOut 
+" syn keyword arduinoFunc digitalPinToInterrupt
+" 
+" syn keyword arduinoType boolean byte word String
+" syn keyword cType	__int128 __float128
+" syn keyword cType	_Float32 _Float64 _Float128
 
 highlight default link arduinoConstant Constant
 highlight default link arduinoType     Type
@@ -38,13 +42,13 @@ highlight default link arduinoFunc     cAnsiFunction
 "******************************************************************************* 
 
 syntax keyword cC11Function    quick_exit at_quick_exit thrd_create thrd_exit mtx_lock mtx_unlock
-syntax keyword cExtentionFunc  asprintf vasprintf dprintf vdprintf getline getdelim strsep strchrnul memmem
+syntax keyword cExtentionFunc  dprintf vdprintf getline getdelim strsep strchrnul memmem
 syntax keyword cExtentionFunc  isblank alloca strdup strdupa mkostemp mkostemps mkdtemp
 syntax keyword cPosixFunction  link unlink mkfifo mkdir symlink mknod truncate ftruncate pipe
 syntax keyword cPosixFunction  chown chmod lstat fstat fstat64 readlink sync syncfs fsync fdopen
 syntax keyword cPosixFunction  fstatat openat fileno realpath dirname scandir
 syntax keyword cPosixFunction  sysconf isatty ttyname sigaction
-syntax keyword cPosixFunction  socket connect bind accept recv recvfrom send recvmsg sendmsg listen
+" syntax keyword cPosixFunction  socket connect bind accept recv recvfrom send recvmsg sendmsg listen
 syntax keyword cPosixFunction  gettimeofday clock_gettime mmap sbrk munmap
 syntax keyword cPosixFunction  execl execle execlp execv execvp execvpe execve wait waitpid pause
 syntax keyword cPosixFunction  posix_spawn posix_spawnp
@@ -56,6 +60,9 @@ syntax match   cForkAsKeyword  "\<v\=fork()"
 syntax keyword cGNUAutoType __auto_type auto_type Auto
 syntax keyword cAssertion assert
 syntax keyword cMiscOperators __extension__ __typeof__
+syntax keyword cBuiltinFunctions  __builtin_expect __builtin_strlen 
+syntax keyword cBuiltinFunctions  __c11_atomic_load __c11_atomic_store __c11_atomic_compare_exchange_strong __c11_atomic_compare_exchange_weak __c11_atomic_exchange
+syntax keyword cBuiltinFunctions  __c11_atomic_fetch_and  __c11_atomic_fetch_add __c11_atomic_fetch_or __c11_atomic_fetch_xor __c11_atomic_fetch_sub
 
 syn keyword	cExtraConstants	_MSC_VER __clang__ __cplusplus __GNUC_MINOR__ __FreeBSD__ _WIN32 _WIN64 WIN32 
 syn keyword	cStorageClass	__restrict __inline __thread
@@ -86,8 +93,8 @@ highlight def link cForkAsKeyword	Keyword
 
 syntax region cAttribute matchgroup=Operator containedin=cPreProc transparent	start='__attribute__\s*(('	skip=')\ze))'	end='))'
 
-syntax region	cDefine	    matchgroup=c_preproc start="^\s*\zs\(%:\|#\)\s*\(define\|undef\)\>" skip="\\$" end="$" keepend contains=ALLBUT,@cPreProcGroup,@Spell
-syntax region	cPreCondit  matchgroup=c_preproc start="^\s*\zs\(%:\|#\)\s*\(\%(if\%(\s0\)\@!\)\|ifdef\|ifndef\|elif\)\>" skip="\\$" end="$" keepend 
+syntax region	cDefine	    matchgroup=c_preproc start="^\s*\zs\(%:\|#\)\s*\(define\|undef\)\>" skip="\\$" end="$" keepend contains=ALLBUT,@cPreProcGroup,@Spell,@cppNumberSuffixes
+syntax region	cPreCondit  matchgroup=c_preproc start="^\s*\zs\(%:\|#\)\s*\(\%(if\%(\s0\)\@!\)\|ifn\=def\|elif\%(n\=def\)\=\)\>" skip="\\$" end="$" keepend 
 			\ contains=cComment,cCommentL,cCppString,cCharacter,cCppParen,cParenError,cNumbers,cCommentError,cSpaceError,cppOutIf,
 			\_Neotags_c_d_cPreProcTag,cConstant,_tag_highlight_c_d_cPreProcTag,cExtraConstants
 syntax match	cPreConditMatch	display "^\s*\zs\(%:\|#\)\s*\(else\|endif\)\>"
@@ -102,6 +109,8 @@ syntax region		cppError_	matchgroup=c_preproc	start=+^\s*#\s*\%(error\|warning\)
 highlight def link	cppError_	String
 
 highlight link cInclude		c_preproc
-hi! link cSpecialCharacter	Special
+highlight! link cSpecialCharacter	Special
+
+highlight def link cBuiltinFunctions Operator
 
 " vim: sts=4 sw=0 noexpandtab

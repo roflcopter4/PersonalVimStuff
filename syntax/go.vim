@@ -48,7 +48,7 @@ hi def link     goComplexes         Type
 
 " Predefined functions and values
 syn match       goBuiltins                 /\<\v(append|cap|close|complex|copy|delete|imag|len)\ze\(/
-syn match       goBuiltins                 /\<\v(make|new|panic|print|println|real|recover)\ze\(/
+syn match       goBuiltins                 /\<\v(make|new|panic|real|recover)\ze\(/
 syn keyword     goBoolean                  true false
 syn keyword     goPredefinedIdentifiers    nil iota
 
