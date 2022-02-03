@@ -155,6 +155,8 @@ fun! s:HighlightOperators()
     if (s:IsC() || &filetype ==# 'go' || &filetype ==# 'rust')
         syn match OperatorChars /\[\]/
         syn match OperatorChars /[:\[\]]/
+        " syn match OperatorChars /[{}]/
+        " syn match OperatorChars /[()]/
         syn match CommaSemicolon /[;,]/
         "syn match StructDeref /\%(\w\)\(\.\)[A-Za-z]/
         "syn match StructDeref /\([A-Za-z)\]]\d*\)\@<=\.\(\d\)\@!/
